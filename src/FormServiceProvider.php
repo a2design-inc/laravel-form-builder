@@ -13,7 +13,7 @@ class FormServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
+        $this->registerFormBuilder();
     }
 
     /**
@@ -24,5 +24,18 @@ class FormServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadViewsFrom(__DIR__.'/resources/views', 'form');
+    }
+
+    /**
+     * Register the form builder instance.
+     *
+     * @return void
+     */
+    protected function registerFormBuilder()
+    {
+        $this->app->singleton('A2design\Form\FormBuilder', function ($app) {
+
+            return new FormBuilder($app['view'], $app['session.store'], $app['request']);
+        });
     }
 }
