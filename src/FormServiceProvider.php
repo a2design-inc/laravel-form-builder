@@ -33,7 +33,7 @@ class FormServiceProvider extends ServiceProvider
      */
     protected function registerFormBuilder()
     {
-        $this->app->singleton('A2design\Form\FormBuilder', function ($app) {
+        $this->app->singleton(FormBuilder::class, function ($app) {
 
             return new FormBuilder($app['view'], $app['session.store'], $app['request']);
         });

@@ -4,10 +4,23 @@ namespace A2design\Form;
 
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class FormBuilder
 {
+    private $view;
+    private $session;
+    private $csrfToken;
+    private $request;
+
+    /**
+     * Instance of model for the editing
+     *
+     * @var Model
+     */
+    private $entity;
+
     /**
      * Create a new form builder instance.
      *
@@ -23,8 +36,17 @@ class FormBuilder
         $this->request = $request;
     }
 
-    public function create()
+    /**
+     * @param string $action
+     * @param null|Model $entity
+     * @param array $parameters
+     *
+     * @return Factory|\Illuminate\View\View
+     */
+    public function create($action = '', $entity = null, $parameters = [])
     {
-        return view('form::form');
+        $this->entity = $entity;
+
+        return view('form::form-create', compact('action', 'parameters', 'entity'));
     }
 }
