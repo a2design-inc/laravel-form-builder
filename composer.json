@@ -1,0 +1,19 @@
+{
+    "name": "a2design/form",
+    "description": "Form Builders for the Laravel Framework",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Loburets Dimitry",
+            "email": "loburets@a2design.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "A2design\\Form\\": "src/"
+        }
+    }
+}
