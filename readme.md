@@ -2,7 +2,7 @@
 
 Laravel plugin for quick form creation. 
 
-### What is it
+### Why
 
 You can show validation errors, old input values and form context based on model entity without any line of code. 
 
@@ -34,14 +34,11 @@ Register the provider (config/app.php):
 A2design\Form\FormServiceProvider::class,
 ```
 
-Add the alias (config/app.php):
+And the alias:
 
 ```
 'Form' => A2design\Form\FormFacade::class,
 ```
 
-### How to use
+### Customization
 
-```
-{!! Form::create() !!}
-```
