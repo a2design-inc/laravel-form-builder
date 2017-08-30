@@ -19,6 +19,7 @@ Output
 ```
 <form method="post" action="/Article/1" id="update-article" > 
 <input type="hidden" name="_token" value="P6LpFJ0bZf4s9aKOi8pSoZXTMITDxtRtQ98qF4wZ"> 
+<input type="hidden" name="_method" value="PUT"> 
 </form>
 ```
 

@@ -11,8 +11,22 @@ class FormBuilder
 {
     private $view;
     private $session;
-    private $csrfToken;
     private $request;
+
+    /**
+     * @var \Illuminate\Routing\Route|null
+     */
+    private $route = null;
+
+    /**
+     * TODO move to package config
+     *
+     * The namespace of controllers
+     * Defined at RouteServiceProvider, but can't be used here because it is on protected scope (L5.4)
+     *
+     * @var string
+     */
+    private $routeNameSpace = 'App\Http\Controllers';
 
     /**
      * Instance of model for the editing
@@ -32,7 +46,6 @@ class FormBuilder
     {
         $this->view = $view;
         $this->session = $session;
-        $this->csrfToken = $session->token();
         $this->request = $request;
     }
 
@@ -45,7 +58,12 @@ class FormBuilder
      */
     public function create($action = '', $entity = null, $parameters = [])
     {
+        $this->route = $this->getRouteByAction($action);
         $this->entity = $entity;
+
+        if (!isset($parameters['method']) && !empty($this->getRouteMethod())) {
+            $parameters['method'] = $this->getRouteMethod();
+        }
 
         return view('form::form-create', compact('action', 'parameters', 'entity'));
     }
@@ -56,5 +74,30 @@ class FormBuilder
     public function end()
     {
         return view('form::form-end');
+    }
+
+    /**
+     * @return string
+     */
+    private function getRouteMethod()
+    {
+        if (empty($this->route)) {
+            return '';
+        }
+
+        if (!is_array($this->route->methods()) && !isset($this->route->methods()[0])) {
+            return '';
+        }
+
+        return $this->route->methods()[0];
+    }
+
+    /**
+     * @param $action
+     * @return \Illuminate\Routing\Route|null
+     */
+    private function getRouteByAction($action)
+    {
+        return \Route::getRoutes()->getByAction($this->routeNameSpace . '\\' . $action);
     }
 }
