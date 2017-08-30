@@ -6,6 +6,7 @@ use Illuminate\Contracts\Session\Session;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\ViewErrorBag;
 
 class FormBuilder
 {
@@ -36,6 +37,11 @@ class FormBuilder
     private $entity;
 
     /**
+     * @var ViewErrorBag
+     */
+    private $errors;
+
+    /**
      * Create a new form builder instance.
      *
      * @param Factory $view
@@ -45,6 +51,7 @@ class FormBuilder
     public function __construct(Factory $view, Session $session, Request $request = null)
     {
         $this->view = $view;
+        $this->errors = $view->shared('errors');
         $this->session = $session;
         $this->request = $request;
     }
@@ -74,6 +81,11 @@ class FormBuilder
     public function end()
     {
         return view('form::form-end');
+    }
+
+    public function input($name, $label = '', $parameters = [])
+    {
+        return view('form::input', compact('name', 'label', 'parameters'));
     }
 
     /**

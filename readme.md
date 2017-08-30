@@ -42,3 +42,18 @@ And the alias:
 
 ### Customization
 
+#### Parameters
+
+You can specify additional parameters:
+
+```
+{!! Form::create('', null, [
+    'url' => 'http://google.com',
+]) !!}
+```
+
+    - method
+    - absolute
+    - url
+    - id
+    - class
