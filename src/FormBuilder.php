@@ -2,22 +2,39 @@
 
 namespace A2design\Form;
 
-use Illuminate\Contracts\Session\Session;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Session\Store;
 use Illuminate\Support\ViewErrorBag;
 
+/**
+ * Class FormBuilder
+ * @package A2design\Form
+ *
+ * TODO id autogenerating true/false at config
+ */
 class FormBuilder
 {
-    private $view;
-    private $session;
-    private $request;
+    /**
+     * @var Factory
+     */
+    protected $view;
+
+    /**
+     * @var Store
+     */
+    protected $session;
+
+    /**
+     * @var Request
+     */
+    protected $request;
 
     /**
      * @var \Illuminate\Routing\Route|null
      */
-    private $route = null;
+    protected $route = null;
 
     /**
      * TODO move to package config
@@ -27,28 +44,38 @@ class FormBuilder
      *
      * @var string
      */
-    private $routeNameSpace = 'App\Http\Controllers';
+    protected $routeNameSpace = 'App\Http\Controllers';
 
     /**
      * Instance of model for the editing
      *
      * @var Model
      */
-    private $entity;
+    protected $entity = null;
 
     /**
      * @var ViewErrorBag
      */
-    private $errors;
+    protected $errors;
+
+    /**
+     * @var string
+     */
+    protected $entityName = '';
+
+    /**
+     * @var string
+     */
+    protected $actionMethod = '';
 
     /**
      * Create a new form builder instance.
      *
      * @param Factory $view
-     * @param Session $session
+     * @param Store $session
      * @param Request|null $request
      */
-    public function __construct(Factory $view, Session $session, Request $request = null)
+    public function __construct(Factory $view, Store $session, Request $request = null)
     {
         $this->view = $view;
         $this->errors = $view->shared('errors');
@@ -66,10 +93,16 @@ class FormBuilder
     public function create($action = '', $entity = null, $parameters = [])
     {
         $this->route = $this->getRouteByAction($action);
+        $this->actionMethod = $this->route->getActionMethod();
         $this->entity = $entity;
+        $this->entityName = $this->getEntityName();
 
         if (!isset($parameters['method']) && !empty($this->getRouteMethod())) {
             $parameters['method'] = $this->getRouteMethod();
+        }
+
+        if (!isset($parameters['id']) && !empty($this->getFormId())) {
+            $parameters['id'] = $this->getFormId();
         }
 
         return view('form::form-create', compact('action', 'parameters', 'entity'));
@@ -83,15 +116,28 @@ class FormBuilder
         return view('form::form-end');
     }
 
+    /**
+     * @param $name
+     * @param string $label
+     * @param array $parameters
+     * @return Factory|\Illuminate\View\View
+     */
     public function input($name, $label = '', $parameters = [])
     {
-        return view('form::input', compact('name', 'label', 'parameters'));
+        $entity = $this->entity;
+        $value = $this->getInputValue($name);
+
+        if (!isset($parameters['id']) && !empty($this->getInputId($name))) {
+            $parameters['id'] = $this->getInputId($name);
+        }
+
+        return view('form::input', compact('name', 'label', 'parameters', 'entity', 'value'));
     }
 
     /**
      * @return string
      */
-    private function getRouteMethod()
+    protected function getRouteMethod()
     {
         if (empty($this->route)) {
             return '';
@@ -108,8 +154,104 @@ class FormBuilder
      * @param $action
      * @return \Illuminate\Routing\Route|null
      */
-    private function getRouteByAction($action)
+    protected function getRouteByAction($action)
     {
         return \Route::getRoutes()->getByAction($this->routeNameSpace . '\\' . $action);
+    }
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    protected function getInputValue($name)
+    {
+        $key = $this->transformKey($name);
+
+        $oldValue = $this->session->getOldInput($key);
+
+        if ($oldValue !== null) {
+            return $oldValue;
+        }
+
+        if (!empty($this->entity)) {
+            return $this->entity->$name;
+        }
+
+        return '';
+    }
+
+    /**
+     * Transform key from array to dot syntax.
+     *
+     * @param  string $key
+     *
+     * @return mixed
+     */
+    protected function transformKey($key)
+    {
+        return str_replace(['.', '[]', '[', ']'], ['_', '', '.', ''], $key);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getFormId()
+    {
+        $id = '';
+
+        if (!empty($this->actionMethod)) {
+            $id = kebab_case($this->actionMethod);
+        }
+
+        if (!empty($this->entityName)) {
+            $id = $id . '-' . kebab_case($this->entityName);
+        }
+
+        return $id;
+    }
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    protected function getInputId($name)
+    {
+        $id = kebab_case($name);
+
+        if (!empty($this->entityName)) {
+            $id = kebab_case($this->entityName) . '-' . $id;
+        }
+
+        if (!empty($this->route)) {
+            $id = kebab_case($this->route->getActionMethod()) . '-' . $id;
+        }
+
+        return $id;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getEntityName()
+    {
+        if (!empty($this->entity)) {
+            return (new \ReflectionClass($this->entity))->getShortName();
+        }
+
+        if (!empty($this->route)) {
+            $controllerName = (new \ReflectionClass($this->route->getController()))->getShortName();
+
+            //todo move to config
+            $controllerNaming = 'Controller';
+            $namePos = strpos($controllerName, $controllerNaming);
+
+            if ($namePos === false) {
+                return '';
+            }
+
+            return substr($controllerName, 0, $namePos);
+        }
+
+        return '';
     }
 }

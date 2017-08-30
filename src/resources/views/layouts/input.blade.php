@@ -1,13 +1,28 @@
-<div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-    <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+<div class="form-group{{ $errors->has($name) ? ' has-error' : '' }}">
+    <label
+        @if (isset($parameters['id']))
+            for="{!! $parameters['id'] !!}"
+        @endif
+        class="col-md-4 control-label"
+    >
+        {{ $label }}
+    </label>
 
     <div class="col-md-6">
         @yield('input')
 
-        @if ($errors->has('email'))
-            <span class="help-block">
-                <strong>{{ $errors->first('email') }}</strong>
-            </span>
+        @if (isset($parameters['all-errors']) && $parameters['all-errors'] === true)
+            @foreach ($errors->get($name) as $message)
+                <span class="help-block">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @endforeach
+
+            @foreach ($errors->get($name . '.*') as $message)
+                <span class="help-block">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @endforeach
         @endif
     </div>
 </div>

@@ -1,5 +1,15 @@
 @extends('form::layouts.input')
 
 @section('input')
-    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+    <input
+        @if (isset($parameters['id']))
+            id="{!! $parameters['id'] !!}"
+        @endif
+        type="text"
+        class="form-control"
+        name="{!! $name !!}"
+        value="{!! $value !!}"
+        required
+        autofocus
+    >
 @endsection

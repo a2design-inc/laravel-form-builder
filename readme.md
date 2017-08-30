@@ -20,7 +20,7 @@ Your code:
 Output:
 
 ```
-<form method="post" action="/Article/1" id="update-article" > 
+<form method="post" action="/article/1" id="update-article" > 
     <input type="hidden" name="_token" value="P6LpFJ0bZf4s9aKOi8pSoZXTMITDxtRtQ98qF4wZ"> 
     <input type="hidden" name="_method" value="PUT"> 
 </form>
@@ -57,3 +57,12 @@ You can specify additional parameters:
     - url
     - id
     - class
+```
+
+{!! Form::input('', '', [
+    'label' => false
+]) !!}
+```
+    - label
+    - id
+    - all-errors
