@@ -49,4 +49,12 @@ class FormBuilder
 
         return view('form::form-create', compact('action', 'parameters', 'entity'));
     }
+
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function end()
+    {
+        return view('form::form-end');
+    }
 }
