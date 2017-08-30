@@ -5,21 +5,24 @@ Laravel plugin for quick form creation.
 ### What is it
 
 You can show validation errors, old input values and form context based on model entity without any line of code. 
-Or you can redefine all what you want manually.
+
+And you can redefine all what you want manually.
 
 ### Quick example
+
+Your code:
 
 ```
 {!! Form::create('ArticleController@update', $article) !!}
 {!! Form::end() !!}
 ```
 
-Output
+Output:
 
 ```
 <form method="post" action="/Article/1" id="update-article" > 
-<input type="hidden" name="_token" value="P6LpFJ0bZf4s9aKOi8pSoZXTMITDxtRtQ98qF4wZ"> 
-<input type="hidden" name="_method" value="PUT"> 
+    <input type="hidden" name="_token" value="P6LpFJ0bZf4s9aKOi8pSoZXTMITDxtRtQ98qF4wZ"> 
+    <input type="hidden" name="_method" value="PUT"> 
 </form>
 ```
 
