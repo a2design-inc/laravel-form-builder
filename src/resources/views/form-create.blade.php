@@ -38,3 +38,6 @@
         class="{!! $parameters['class'] !!}"
     @endif
 >
+    @if (!isset($parameters['method']) || $parameters['method'] !== 'get' && $parameters['method'] !== 'GET')
+        {{ csrf_field() }}
+    @endif
