@@ -1,9 +1,22 @@
-<div class="form-group{{ $errors->has($name) ? ' has-error' : '' }}">
+<div
+    class="form-group
+
+        {{ $errors->has($name) ? ' has-error' : '' }}
+
+         @if (isset($parameters['wrapper-class']))
+            {!! $parameters['wrapper-class'] !!}
+         @endif
+        "
+>
     <label
         @if (isset($parameters['id']))
             for="{!! $parameters['id'] !!}"
         @endif
-        class="col-md-4 control-label"
+        class="col-md-4 control-label
+             @if (isset($parameters['label-class']))
+                {!! $parameters['label-class'] !!}
+            @endif
+        "
     >
         {{ $label }}
     </label>
