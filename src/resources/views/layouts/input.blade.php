@@ -13,16 +13,14 @@
 
         @if (isset($parameters['all-errors']) && $parameters['all-errors'] === true)
             @foreach ($errors->get($name) as $message)
-                <span class="help-block">
-                    <strong>{{ $message }}</strong>
-                </span>
+                @include('form::partials.error-message')
             @endforeach
 
             @foreach ($errors->get($name . '.*') as $message)
-                <span class="help-block">
-                    <strong>{{ $message }}</strong>
-                </span>
+                @include('form::partials.error-message')
             @endforeach
+        @elseif ($errors->has($name))
+            @include('form::partials.error-message', ['message' => $errors->first($name)])
         @endif
     </div>
 </div>
