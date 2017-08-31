@@ -44,25 +44,23 @@ And the alias:
 
 #### Parameters
 
-You can specify additional parameters:
+You can specify additional settings as array of parameters:
 
 ```
 {!! Form::create('', null, [
     'url' => 'http://google.com',
 ]) !!}
-```
-
-    - method
-    - absolute
-    - url
-    - id
-    - class
-```
 
 {!! Form::input('', '', [
     'label' => false
 ]) !!}
-```
-    - label
-    - id
-    - all-errors
+```    
+    
+| Element          | Parameter      | Description                         |
+|------------------|----------------|-------------------------------------|
+| Common           | class          | Class attribute                     |
+|                  | id             | Id attribute. Generated automatically. If you don't need, specify empty string or redefine by id what you want. |
+| Form::create     | method         | POST, GET, PUT etc                  |
+|                  | absolute       | Absolute path of the method         |
+|                  | url            | Use the url instead action argument |
+| Form::input      | all-errors     | List all of the validation errors fot the input instead only first |
