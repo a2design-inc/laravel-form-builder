@@ -127,6 +127,10 @@ class FormBuilder
         $entity = $this->entity;
         $value = $this->getInputValue($name);
 
+        if (isset($parameters['value'])) {
+            $value = $parameters['value'];
+        }
+        
         if (!isset($parameters['id']) && !empty($this->getInputId($name))) {
             $parameters['id'] = $this->getInputId($name);
         }
