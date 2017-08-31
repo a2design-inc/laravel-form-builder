@@ -69,7 +69,7 @@ You can specify additional settings as array of parameters:
 |                  | type           | Set the type attribute                 |
 |                  | wrapper-class  | Set the class of the input wrapper div |
 |                  | label-class    | Set the class of the label             |
-|                  | value          | Define your value             |
+|                  | value          | Define your own value                  |
 
 ### Template editing
 
