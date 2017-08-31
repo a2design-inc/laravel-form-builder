@@ -38,6 +38,12 @@ And the alias:
 'Form' => A2design\Form\FormFacade::class,
 ```
 
+Publish the package assets:
+
+```
+php artisan vendor:publish
+```
+
 ## Customization
 
 ### Parameters
@@ -52,7 +58,7 @@ You can specify additional settings as array of parameters:
     
 | Element          | Parameter      | Description                            |
 |------------------|----------------|----------------------------------------|
-| Common           | class          | Class attribute                        |
+| Everywhere       | class          | Class attribute                        |
 |                  | id             | Id attribute. Generated automatically. If you don't need, specify empty string or redefine by id what you want. |
 | Form::create     | method         | POST, GET, PUT etc                     |
 |                  | absolute       | Absolute path of the method            |
@@ -67,8 +73,8 @@ You can specify additional settings as array of parameters:
 
 ### Template editing
 
-The package is used the laravel blade templates for all elements. Just publish them for free customization:
+The package is used the laravel blade templates for all form elements. Feel free for customization if you need.
 
-```
-php artisan vendor:publish
-```
+### Configs
+
+Edit the config/form.php file to change the global settings (see description for any configuration in the file)

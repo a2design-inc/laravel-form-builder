@@ -12,7 +12,7 @@ use Illuminate\Support\ViewErrorBag;
  * Class FormBuilder
  * @package A2design\Form
  *
- * TODO id autogenerating true/false at config
+ * TODO boostrap classes at config
  */
 class FormBuilder
 {
@@ -101,7 +101,7 @@ class FormBuilder
             $parameters['method'] = $this->getRouteMethod();
         }
 
-        if (!isset($parameters['id']) && !empty($this->getFormId())) {
+        if (!isset($parameters['id']) && config('form.generate_id') && !empty($this->getFormId())) {
             $parameters['id'] = $this->getFormId();
         }
 
@@ -130,8 +130,8 @@ class FormBuilder
         if (isset($parameters['value'])) {
             $value = $parameters['value'];
         }
-        
-        if (!isset($parameters['id']) && !empty($this->getInputId($name))) {
+
+        if (!isset($parameters['id']) && config('form.generate_id') && !empty($this->getInputId($name))) {
             $parameters['id'] = $this->getInputId($name);
         }
 

@@ -24,6 +24,9 @@ class FormServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadViewsFrom(__DIR__.'/resources/views', 'form');
+        $this->publishes([
+            __DIR__.'/config/form.php' => config_path('form.php'),
+        ]);
     }
 
     /**
