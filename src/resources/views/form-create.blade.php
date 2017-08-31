@@ -26,15 +26,6 @@
     {{--set or generate id attribute--}}
     @if (isset($parameters['id']))
         id="{!! $parameters['id'] !!}"
-    @elseif (!empty($action) && !empty($entity))
-        @php
-            $method = explode('@', $action)[1];
-            $entityName = (new \ReflectionClass($entity))->getShortName();
-            $id = kebab_case($method) . '-' . kebab_case($entityName);
-        @endphp
-        id="{!! $id !!}"
-    @elseif (!empty($action))
-        id="{!! kebab_case(explode('@', $action)[1]) !!}"
     @endif
 
     {{--set class attribute--}}
