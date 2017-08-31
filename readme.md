@@ -2,11 +2,9 @@
 
 Laravel plugin for quick form creation. 
 
-## Why
-
 You can show validation errors, old input values and form context based on model entity without any line of code. 
 
-And you can redefine all what you want manually.
+And you can simply redefine or adjust all what you want.
 
 ## Quick example
 
@@ -47,13 +45,9 @@ And the alias:
 You can specify additional settings as array of parameters:
 
 ```
-{!! Form::create('', null, [
-    'url' => 'http://google.com',
-]) !!}
+{!! Form::create('', null, ['url' => 'http://google.com',]) !!}
 
-{!! Form::input('', '', [
-    'label' => false
-]) !!}
+{!! Form::input('', '', ['label' => false]) !!}
 ```    
     
 | Element          | Parameter      | Description                            |
@@ -72,3 +66,9 @@ You can specify additional settings as array of parameters:
 |                  | value          | Define your value             |
 
 ### Template editing
+
+The package is used the laravel blade templates for all elements. Just publish them for free customization:
+
+```
+php artisan vendor:publish
+```
