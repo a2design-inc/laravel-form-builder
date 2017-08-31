@@ -1,7 +1,6 @@
 @extends('form::layouts.input')
 
 @section('input')
-<?php var_dump($parameters) ;?>
     <input
         @if (isset($parameters['id']))
             id="{!! $parameters['id'] !!}"
