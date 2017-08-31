@@ -63,6 +63,9 @@ You can specify additional settings as array of parameters:
 | Form::create     | method         | POST, GET, PUT etc                     |
 |                  | absolute       | Absolute path of the method            |
 |                  | url            | Use the url instead action argument    |
+|                  | input-wrappers | TODO                                   |
+|                  | labels         | TODO                                   |
+|                  | bootstrap-grids| TODO                                   |
 | Form::input      | all-errors     | List all of the validation errors fot the input instead only first |
 |                  | required       | Set true for the attribute using       |
 |                  | autofocus      | Set true for the attribute using       |
@@ -70,6 +73,9 @@ You can specify additional settings as array of parameters:
 |                  | wrapper-class  | Set the class of the input wrapper div |
 |                  | label-class    | Set the class of the label             |
 |                  | value          | Define your own value                  |
+|                  | wrapper        | TODO                                   |
+|                  | label          | TODO                                   |
+|                  | bootstrap-grid | TODO                                   |
 
 ### Template editing
 
