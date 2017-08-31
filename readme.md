@@ -2,13 +2,13 @@
 
 Laravel plugin for quick form creation. 
 
-### Why
+## Why
 
 You can show validation errors, old input values and form context based on model entity without any line of code. 
 
 And you can redefine all what you want manually.
 
-### Quick example
+## Quick example
 
 Your code:
 
@@ -26,7 +26,7 @@ Output:
 </form>
 ```
 
-### How to install
+## How to install
 
 Register the provider (config/app.php):
 
@@ -40,9 +40,9 @@ And the alias:
 'Form' => A2design\Form\FormFacade::class,
 ```
 
-### Customization
+## Customization
 
-#### Parameters
+### Parameters
 
 You can specify additional settings as array of parameters:
 
@@ -64,3 +64,5 @@ You can specify additional settings as array of parameters:
 |                  | absolute       | Absolute path of the method         |
 |                  | url            | Use the url instead action argument |
 | Form::input      | all-errors     | List all of the validation errors fot the input instead only first |
+
+### Template editing
