@@ -116,22 +116,20 @@ php artisan vendor:publish
 
 ### Configs
 
-Edit the config/form.php file to change the global settings (see description for any configuration in the file)
-
-Don't forget to publish the package assets for this:
+Edit the config/form.php file to change the global settings. Don't forget to publish the package assets for this:
 
 ```
 php artisan vendor:publish
 ```
 
-| Config | Values | Meaning | Description |
-|--------|--------|---------|-------------|
-| generate_id | true, false | Generate ids for elements | When enabled the ids for inputs, labels, wrappers etc are generated based on entity name, field name and controller method |
-| control_label_class | false, 'string' | Class for each label | Redefine the default bootstrap "control-label" class or disable it |
-| label_grid_class | false, 'string' | Class for grid column with label | Some class name for the grid |
-| input_grid_class | false, 'string' | Class for grid column with input | Some class name for the grid |
-| route_name_space | 'string' | The namespace of controllers | Defined at RouteServiceProvider |
-| controller_naming | 'string' | The name of controllers | End of your controllers' names By default is just "Controller" when you use ArticleController, UserController etc |
+| Config | Values | Default | Meaning | Description |
+|--------|--------|---------|---------|-------------|
+| generate_id | true, false | true | Generate ids for elements | When enabled the ids for inputs, labels, wrappers etc are generated based on entity name, field name and controller method |
+| control_label_class | false, 'string' | 'control-label' | Class for each label | Redefine the default bootstrap "control-label" class or disable it |
+| label_grid_class | false, 'string' | 'col-md-4' | Class for grid column with label | Some class name for the grid |
+| input_grid_class | false, 'string' | 'col-md-8' | Class for grid column with input | Some class name for the grid |
+| route_name_space | 'string' | 'App\Http\Controllers' | The namespace of controllers | Defined at RouteServiceProvider |
+| controller_naming | 'string' | 'Controller' | The name of controllers | End of your controllers' names By default is just "Controller" when you use ArticleController, UserController etc |
 
 ### List of methods
 

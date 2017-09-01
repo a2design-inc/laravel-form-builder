@@ -12,6 +12,8 @@ use Illuminate\Support\ViewErrorBag;
  * Class FormBuilder
  * @package A2design\Form
  *
+ * TODO single setting to disable grids/bootstrap
+ *
  * TODO button
  * TODO submit
  * TODO checkbox
