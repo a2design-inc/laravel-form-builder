@@ -58,13 +58,24 @@ php artisan vendor:publish
 
 ### Parameters
 
-You can specify additional parameters:
+You can specify a lot of additional parameters:
 
 ```
-{!! Form::create('', null, ['url' => 'http://google.com',]) !!}
+{!! Form::create('', null, [
+    //set custom method url
+    'url' => 'http://google.com',
+    //set method
+    'method' => 'POST',
+    //disable grid system and show inputs traditionally
+    'label-grid-class' => false,
+    'input-grid-class' => false,
+    //etc
+]) !!}
 
 {!! Form::input('', '', ['label' => false]) !!}
-```    
+```
+
+### Full list of parameters
     
 | Element          | Parameter               | Description                                  |
 |------------------|-------------------------|----------------------------------------------|
@@ -74,9 +85,6 @@ You can specify additional parameters:
 |                  | method                  | POST, GET, PUT etc                           |
 |                  | absolute                | Absolute path of the method                  |
 |                  | url                     | Use the url instead action argument          |
-|                  | input-wrappers          | TODO                                         |
-|                  | labels                  | TODO                                         |
-|                  | bootstrap-grids         | TODO                                         |
 | Form::input      | all-errors              | List all of the validation errors fot the input instead only first |
 |                  | error                   | Set text of error or false to hide           |
 |                  | required                | Set true for the attribute using             |

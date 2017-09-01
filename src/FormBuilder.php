@@ -15,6 +15,7 @@ use Illuminate\Support\ViewErrorBag;
  * TODO? move html classes etc from template to the class and generate one string
  * TODO email, etc methods for input types
  * TODO button
+ * TODO write readme about config parameters
  * TODO tests
  */
 class FormBuilder
@@ -67,6 +68,18 @@ class FormBuilder
      * @var array
      */
     protected $formParameters = [];
+
+    /**
+     * Array of parameter names which can be used for several elements
+     * The parameters which are not unique for the element where they can be used
+     * For example, 'id' can be used for form, input etc
+     *
+     * @var array
+     */
+    protected $commonParameters = [
+        'id',
+        'class'
+    ];
 
     /**
      * Create a new form builder instance.
@@ -296,6 +309,13 @@ class FormBuilder
     {
         // use global parameters for the form instance
         foreach ($this->formParameters as $name => $formParameter) {
+
+            // skip common parameters which used for all elements
+            // e.g. if 'id' set for form is set only for the form
+            if (in_array($name, $this->commonParameters)) {
+                continue;
+            }
+
             if (!isset($parameters[$name])) {
                 $parameters[$name] = $formParameter;
             }
