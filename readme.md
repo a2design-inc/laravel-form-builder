@@ -36,6 +36,18 @@ Output:
 
 Of course, you can disable bootstrap, set global configs, edit templates etc! See below.
 
+## Table of Contents
+- [How to install](#how_to_install)
+- [Basic example](#basic_example)
+- [Customization](#customization)
+    * [Parameters](#parameters)
+    * [Full list of parameters](#full_list_of_parameters)
+    * [Template editing](#template_editing)
+    * [Configs](#configs)
+    * [Disable Bootstrap](#disable_bootstrap)
+- [List of methods](#list_of_methods)
+
+
 ## How to install
 
 Register the provider (config/app.php):
@@ -138,7 +150,11 @@ php artisan vendor:publish
 | error_form_group_class |false, 'string' | 'has-error' | Class for form group with error | Redefine the default bootstrap "has-error" class or disable it |
 | error_class | false, 'string' | 'has-error' | Class for input with error | Define the class or disable it |
 
-### List of methods
+### Disable Bootstrap
+ 
+ You can remove any class or wrapper for single element by parameters or globally in config file.
+ 
+## List of methods
 
 #### Elements
 
