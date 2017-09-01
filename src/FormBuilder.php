@@ -373,7 +373,12 @@ class FormBuilder
         ];
 
         foreach ($configurableParameters as $configurableParameter) {
-            $parameters[$configurableParameter] = $this->getConfig(snake_case($configurableParameter));
+
+            if (isset($parameters[$configurableParameter])) {
+                continue;
+            }
+
+            $parameters[$configurableParameter] = $this->getConfig(snake_case(camel_case($configurableParameter)));
         }
 
         return $parameters;
