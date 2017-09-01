@@ -1,12 +1,12 @@
-# Laravel Form Builer
+# Laravel Form Builder
 
-Laravel plugin for quick form creation. 
+Laravel plugin for quick form creation with Bootstrap support. 
 
 You can show validation errors, old input values and form context based on model entity without any line of code. 
 
 And you can simply redefine or adjust all what you want.
 
-## Quick example
+## Basic example
 
 Your code:
 
@@ -28,7 +28,7 @@ Output:
             Name
         </label>
         <div class="col-md-6">
-            <input id="update-article-name" class="form-control" name="name" value="asdf">
+            <input id="update-article-name" class="form-control" name="name" value="Name of the article">
         </div>
     </div> 
 </form>
@@ -83,7 +83,8 @@ You can specify additional settings as array of parameters:
 |                  | wrapper-class  | Set the class of the input wrapper div |
 |                  | label-class    | Set the class of the label             |
 |                  | value          | Define your own value                  |
-|                  | wrapper        | TODO                                   |
+|                  | wrapper        | Set false if you don't need the wrapper div  |                                   |
+|                  | form-group-wrapper| Set false if you don't need the wrapper div  |                                   |
 |                  | label          | Set false if you don't need the label, or set some string with HTML |
 |                  | bootstrap-grid | TODO                                   |
 
