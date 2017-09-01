@@ -101,8 +101,11 @@ You can specify a lot of additional parameters:
 |                  | label                   | Set false if you don't need the label or set some string with HTML |
 |                  | control-label-class     | Redefine the default bootstrap class for each label ("control-label") or disable it |
 |                  | form-group-class        | Specify any class instead the "form-group" or set false |
+|                  | form-control-class      | Specify any class for the input instead the "form-control" or set false |
 |                  | label-grid-class        | Specify any class for the label grid column or set false to use without grid |
 |                  | input-grid-class        | Specify any class for the input grid column or set false to use without grid |
+|                  | error-form-group-class  | Specify any class for the form group with error or set false |
+|                  | error-class             | Specify any class for the input with error or set false |
 
 ### Template editing
 
@@ -130,6 +133,10 @@ php artisan vendor:publish
 | input_grid_class | false, 'string' | 'col-md-8' | Class for grid column with input | Some class name for the grid |
 | route_name_space | 'string' | 'App\Http\Controllers' | The namespace of controllers | Defined at RouteServiceProvider |
 | controller_naming | 'string' | 'Controller' | The name of controllers | End of your controllers' names By default is just "Controller" when you use ArticleController, UserController etc |
+| form_group_class | false, 'string' | 'form-group' | Class for form group | Redefine the default bootstrap "form-group" class or disable it |
+| form_control_class | false, 'string' | 'form-control' | Class for for input | Redefine the default bootstrap "form-control" class or disable it |
+| error_form_group_class |false, 'string' | 'has-error' | Class for form group with error | Redefine the default bootstrap "has-error" class or disable it |
+| error_class | false, 'string' | 'has-error' | Class for input with error | Define the class or disable it |
 
 ### List of methods
 

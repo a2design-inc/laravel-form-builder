@@ -18,6 +18,32 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Class for form group
+    |--------------------------------------------------------------------------
+    |
+    | Redefine the default bootstrap "form-group" class or disable it
+    |
+    | Supported: false, 'string'
+    |
+    */
+
+    'form_group_class' => 'form-group',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Class for for input
+    |--------------------------------------------------------------------------
+    |
+    | Redefine the default bootstrap "form-control" class or disable it
+    |
+    | Supported: false, 'string'
+    |
+    */
+
+    'form_control_class' => 'form-control',
+
+    /*
+    |--------------------------------------------------------------------------
     | Class for each label
     |--------------------------------------------------------------------------
     |
@@ -28,6 +54,32 @@ return [
     */
 
     'control_label_class' => 'control-label',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Class for form group with error
+    |--------------------------------------------------------------------------
+    |
+    | Redefine the default bootstrap "has-error" class or disable it
+    |
+    | Supported: false, 'string'
+    |
+    */
+
+    'error_form_group_class' => 'has-error',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Class for input with error
+    |--------------------------------------------------------------------------
+    |
+    | Define the class or disable it
+    |
+    | Supported: false, 'string'
+    |
+    */
+
+    'error_class' => 'has-error',
 
     /*
     |--------------------------------------------------------------------------

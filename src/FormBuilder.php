@@ -222,7 +222,7 @@ class FormBuilder
         $parameters['label-classes'] = $this->getLabelClasses($parameters);
         $parameters['form-group-wrapper-classes'] = $this->getFormGroupClasses($parameters, $name);
         $parameters['input-wrapper-classes'] = $this->getInputWrapperClasses($parameters);
-        $parameters['input-classes'] = $this->getInputClasses($parameters);
+        $parameters['input-classes'] = $this->getInputClasses($parameters, $name);
 
         return view('form::input', compact('name', 'label', 'parameters', 'entity', 'value'));
     }
@@ -376,6 +376,10 @@ class FormBuilder
             'control-label-class',
             'label-grid-class',
             'input-grid-class',
+            'form-group-class',
+            'form-control-class',
+            'error-form-group-class',
+            'error-class',
         ];
 
         foreach ($configurableParameters as $configurableParameter) {
@@ -466,11 +470,11 @@ class FormBuilder
     {
         $classes = [];
 
-        if (isset($parameters['label-class'])) {
+        if (isset($parameters['label-class']) && $parameters['label-class'] !== false) {
             $classes[] = $parameters['label-class'];
         }
 
-        if (isset($parameters['label-grid-class'])) {
+        if (isset($parameters['label-grid-class']) && $parameters['label-grid-class'] !== false) {
             $classes[] = $parameters['label-grid-class'];
         }
 
@@ -495,16 +499,13 @@ class FormBuilder
 
          if (isset($parameters['form-group-class']) && $parameters['form-group-class'] !== false) {
              $classes[] = $parameters['form-group-class'];
-         } elseif (!isset($parameters['form-group-class'])) {
-             //todo config
-             $classes[] = 'form-group';
          }
 
-        if ($this->errors->has($name) || isset($parameters['error']) && $parameters['error'] !== false) {
-            $classes[] = 'has-error';
+        if ($this->inputHasError($parameters, $name) && $parameters['error-form-group-class'] !== false) {
+            $classes[] = $parameters['error-form-group-class'];
         }
 
-         if (isset($parameters['form-group-wrapper-class'])) {
+         if (isset($parameters['form-group-wrapper-class']) && $parameters['form-group-wrapper-class'] !== false) {
              $classes[] = $parameters['form-group-wrapper-class'];
          }
 
@@ -522,11 +523,11 @@ class FormBuilder
     {
         $classes = [];
 
-        if (isset($parameters['input-grid-class'])) {
+        if (isset($parameters['input-grid-class']) && $parameters['input-grid-class'] !== false) {
             $classes[] = $parameters['input-grid-class'];
         }
 
-        if (isset($parameters['wrapper-class'])) {
+        if (isset($parameters['wrapper-class']) && $parameters['wrapper-class'] !== false) {
             $classes[] = $parameters['wrapper-class'];
         }
 
@@ -537,20 +538,40 @@ class FormBuilder
      * Return string with classes for the input
      *
      * @param array $parameters
+     * @param string $name
      *
      * @return string
      */
-    protected function getInputClasses($parameters)
+    protected function getInputClasses($parameters, $name)
     {
         $classes = [];
 
-        //todo move to config
-        $classes[] = 'form-control';
+        if (isset($parameters['form-control-class']) && $parameters['form-control-class'] !== false) {
+            $classes[] = $parameters['form-control-class'];
+        }
 
-        if (isset($parameters['class'])) {
+        if (isset($parameters['class']) && $parameters['class'] !== false) {
             $classes[] = $parameters['class'];
         }
 
+        if ($this->inputHasError($parameters, $name) && $parameters['error-class'] !== false) {
+            $classes[] = $parameters['error-class'];
+        }
+
         return implode(' ', $classes);
+    }
+
+    /**
+     * Return true if input with the name has any validation error
+     *
+     * @param array $parameters
+     * @param string $name
+     *
+     * @return bool
+     */
+    protected function inputHasError($parameters, $name)
+    {
+        return $this->errors->has($name)
+            || isset($parameters['error']) && $parameters['error'] !== false;
     }
 }
