@@ -203,8 +203,6 @@ class FormBuilder
      */
     public function input($name, $label = '', $parameters = [])
     {
-        $entity = $this->entity;
-
         $parameters = $this->setDefaultFromConfig($parameters);
         $parameters = $this->setFromForm($parameters);
 
