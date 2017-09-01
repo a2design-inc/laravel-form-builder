@@ -13,7 +13,6 @@ use Illuminate\Support\ViewErrorBag;
  * @package A2design\Form
  *
  * TODO boostrap classes at config
- * TODO check publish feature
  */
 class FormBuilder
 {
