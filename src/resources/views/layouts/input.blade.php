@@ -12,8 +12,8 @@
                 has-error
             @endif
 
-             @if (isset($parameters['wrapper-class']))
-                {!! $parameters['wrapper-class'] !!}
+             @if (isset($parameters['form-group-wrapper-class']))
+                {!! $parameters['form-group-wrapper-class'] !!}
              @endif
             "
     >
@@ -50,6 +50,10 @@
         <div class="
              @if (isset($parameters['input-grid-class']))
                 {!! $parameters['input-grid-class'] !!}
+             @endif
+
+            @if (isset($parameters['wrapper-class']))
+                {!! $parameters['wrapper-class'] !!}
             @endif
         ">
     @endif
