@@ -53,5 +53,5 @@ return [
     |
     */
 
-    'input_grid_class' => 'col-md-6',
+    'input_grid_class' => 'col-md-8',
 ];
