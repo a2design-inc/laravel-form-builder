@@ -122,6 +122,19 @@ You can specify a lot of additional parameters:
 |                  | input-grid-class        | Specify any class for the input grid column or set false to use without grid |
 |                  | error-form-group-class  | Specify any class for the form group with error or set false |
 |                  | error-class             | Specify any class for the input with error or set false |
+| Form::button     | type                    | Set the type attribute                       |
+|                  | name                    | Set the name attribute                       |
+|                  | value                   | Set the value attribute                      |
+|                  | form                    | Set the form attribute                       |
+|                  | autofocus               | Set true for the attribute using             |
+|                  | disabled                | Set true for the attribute using             |
+|                  | escaped                 | Set true/false for the button text escaping  |
+|                  | form-group-wrapper      | Set false if you don't need the wrapper div  |
+|                  | form-group-wrapper-class| Set the class of the form-group wrapper div  |
+|                  | button-grid-class       | Specify any class for the button grid column or set false to use without grid |
+|                  | wrapper-class           | Set the class of the input wrapper div       |
+|                  | btn-class               | Specify any class for the input instead the default "btn" or set false |
+
 
 ### Template editing
 
@@ -153,6 +166,8 @@ php artisan vendor:publish
 | form_control_class | false, 'string' | 'form-control' | Class for for input | Redefine the default bootstrap "form-control" class or disable it |
 | error_form_group_class |false, 'string' | 'has-error' | Class for form group with error | Redefine the default bootstrap "has-error" class or disable it |
 | error_class | false, 'string' | 'has-error' | Class for input with error | Define the class or disable it |
+| btn_class | false, 'string' | 'btn' | Class for for button | Redefine the default bootstrap "btn" class or disable it |
+| button_grid_class | false, 'string' | 'col-md-8 col-md-offset-4' | Class for grid column with button | Some class name for the grid |
 
 ### Disable Bootstrap
  
@@ -165,6 +180,7 @@ php artisan vendor:publish
  - Form::create($action = '', $entity = null, $parameters = [])
  - Form::end()
  - Form::input($name, $label = '', $parameters = [])
+ - Form::button($text = 'Submit', $parameters = [])
 
  
 #### Types shortcuts

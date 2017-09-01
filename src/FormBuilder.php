@@ -203,8 +203,8 @@ class FormBuilder
      */
     public function input($name, $label = '', $parameters = [])
     {
-        $parameters = $this->setDefaultFromConfig($parameters);
         $parameters = $this->setFromForm($parameters);
+        $parameters = $this->setDefaultFromConfig($parameters);
 
         $value = $this->getInputValue($name);
 
@@ -221,7 +221,42 @@ class FormBuilder
         $parameters['input-wrapper-classes'] = $this->getInputWrapperClasses($parameters);
         $parameters['input-classes'] = $this->getInputClasses($parameters, $name);
 
-        return view('form::input', compact('name', 'label', 'parameters', 'entity', 'value'));
+        return view('form::input', compact('name', 'label', 'parameters', 'value'));
+    }
+
+    /**
+     * Create new button
+     *
+     * @param string $text
+     * @param array $parameters
+     *
+     * @return Factory|\Illuminate\View\View
+     */
+    public function button($text = 'Submit', $parameters = [])
+    {
+        $parameters = $this->setFromForm($parameters);
+        $parameters = $this->setDefaultFromConfig($parameters);
+        $parameters['label'] = false;
+        $name = isset($parameters['name']) ? $parameters['name'] : '';
+
+
+        if (!isset($parameters['type'])) {
+            $parameters['type'] = 'submit';
+        }
+
+        if (!isset($parameters['escaped'])) {
+            $parameters['escaped'] = true;
+        }
+
+        if (!isset($parameters['id']) && $this->getConfig('generate_id') && !empty($this->getInputId($parameters['type']))) {
+            $parameters['id'] = $this->getInputId($parameters['type']);
+        }
+
+        $parameters['form-group-wrapper-classes'] = $this->getFormGroupClasses($parameters);
+        $parameters['input-wrapper-classes'] = $this->getButtonWrapperClasses($parameters);
+        $parameters['button-classes'] = $this->getButtonClasses($parameters);
+
+        return view('form::button', compact('text', 'parameters', 'name'));
     }
 
     /**
@@ -377,6 +412,8 @@ class FormBuilder
             'form-control-class',
             'error-form-group-class',
             'error-class',
+            'button-grid-class',
+            'btn-class',
         ];
 
         foreach ($configurableParameters as $configurableParameter) {
@@ -490,7 +527,7 @@ class FormBuilder
      *
      * @return string
      */
-    protected function getFormGroupClasses($parameters, $name)
+    protected function getFormGroupClasses($parameters, $name = '')
     {
         $classes = [];
 
@@ -574,5 +611,51 @@ class FormBuilder
 
         return $this->errors->has($name)
             || isset($parameters['error']) && $parameters['error'] !== false;
+    }
+
+
+    /**
+     * Return string with classes for the wrapper
+     *
+     * @param array $parameters
+     *
+     * @return string
+     */
+    protected function getButtonWrapperClasses($parameters)
+    {
+        $classes = [];
+
+        if (isset($parameters['button-grid-class']) && $parameters['button-grid-class'] !== false) {
+            $classes[] = $parameters['button-grid-class'];
+        }
+
+        if (isset($parameters['wrapper-class']) && $parameters['wrapper-class'] !== false) {
+            $classes[] = $parameters['wrapper-class'];
+        }
+
+        return implode(' ', $classes);
+    }
+
+
+    /**
+     * Return string with classes for the button
+     *
+     * @param array $parameters
+     *
+     * @return string
+     */
+    protected function getButtonClasses($parameters)
+    {
+        $classes = [];
+
+        if (isset($parameters['btn-class']) && $parameters['btn-class'] !== false) {
+            $classes[] = $parameters['btn-class'];
+        }
+
+        if (isset($parameters['class']) && $parameters['class'] !== false) {
+            $classes[] = $parameters['class'];
+        }
+
+        return implode(' ', $classes);
     }
 }
