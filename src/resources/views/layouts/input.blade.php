@@ -1,8 +1,15 @@
 @if (!isset($parameters['form-group-wrapper']) || $parameters['form-group-wrapper'] !== false)
     <div
-        class="form-group
+        class="
+             @if (isset($parameters['form-group-class']) && $parameters['form-group-class'] !== false)
+                {!! $parameters['form-group-class'] !!}
+             @elseif (!isset($parameters['form-group-class']))
+                form-group
+             @endif
 
-            {!! $errors->has($name) ? ' has-error' : '' !!}
+            @if ($errors->has($name) || isset($parameters['error']) && $parameters['error'] !== false)
+                has-error
+            @endif
 
              @if (isset($parameters['wrapper-class']))
                 {!! $parameters['wrapper-class'] !!}
@@ -41,6 +48,9 @@
             @foreach ($errors->get($name . '.*') as $message)
                 @include('form::partials.error-message')
             @endforeach
+        @elseif (isset($parameters['error']) && $parameters['error'] !== false)
+            @include('form::partials.error-message', ['message' => $parameters['error']])
+        @elseif (isset($parameters['error']) && $parameters['error'] === false)
         @elseif ($errors->has($name))
             @include('form::partials.error-message', ['message' => $errors->first($name)])
         @endif

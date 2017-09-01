@@ -13,6 +13,7 @@ use Illuminate\Support\ViewErrorBag;
  * @package A2design\Form
  *
  * TODO boostrap classes at config
+ * TODO email, etc methods for input types
  */
 class FormBuilder
 {

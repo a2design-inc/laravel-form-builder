@@ -77,16 +77,17 @@ You can specify additional parameters:
 |                  | labels             | TODO                                         |
 |                  | bootstrap-grids    | TODO                                         |
 | Form::input      | all-errors         | List all of the validation errors fot the input instead only first |
+|                  | error              | Set text of error or false to hide           |
 |                  | required           | Set true for the attribute using             |
 |                  | autofocus          | Set true for the attribute using             |
 |                  | type               | Set the type attribute                       |
 |                  | wrapper-class      | Set the class of the input wrapper div       |
 |                  | label-class        | Set the class of the label                   |
 |                  | value              | Define your own value                        |
-|                  | wrapper            | Set false if you don't need the wrapper div  |                                   |
-|                  | form-group-wrapper | Set false if you don't need the wrapper div  |                                   |
+|                  | wrapper            | Set false if you don't need the wrapper div  |
+|                  | form-group-wrapper | Set false if you don't need the wrapper div  |
 |                  | label              | Set false if you don't need the label, or set some string with HTML |
-|                  | bootstrap-grid     | TODO                                         |
+|                  | form-group-class   | Specify any class instead the "form-group" or set false |
 
 ### Template editing
 
