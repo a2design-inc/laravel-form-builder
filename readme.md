@@ -86,7 +86,8 @@ You can specify additional parameters:
 |                  | value              | Define your own value                        |
 |                  | wrapper            | Set false if you don't need the wrapper div  |
 |                  | form-group-wrapper | Set false if you don't need the wrapper div  |
-|                  | label              | Set false if you don't need the label, or set some string with HTML |
+|                  | label              | Set false if you don't need the label or set some string with HTML |
+|                  | control-label-class| Redefine the default bootstrap class for each label ("control-label") or disable it |
 |                  | form-group-class   | Specify any class instead the "form-group" or set false |
 
 ### Template editing

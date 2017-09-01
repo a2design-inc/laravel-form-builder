@@ -25,10 +25,14 @@
             @if (isset($parameters['id']))
                 for="{!! $parameters['id'] !!}"
             @endif
-            class="col-md-4 control-label
+            class="col-md-4
                  @if (isset($parameters['label-class']))
                     {!! $parameters['label-class'] !!}
-                @endif
+                 @endif
+
+                 @if (isset($parameters['control-label-class']) && $parameters['control-label-class'] !== false)
+                    {!! $parameters['control-label-class'] !!}
+                 @endif
             "
         >
             {{ $label }}

@@ -15,4 +15,17 @@ return [
     */
 
     'generate_id' => true,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Class for each label
+    |--------------------------------------------------------------------------
+    |
+    | Redefine the default bootstrap "control-label" class or disable it
+    |
+    | Supported: false, 'string'
+    |
+    */
+
+    'control_label_class' => 'control-label',
 ];

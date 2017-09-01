@@ -12,7 +12,8 @@ use Illuminate\Support\ViewErrorBag;
  * Class FormBuilder
  * @package A2design\Form
  *
- * TODO boostrap classes at config
+ * TODO boostrap classes and at config
+ * TODO? move html classes etc from template to the class and generate one string
  * TODO email, etc methods for input types
  */
 class FormBuilder
@@ -134,6 +135,10 @@ class FormBuilder
 
         if (!isset($parameters['id']) && config('form.generate_id') && !empty($this->getInputId($name))) {
             $parameters['id'] = $this->getInputId($name);
+        }
+
+        if (!isset($parameters['control-label-class'])) {
+            $parameters['control-label-class'] = config('form.control_label_class');
         }
 
         return view('form::input', compact('name', 'label', 'parameters', 'entity', 'value'));
