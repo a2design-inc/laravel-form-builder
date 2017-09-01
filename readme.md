@@ -37,6 +37,7 @@ Output:
 Of course, you can disable bootstrap, set global configs, edit templates etc! See below.
 
 ## Table of Contents
+
 - [How to install](#how_to_install)
 - [Basic example](#basic_example)
 - [Customization](#customization)
@@ -102,8 +103,11 @@ You can specify a lot of additional parameters:
 | Form::input      | all-errors              | List all of the validation errors fot the input instead only first |
 |                  | error                   | Set text of error or false to force hide     |
 |                  | required                | Set true for the attribute using             |
+|                  | readonly                | Set true for the attribute using             |
+|                  | disabled                | Set true for the attribute using             |
 |                  | autofocus               | Set true for the attribute using             |
 |                  | type                    | Set the type attribute                       |
+|                  | enctype                 | Set the enctype attribute                    |
 |                  | wrapper-class           | Set the class of the input wrapper div       |
 |                  | form-group-wrapper-class| Set the class of the form-group wrapper div  |
 |                  | label-class             | Set the class of the label                   |

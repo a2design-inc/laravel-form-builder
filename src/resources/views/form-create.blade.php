@@ -28,6 +28,11 @@
         id="{!! $parameters['id'] !!}"
     @endif
 
+    {{--set or generate id attribute--}}
+    @if (isset($parameters['enctype']))
+        enctype="{!! $parameters['enctype'] !!}"
+    @endif
+
     {{--set class attribute--}}
     @if (isset($parameters['class']))
         class="{!! $parameters['class'] !!}"

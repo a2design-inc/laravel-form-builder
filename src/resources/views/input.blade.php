@@ -24,6 +24,14 @@
         @if (isset($parameters['autofocus']) && $parameters['autofocus'] === true)
             autofocus
         @endif
+
+        @if (isset($parameters['disabled']) && $parameters['disabled'] === true)
+            disabled
+        @endif
+
+        @if (isset($parameters['readonly']) && $parameters['readonly'] === true)
+            readonly
+        @endif
     >
 {{--For multiple layout using--}}
 @overwrite

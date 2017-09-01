@@ -85,15 +85,16 @@ class FormBuilder
     protected $formParameters = [];
 
     /**
-     * Array of parameter names which can be used for several elements
-     * The parameters which are not unique for the element
-     * For example, 'id' can be used for form, input etc
+     * Array of parameter names which can be used for form creating
      *
      * @var array
      */
-    protected $commonParameters = [
+    protected $formParameterNames = [
         'id',
         'class',
+        'method',
+        'absolute',
+        'url',
     ];
 
     /**
@@ -406,7 +407,7 @@ class FormBuilder
 
             // skip common parameters which used for all elements
             // e.g. if 'id' set for form is set only for the form
-            if (in_array($name, $this->commonParameters)) {
+            if (in_array($name, $this->formParameterNames)) {
                 continue;
             }
 
