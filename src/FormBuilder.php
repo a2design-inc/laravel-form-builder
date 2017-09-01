@@ -20,6 +20,8 @@ use Illuminate\Support\ViewErrorBag;
  */
 class FormBuilder
 {
+    const CONFIG_NAME = 'form';
+
     /**
      * @var Factory
      */
@@ -73,6 +75,11 @@ class FormBuilder
     protected $actionMethod = '';
 
     /**
+     * @var array
+     */
+    protected $formParameters = [];
+
+    /**
      * Create a new form builder instance.
      *
      * @param Factory $view
@@ -100,6 +107,7 @@ class FormBuilder
         $this->actionMethod = $this->route->getActionMethod();
         $this->entity = $entity;
         $this->entityName = $this->getEntityName();
+        $this->formParameters = $parameters;
 
         if (!isset($parameters['method']) && !empty($this->getRouteMethod())) {
             $parameters['method'] = $this->getRouteMethod();
@@ -139,17 +147,8 @@ class FormBuilder
             $parameters['id'] = $this->getInputId($name);
         }
 
-        if (!isset($parameters['control-label-class'])) {
-            $parameters['control-label-class'] = config('form.control_label_class');
-        }
-
-        if (!isset($parameters['label-grid-class'])) {
-            $parameters['label-grid-class'] = config('form.label_grid_class');
-        }
-
-        if (!isset($parameters['input-grid-class'])) {
-            $parameters['input-grid-class'] = config('form.input_grid_class');
-        }
+        $parameters = $this->setDefaultFromConfig($parameters);
+        $parameters = $this->setFromForm($parameters);
 
         return view('form::input', compact('name', 'label', 'parameters', 'entity', 'value'));
     }
@@ -273,5 +272,46 @@ class FormBuilder
         }
 
         return '';
+    }
+
+    /**
+     * Set parameter from config if it is not set
+     *
+     * Parameter key in on kebab-case, config key is on snake_case
+     *
+     * @param array $parameters
+     * @return array
+     */
+    protected function setDefaultFromConfig($parameters)
+    {
+        $configurableParameters = [
+            'control-label-class',
+            'label-grid-class',
+            'input-grid-class',
+        ];
+
+        foreach ($configurableParameters as $configurableParameter) {
+            $parameters[$configurableParameter] = config(self::CONFIG_NAME . '.' . snake_case($configurableParameter));
+        }
+
+        return $parameters;
+    }
+
+    /**
+     * Set parameter from form parameters if it is not set
+     *
+     * @param array $parameters
+     * @return array
+     */
+    protected function setFromForm($parameters)
+    {
+        // use global parameters for the form instance
+        foreach ($this->formParameters as $name => $formParameter) {
+            if (!isset($parameters[$name])) {
+                $parameters[$name] = $formParameter;
+            }
+        }
+
+        return $parameters;
     }
 }
