@@ -12,11 +12,9 @@ use Illuminate\Support\ViewErrorBag;
  * Class FormBuilder
  * @package A2design\Form
  *
- * TODO bootstrap classes and at config
  * TODO? move html classes etc from template to the class and generate one string
  * TODO email, etc methods for input types
- * TODO global settings for form create()
- * TODO test
+ * TODO tests
  */
 class FormBuilder
 {

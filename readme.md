@@ -70,7 +70,8 @@ You can specify additional parameters:
 |------------------|-------------------------|----------------------------------------------|
 | Everywhere       | class                   | Class attribute                              |
 |                  | id                      | Id attribute. Generated automatically. If you don't need, specify empty string or redefine by id what you want. Or just adjust globally in config file |
-| Form::create     | method                  | POST, GET, PUT etc                           |
+| Form::create     |                         | Note: you can use input parameters here to apply them for all inputs inside the form |
+|                  | method                  | POST, GET, PUT etc                           |
 |                  | absolute                | Absolute path of the method                  |
 |                  | url                     | Use the url instead action argument          |
 |                  | input-wrappers          | TODO                                         |
