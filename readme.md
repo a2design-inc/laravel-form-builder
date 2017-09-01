@@ -140,7 +140,7 @@ php artisan vendor:publish
  - Form::input($name, $label = '', $parameters = [])
 
  
- #### Types shortcuts
+#### Types shortcuts
  
  Equal to input() with the "type" parameter
  
