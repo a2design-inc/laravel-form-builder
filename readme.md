@@ -88,7 +88,7 @@ You can specify a lot of additional parameters:
 |                  | absolute                | Absolute path of the method                  |
 |                  | url                     | Use the url instead action argument          |
 | Form::input      | all-errors              | List all of the validation errors fot the input instead only first |
-|                  | error                   | Set text of error or false to hide           |
+|                  | error                   | Set text of error or false to force hide     |
 |                  | required                | Set true for the attribute using             |
 |                  | autofocus               | Set true for the attribute using             |
 |                  | type                    | Set the type attribute                       |

@@ -571,6 +571,10 @@ class FormBuilder
      */
     protected function inputHasError($parameters, $name)
     {
+        if (isset($parameters['error']) && $parameters['error'] === false) {
+            return false;
+        }
+
         return $this->errors->has($name)
             || isset($parameters['error']) && $parameters['error'] !== false;
     }
