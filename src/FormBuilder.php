@@ -13,14 +13,26 @@ use Illuminate\Support\ViewErrorBag;
  * @package A2design\Form
  *
  * TODO? move html classes etc from template to the class and generate one string
- * TODO email, etc methods for input types
+ *
  * TODO button
- * TODO write readme about config parameters
+ * TODO submit
+ * TODO checkbox
+ * TODO radio
+ * TODO file
+ * TODO image
+ * TODO hidden
+ * TODO reset
+ * TODO textarea
+ *
  * TODO tests
  * TODO comments
+ * TODO write readme about config parameters
  */
 class FormBuilder
 {
+    /**
+     * Config prefix
+     */
     const CONFIG_NAME = 'form';
 
     /**
@@ -46,7 +58,7 @@ class FormBuilder
     /**
      * Instance of model for the editing
      *
-     * @var Model
+     * @var Model|null
      */
     protected $entity = null;
 
@@ -56,23 +68,29 @@ class FormBuilder
     protected $errors;
 
     /**
+     * Name of entity of the form
+     *
      * @var string
      */
     protected $entityName = '';
 
     /**
+     * Name of controller method
+     *
      * @var string
      */
     protected $actionMethod = '';
 
     /**
+     * Parameters set for form
+     *
      * @var array
      */
     protected $formParameters = [];
 
     /**
      * Array of parameter names which can be used for several elements
-     * The parameters which are not unique for the element where they can be used
+     * The parameters which are not unique for the element
      * For example, 'id' can be used for form, input etc
      *
      * @var array
@@ -122,17 +140,26 @@ class FormBuilder
     }
 
 
+    /**
+     * Catch calls
+     *
+     * @param $name
+     * @param $arguments
+     *
+     * @return Factory|\Illuminate\View\View
+     */
     public function __call($name, $arguments)
     {
+        //Call input() method with "type" parameter
         if (in_array($name, $this->typeInheritedInputs)) {
 
-            $arguments[2]['type'] = kebab_case($name);
-
-            return $this->input(...$arguments);
+            return $this->callInputType($name, $arguments);
         }
     }
 
     /**
+     * Create a new form
+     *
      * @param string $action
      * @param null|Model $entity
      * @param array $parameters
@@ -159,6 +186,8 @@ class FormBuilder
     }
 
     /**
+     * Close the form
+     *
      * @return \Illuminate\View\View
      */
     public function end()
@@ -167,9 +196,12 @@ class FormBuilder
     }
 
     /**
+     * Create new input
+     *
      * @param $name
      * @param string $label
      * @param array $parameters
+     *
      * @return Factory|\Illuminate\View\View
      */
     public function input($name, $label = '', $parameters = [])
@@ -192,6 +224,8 @@ class FormBuilder
     }
 
     /**
+     * Return method name of controller by the route
+     *
      * @return string
      */
     protected function getRouteMethod()
@@ -208,7 +242,10 @@ class FormBuilder
     }
 
     /**
-     * @param $action
+     * Return route instance by action name
+     *
+     * @param string $action
+     *
      * @return \Illuminate\Routing\Route|null
      */
     protected function getRouteByAction($action)
@@ -219,7 +256,10 @@ class FormBuilder
     }
 
     /**
+     * Get value for input by name
+     *
      * @param string $name
+     *
      * @return string
      */
     protected function getInputValue($name)
@@ -252,6 +292,8 @@ class FormBuilder
     }
 
     /**
+     * Generate id for form
+     *
      * @return string
      */
     protected function getFormId()
@@ -270,6 +312,8 @@ class FormBuilder
     }
 
     /**
+     * Generate ind for input by name
+     *
      * @param string $name
      * @return string
      */
@@ -289,6 +333,8 @@ class FormBuilder
     }
 
     /**
+     * Return name of entity of the form
+     *
      * @return string
      */
     protected function getEntityName()
@@ -314,10 +360,10 @@ class FormBuilder
 
     /**
      * Set parameter from config if it is not set
-     *
      * Parameter key in on kebab-case, config key is on snake_case
      *
      * @param array $parameters
+     *
      * @return array
      */
     protected function setDefaultFromConfig($parameters)
@@ -339,6 +385,7 @@ class FormBuilder
      * Set parameter from form parameters if it is not set
      *
      * @param array $parameters
+     *
      * @return array
      */
     protected function setFromForm($parameters)
@@ -364,10 +411,38 @@ class FormBuilder
      * Return package config value by name
      *
      * @param $name
+     *
      * @return mixed
      */
     protected function getConfig($name)
     {
         return config(self::CONFIG_NAME . '.' . $name);
+    }
+
+    /**
+     * Call input() method with "type" parameter
+     *
+     * @param $type
+     * @param $arguments
+     * 
+     * @return Factory|\Illuminate\View\View
+     */
+    protected function callInputType($type, $arguments)
+    {
+        if (!isset($arguments[0])) {
+            $arguments[0] = '';
+        }
+
+        if (!isset($arguments[1])) {
+            $arguments[1] = '';
+        }
+
+        if (!isset($arguments[2])) {
+            $arguments[2] = [];
+        }
+
+        $arguments[2]['type'] = kebab_case($type);
+
+        return $this->input(...$arguments);
     }
 }

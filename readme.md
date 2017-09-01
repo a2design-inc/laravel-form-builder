@@ -126,16 +126,16 @@ php artisan vendor:publish
 
 #### Elements
 
- - Form::create()
+ - Form::create($action = '', $entity = null, $parameters = [])
  - Form::end()
- - Form::input()
+ - Form::input($name, $label = '', $parameters = [])
 
  
  #### Types shortcuts
  
  Equal to input() with the "type" parameter
  
- - Form::text() - equal to input()
+ - Form::text() - input() alias
  - Form::password()
  - Form::color()
  - Form::date()
