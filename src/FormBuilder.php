@@ -17,6 +17,7 @@ use Illuminate\Support\ViewErrorBag;
  * TODO button
  * TODO write readme about config parameters
  * TODO tests
+ * TODO comments
  */
 class FormBuilder
 {
@@ -78,7 +79,31 @@ class FormBuilder
      */
     protected $commonParameters = [
         'id',
-        'class'
+        'class',
+    ];
+
+    /**
+     * Array of input types which called like as usual input() method, but with different type parameter
+     *
+     * @var array
+     */
+    protected $typeInheritedInputs = [
+        'password',
+        'text',
+        //html5
+        'color',
+        'date',
+        'datetime',
+        'datetimeLocal',
+        'email',
+        'number',
+        'range',
+        'search',
+        'tel',
+        'time',
+        'url',
+        'month',
+        'week',
     ];
 
     /**
@@ -94,6 +119,17 @@ class FormBuilder
         $this->errors = $view->shared('errors');
         $this->session = $session;
         $this->request = $request;
+    }
+
+
+    public function __call($name, $arguments)
+    {
+        if (in_array($name, $this->typeInheritedInputs)) {
+
+            $arguments[2]['type'] = kebab_case($name);
+
+            return $this->input(...$arguments);
+        }
     }
 
     /**

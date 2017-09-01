@@ -121,3 +121,32 @@ Don't forget to publish the package assets for this:
 ```
 php artisan vendor:publish
 ```
+
+### List of methods
+
+#### Elements
+
+ - Form::create()
+ - Form::end()
+ - Form::input()
+
+ 
+ #### Types shortcuts
+ 
+ Equal to input() with the "type" parameter
+ 
+ - Form::text() - equal to input()
+ - Form::password()
+ - Form::color()
+ - Form::date()
+ - Form::datetime()
+ - Form::datetimeLocal()
+ - Form::email()
+ - Form::number()
+ - Form::range()
+ - Form::search()
+ - Form::tel()
+ - Form::time()
+ - Form::url()
+ - Form::month()
+ - Form::week()
