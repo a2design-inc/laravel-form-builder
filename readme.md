@@ -12,6 +12,7 @@ Your code:
 
 ```
 {!! Form::create('ArticleController@update', $article) !!}
+{!! Form::input('name', 'Name') !!}
 {!! Form::end() !!}
 ```
 
@@ -21,6 +22,15 @@ Output:
 <form method="post" action="/article/1" id="update-article" > 
     <input type="hidden" name="_token" value="P6LpFJ0bZf4s9aKOi8pSoZXTMITDxtRtQ98qF4wZ"> 
     <input type="hidden" name="_method" value="PUT"> 
+    
+    <div class="form-group ">
+        <label for="update-article-name" class="col-md-4 control-label">
+            Name
+        </label>
+        <div class="col-md-6">
+            <input id="update-article-name" class="form-control" name="name" value="asdf">
+        </div>
+    </div> 
 </form>
 ```
 
@@ -74,12 +84,12 @@ You can specify additional settings as array of parameters:
 |                  | label-class    | Set the class of the label             |
 |                  | value          | Define your own value                  |
 |                  | wrapper        | TODO                                   |
-|                  | label          | TODO                                   |
+|                  | label          | Set false if you don't need the label, or set some string with HTML |
 |                  | bootstrap-grid | TODO                                   |
 
 ### Template editing
 
-The package is used the laravel blade templates for all form elements. Feel free for customization if you need.
+The package is used the laravel blade templates for all form elements. Feel free to customize what you need.
 
 ### Configs
 

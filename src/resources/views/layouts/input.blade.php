@@ -1,25 +1,29 @@
 <div
     class="form-group
 
-        {{ $errors->has($name) ? ' has-error' : '' }}
+        {!! $errors->has($name) ? ' has-error' : '' !!}
 
          @if (isset($parameters['wrapper-class']))
             {!! $parameters['wrapper-class'] !!}
          @endif
         "
 >
-    <label
-        @if (isset($parameters['id']))
-            for="{!! $parameters['id'] !!}"
-        @endif
-        class="col-md-4 control-label
-             @if (isset($parameters['label-class']))
-                {!! $parameters['label-class'] !!}
+    @if (isset($parameters['label']) && is_string($parameters['label']))
+        {!! $parameters['label'] !!}
+    @elseif (!isset($parameters['label']) || $parameters['label'] !== false)
+        <label
+            @if (isset($parameters['id']))
+                for="{!! $parameters['id'] !!}"
             @endif
-        "
-    >
-        {{ $label }}
-    </label>
+            class="col-md-4 control-label
+                 @if (isset($parameters['label-class']))
+                    {!! $parameters['label-class'] !!}
+                @endif
+            "
+        >
+            {{ $label }}
+        </label>
+    @endif
 
     <div class="col-md-6">
         @yield('input')
