@@ -54,4 +54,31 @@ return [
     */
 
     'input_grid_class' => 'col-md-8',
+
+    /*
+    |--------------------------------------------------------------------------
+    | The namespace of controllers
+    |--------------------------------------------------------------------------
+    |
+    | Defined at RouteServiceProvider
+    |
+    | Supported: 'string'
+    |
+    */
+
+    'route_name_space' => 'App\Http\Controllers',
+
+    /*
+    |--------------------------------------------------------------------------
+    | The name of controllers
+    |--------------------------------------------------------------------------
+    |
+    | End of your controllers' names
+    | By default is just "Controller" when you use ArticleController, UserController etc
+    |
+    | Supported: 'string'
+    |
+    */
+
+    'controller_naming' => 'Controller',
 ];

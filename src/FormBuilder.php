@@ -14,6 +14,7 @@ use Illuminate\Support\ViewErrorBag;
  *
  * TODO? move html classes etc from template to the class and generate one string
  * TODO email, etc methods for input types
+ * TODO button
  * TODO tests
  */
 class FormBuilder
@@ -39,16 +40,6 @@ class FormBuilder
      * @var \Illuminate\Routing\Route|null
      */
     protected $route = null;
-
-    /**
-     * TODO move to package config
-     *
-     * The namespace of controllers
-     * Defined at RouteServiceProvider, but can't be used here because it is on protected scope (L5.4)
-     *
-     * @var string
-     */
-    protected $routeNameSpace = 'App\Http\Controllers';
 
     /**
      * Instance of model for the editing
@@ -111,7 +102,7 @@ class FormBuilder
             $parameters['method'] = $this->getRouteMethod();
         }
 
-        if (!isset($parameters['id']) && config('form.generate_id') && !empty($this->getFormId())) {
+        if (!isset($parameters['id']) && $this->getConfig('generate_id') && !empty($this->getFormId())) {
             $parameters['id'] = $this->getFormId();
         }
 
@@ -141,7 +132,7 @@ class FormBuilder
             $value = $parameters['value'];
         }
 
-        if (!isset($parameters['id']) && config('form.generate_id') && !empty($this->getInputId($name))) {
+        if (!isset($parameters['id']) && $this->getConfig('generate_id') && !empty($this->getInputId($name))) {
             $parameters['id'] = $this->getInputId($name);
         }
 
@@ -173,7 +164,9 @@ class FormBuilder
      */
     protected function getRouteByAction($action)
     {
-        return \Route::getRoutes()->getByAction($this->routeNameSpace . '\\' . $action);
+        // Route name space can't be used dynamically because it is on protected scope (L5.4)
+        // Therefore defined in config file :(
+        return \Route::getRoutes()->getByAction($this->getConfig('route_name_space') . '\\' . $action);
     }
 
     /**
@@ -258,9 +251,7 @@ class FormBuilder
         if (!empty($this->route)) {
             $controllerName = (new \ReflectionClass($this->route->getController()))->getShortName();
 
-            //todo move to config
-            $controllerNaming = 'Controller';
-            $namePos = strpos($controllerName, $controllerNaming);
+            $namePos = strpos($controllerName, $this->getConfig('controller_naming'));
 
             if ($namePos === false) {
                 return '';
@@ -289,7 +280,7 @@ class FormBuilder
         ];
 
         foreach ($configurableParameters as $configurableParameter) {
-            $parameters[$configurableParameter] = config(self::CONFIG_NAME . '.' . snake_case($configurableParameter));
+            $parameters[$configurableParameter] = $this->getConfig(snake_case($configurableParameter));
         }
 
         return $parameters;
@@ -311,5 +302,16 @@ class FormBuilder
         }
 
         return $parameters;
+    }
+
+    /**
+     * Return package config value by name
+     *
+     * @param $name
+     * @return mixed
+     */
+    protected function getConfig($name)
+    {
+        return config(self::CONFIG_NAME . '.' . $name);
     }
 }
