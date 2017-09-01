@@ -12,9 +12,11 @@ use Illuminate\Support\ViewErrorBag;
  * Class FormBuilder
  * @package A2design\Form
  *
- * TODO boostrap classes and at config
+ * TODO bootstrap classes and at config
  * TODO? move html classes etc from template to the class and generate one string
  * TODO email, etc methods for input types
+ * TODO global settings for form create()
+ * TODO test
  */
 class FormBuilder
 {
@@ -139,6 +141,14 @@ class FormBuilder
 
         if (!isset($parameters['control-label-class'])) {
             $parameters['control-label-class'] = config('form.control_label_class');
+        }
+
+        if (!isset($parameters['label-grid-class'])) {
+            $parameters['label-grid-class'] = config('form.label_grid_class');
+        }
+
+        if (!isset($parameters['input-grid-class'])) {
+            $parameters['input-grid-class'] = config('form.input_grid_class');
         }
 
         return view('form::input', compact('name', 'label', 'parameters', 'entity', 'value'));

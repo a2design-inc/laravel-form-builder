@@ -28,4 +28,30 @@ return [
     */
 
     'control_label_class' => 'control-label',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Class for grid column with label
+    |--------------------------------------------------------------------------
+    |
+    | Some class name for the grid
+    |
+    | Supported: false, 'string'
+    |
+    */
+
+    'label_grid_class' => 'col-md-4',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Class for grid column with input
+    |--------------------------------------------------------------------------
+    |
+    | Some class name for the grid
+    |
+    | Supported: false, 'string'
+    |
+    */
+
+    'input_grid_class' => 'col-md-6',
 ];

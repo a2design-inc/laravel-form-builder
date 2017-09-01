@@ -27,9 +27,13 @@
             @if (isset($parameters['id']))
                 for="{!! $parameters['id'] !!}"
             @endif
-            class="col-md-4
+            class="
                  @if (isset($parameters['label-class']))
                     {!! $parameters['label-class'] !!}
+                 @endif
+
+                 @if (isset($parameters['label-grid-class']))
+                    {!! $parameters['label-grid-class'] !!}
                  @endif
 
                  @if (isset($parameters['control-label-class']) && $parameters['control-label-class'] !== false)
@@ -43,14 +47,18 @@
 
     {{--Set input wrapping--}}
     @if (!isset($parameters['wrapper']) || $parameters['wrapper'] !== false)
-        <div class="col-md-6">
+        <div class="
+             @if (isset($parameters['input-grid-class']))
+                {!! $parameters['input-grid-class'] !!}
+            @endif
+        ">
     @endif
 
         @yield('input')
 
         {{--Set errors--}}
         @if (isset($parameters['all-errors']) && $parameters['all-errors'] === true)
-            
+
             @foreach ($errors->get($name) as $message)
                 @include('form::partials.error-message')
             @endforeach

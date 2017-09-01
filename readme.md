@@ -89,6 +89,8 @@ You can specify additional parameters:
 |                  | label              | Set false if you don't need the label or set some string with HTML |
 |                  | control-label-class| Redefine the default bootstrap class for each label ("control-label") or disable it |
 |                  | form-group-class   | Specify any class instead the "form-group" or set false |
+|                  | label-grid-class   | Specify any class for the label grid instead the "col-md-4" or set false |
+|                  | input-grid-class   | Specify any class for the input grid instead the "col-md-6" or set false |
 
 ### Template editing
 
