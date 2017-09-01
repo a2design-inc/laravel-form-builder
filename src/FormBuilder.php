@@ -25,8 +25,6 @@ use Illuminate\Support\ViewErrorBag;
  * TODO textarea
  *
  * TODO tests
- * TODO comments
- * TODO write readme about config parameters
  */
 class FormBuilder
 {
@@ -424,7 +422,7 @@ class FormBuilder
      *
      * @param $type
      * @param $arguments
-     * 
+     *
      * @return Factory|\Illuminate\View\View
      */
     protected function callInputType($type, $arguments)
