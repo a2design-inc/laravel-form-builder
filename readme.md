@@ -48,7 +48,7 @@ And the alias:
 'Form' => A2design\Form\FormFacade::class,
 ```
 
-Publish the package assets:
+Publish the package assets (if you need to change the config file or templates):
 
 ```
 php artisan vendor:publish
@@ -69,7 +69,7 @@ You can specify additional parameters:
 | Element          | Parameter          | Description                                  |
 |------------------|--------------------|----------------------------------------------|
 | Everywhere       | class              | Class attribute                              |
-|                  | id                 | Id attribute. Generated automatically. If you don't need, specify empty string or redefine by id what you want. |
+|                  | id                 | Id attribute. Generated automatically. If you don't need, specify empty string or redefine by id what you want. Or just adjust globally in config file |
 | Form::create     | method             | POST, GET, PUT etc                           |
 |                  | absolute           | Absolute path of the method                  |
 |                  | url                | Use the url instead action argument          |
@@ -92,6 +92,18 @@ You can specify additional parameters:
 
 The package is used the laravel blade templates for all form elements. Feel free to customize what you need.
 
+Don't forget to publish the package assets for this:
+
+```
+php artisan vendor:publish
+```
+
 ### Configs
 
 Edit the config/form.php file to change the global settings (see description for any configuration in the file)
+
+Don't forget to publish the package assets for this:
+
+```
+php artisan vendor:publish
+```
