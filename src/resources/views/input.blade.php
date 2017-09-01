@@ -6,11 +6,9 @@
             id="{!! $parameters['id'] !!}"
         @endif
 
-        class="form-control
-            @if (isset($parameters['class']))
-               {!! $parameters['class'] !!}
-            @endif
-        "
+        @if (isset($parameters['input-classes']))
+            class="{!! $parameters['input-classes'] !!}"
+        @endif
 
         name="{!! $name !!}"
         value="{!! $value !!}"

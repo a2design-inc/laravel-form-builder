@@ -34,6 +34,8 @@ Output:
 </form>
 ```
 
+Of course, you can disable bootstrap, set global configs, edit templates etc! See below.
+
 ## How to install
 
 Register the provider (config/app.php):
@@ -159,3 +161,4 @@ php artisan vendor:publish
  - Form::url()
  - Form::month()
  - Form::week()
+ 

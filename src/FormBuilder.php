@@ -12,8 +12,6 @@ use Illuminate\Support\ViewErrorBag;
  * Class FormBuilder
  * @package A2design\Form
  *
- * TODO? move html classes etc from template to the class and generate one string
- *
  * TODO button
  * TODO submit
  * TODO checkbox
@@ -205,6 +203,10 @@ class FormBuilder
     public function input($name, $label = '', $parameters = [])
     {
         $entity = $this->entity;
+
+        $parameters = $this->setDefaultFromConfig($parameters);
+        $parameters = $this->setFromForm($parameters);
+
         $value = $this->getInputValue($name);
 
         if (isset($parameters['value'])) {
@@ -215,8 +217,10 @@ class FormBuilder
             $parameters['id'] = $this->getInputId($name);
         }
 
-        $parameters = $this->setDefaultFromConfig($parameters);
-        $parameters = $this->setFromForm($parameters);
+        $parameters['label-classes'] = $this->getLabelClasses($parameters);
+        $parameters['form-group-wrapper-classes'] = $this->getFormGroupClasses($parameters, $name);
+        $parameters['input-wrapper-classes'] = $this->getInputWrapperClasses($parameters);
+        $parameters['input-classes'] = $this->getInputClasses($parameters);
 
         return view('form::input', compact('name', 'label', 'parameters', 'entity', 'value'));
     }
@@ -447,5 +451,104 @@ class FormBuilder
         $arguments[2]['type'] = kebab_case($type);
 
         return $this->input(...$arguments);
+    }
+
+    /**
+     * Return string with classes for label
+     *
+     * @param array $parameters
+     *
+     * @return string
+     */
+    protected function getLabelClasses($parameters)
+    {
+        $classes = [];
+
+        if (isset($parameters['label-class'])) {
+            $classes[] = $parameters['label-class'];
+        }
+
+        if (isset($parameters['label-grid-class'])) {
+            $classes[] = $parameters['label-grid-class'];
+        }
+
+        if (isset($parameters['control-label-class']) && $parameters['control-label-class'] !== false) {
+            $classes[] = $parameters['control-label-class'];
+        }
+
+        return implode(' ', $classes);
+    }
+
+    /**
+     * Return string with classes for the wrapper
+     *
+     * @param array $parameters
+     * @param string $name
+     *
+     * @return string
+     */
+    protected function getFormGroupClasses($parameters, $name)
+    {
+        $classes = [];
+
+         if (isset($parameters['form-group-class']) && $parameters['form-group-class'] !== false) {
+             $classes[] = $parameters['form-group-class'];
+         } elseif (!isset($parameters['form-group-class'])) {
+             //todo config
+             $classes[] = 'form-group';
+         }
+
+        if ($this->errors->has($name) || isset($parameters['error']) && $parameters['error'] !== false) {
+            $classes[] = 'has-error';
+        }
+
+         if (isset($parameters['form-group-wrapper-class'])) {
+             $classes[] = $parameters['form-group-wrapper-class'];
+         }
+
+        return implode(' ', $classes);
+    }
+
+    /**
+     * Return string with classes for the wrapper
+     *
+     * @param array $parameters
+     *
+     * @return string
+     */
+    protected function getInputWrapperClasses($parameters)
+    {
+        $classes = [];
+
+        if (isset($parameters['input-grid-class'])) {
+            $classes[] = $parameters['input-grid-class'];
+        }
+
+        if (isset($parameters['wrapper-class'])) {
+            $classes[] = $parameters['wrapper-class'];
+        }
+
+        return implode(' ', $classes);
+    }
+
+    /**
+     * Return string with classes for the input
+     *
+     * @param array $parameters
+     *
+     * @return string
+     */
+    protected function getInputClasses($parameters)
+    {
+        $classes = [];
+
+        //todo move to config
+        $classes[] = 'form-control';
+
+        if (isset($parameters['class'])) {
+            $classes[] = $parameters['class'];
+        }
+
+        return implode(' ', $classes);
     }
 }
