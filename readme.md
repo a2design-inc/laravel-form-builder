@@ -13,6 +13,7 @@ Your code:
 ```
 {!! Form::create('ArticleController@update', $article) !!}
 {!! Form::input('name', 'Name') !!}
+{!! Form::button('Update') !!}
 {!! Form::end() !!}
 ```
 
@@ -31,6 +32,14 @@ Output:
             <input id="update-article-name" class="form-control" name="name" value="Name of the article">
         </div>
     </div> 
+    
+    <div class="form-group"> 
+        <div class="col-md-8 col-md-offset-4"> 
+            <button id="update-article-submit" type="submit"> 
+                Update
+            </button>
+        </div>
+    </div>
 </form>
 ```
 

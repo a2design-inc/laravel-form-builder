@@ -12,8 +12,7 @@ use Illuminate\Support\ViewErrorBag;
  * Class FormBuilder
  * @package A2design\Form
  *
- * TODO button
- * TODO submit
+ * TODO? submit
  * TODO checkbox
  * TODO radio
  * TODO file
