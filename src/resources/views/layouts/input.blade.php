@@ -1,3 +1,4 @@
+{{--Set wrapper div--}}
 @if (!isset($parameters['form-group-wrapper']) || $parameters['form-group-wrapper'] !== false)
     <div
         class="
@@ -18,6 +19,7 @@
     >
 @endif
 
+    {{--Set label--}}
     @if (isset($parameters['label']) && is_string($parameters['label']))
         {!! $parameters['label'] !!}
     @elseif (!isset($parameters['label']) || $parameters['label'] !== false)
@@ -39,12 +41,16 @@
         </label>
     @endif
 
+    {{--Set input wrapping--}}
     @if (!isset($parameters['wrapper']) || $parameters['wrapper'] !== false)
         <div class="col-md-6">
     @endif
+
         @yield('input')
 
+        {{--Set errors--}}
         @if (isset($parameters['all-errors']) && $parameters['all-errors'] === true)
+            
             @foreach ($errors->get($name) as $message)
                 @include('form::partials.error-message')
             @endforeach
@@ -52,12 +58,14 @@
             @foreach ($errors->get($name . '.*') as $message)
                 @include('form::partials.error-message')
             @endforeach
+
         @elseif (isset($parameters['error']) && $parameters['error'] !== false)
             @include('form::partials.error-message', ['message' => $parameters['error']])
         @elseif (isset($parameters['error']) && $parameters['error'] === false)
         @elseif ($errors->has($name))
             @include('form::partials.error-message', ['message' => $errors->first($name)])
         @endif
+
     @if (!isset($parameters['wrapper']) || $parameters['wrapper'] !== false)
         </div>
     @endif
