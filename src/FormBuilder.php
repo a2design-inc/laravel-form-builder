@@ -13,6 +13,9 @@ use Illuminate\Support\ViewErrorBag;
  * @package A2design\Form
  *
  * TODO button-link
+ * TODO button-clear shortcut
+ * TODO button group
+ *
  * TODO? submit
  * TODO checkbox
  * TODO radio

@@ -13,7 +13,7 @@
         name="{!! $name !!}"
 
         @if (!empty($parameters['value']))
-            type="{!! $parameters['value'] !!}"
+            value="{!! $parameters['value'] !!}"
         @endif
 
         @if (!empty($parameters['type']))
