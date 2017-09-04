@@ -126,6 +126,7 @@ You can specify a lot of additional parameters:
 |                  | method                  | POST, GET, PUT etc                           |
 |                  | absolute                | Absolute path of the method                  |
 |                  | url                     | Use the url instead action argument          |
+|                  | form-direction-class    | Use some class for label->input direction    |
 | Form::input      | all-errors              | List all of the validation errors fot the input instead only first |
 |                  | error                   | Set text of error or false to force hide     |
 |                  | required                | Set true for the attribute using             |
@@ -194,6 +195,7 @@ php artisan vendor:publish
 | error_class | false, 'string' | 'has-error' | Class for input with error | Define the class or disable it |
 | btn_class | false, 'string' | 'btn' | Class for for button | Redefine the default bootstrap "btn" class or disable it |
 | button_grid_class | false, 'string' | 'col-md-8 col-md-offset-4' | Class for grid column with button | Some class name for the grid |
+| form_direction_class | false, 'string' | 'form-horizontal' | Class for form direction | Redefine the default bootstrap "form-horizontal" class or disable it |
 
 ### Disable Bootstrap
  

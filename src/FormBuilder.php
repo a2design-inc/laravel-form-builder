@@ -168,7 +168,7 @@ class FormBuilder
         $this->actionMethod = $this->route->getActionMethod();
         $this->entity = $entity;
         $this->entityName = $this->getEntityName();
-        $this->formParameters = $parameters;
+        $parameters = $this->setDefaultFromConfig($parameters);
 
         if (!isset($parameters['method']) && !empty($this->getRouteMethod())) {
             $parameters['method'] = $this->getRouteMethod();
@@ -177,6 +177,10 @@ class FormBuilder
         if (!isset($parameters['id']) && $this->getConfig('generate_id') && !empty($this->getFormId())) {
             $parameters['id'] = $this->getFormId();
         }
+
+        $parameters['form-classes'] = $this->getFormClasses($parameters);
+
+        $this->formParameters = $parameters;
 
         return view('form::form-create', compact('action', 'parameters', 'entity'));
     }
@@ -413,6 +417,7 @@ class FormBuilder
             'error-class',
             'button-grid-class',
             'btn-class',
+            'form-direction-class',
         ];
 
         foreach ($configurableParameters as $configurableParameter) {
@@ -589,6 +594,28 @@ class FormBuilder
 
         if ($this->inputHasError($parameters, $name) && $parameters['error-class'] !== false) {
             $classes[] = $parameters['error-class'];
+        }
+
+        return implode(' ', $classes);
+    }
+
+    /**
+     * Return string with classes for the form
+     *
+     * @param array $parameters
+     *
+     * @return string
+     */
+    protected function getFormClasses($parameters)
+    {
+        $classes = [];
+
+        if (isset($parameters['form-direction-class']) && $parameters['form-direction-class'] !== false) {
+            $classes[] = $parameters['form-direction-class'];
+        }
+
+        if (isset($parameters['class']) && $parameters['class'] !== false) {
+            $classes[] = $parameters['class'];
         }
 
         return implode(' ', $classes);
