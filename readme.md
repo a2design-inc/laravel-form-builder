@@ -111,7 +111,7 @@ You can specify a lot of additional parameters:
 |------------------|-------------------------|----------------------------------------------|
 | Everywhere       | class                   | Class attribute                              |
 |                  | id                      | Id attribute. Generated automatically. If you don't need, specify empty string or redefine by id what you want. Or just adjust globally in config file |
-| Form::create     |                         | Note: you can use input parameters here to apply them for all inputs inside the form |
+| Form::create     |                         | Note: you can use other parameters here to apply them for all inputs, buttons etc inside the form |
 |                  | method                  | POST, GET, PUT etc                           |
 |                  | absolute                | Absolute path of the method                  |
 |                  | url                     | Use the url instead action argument          |
