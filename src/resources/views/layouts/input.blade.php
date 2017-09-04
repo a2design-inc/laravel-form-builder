@@ -1,7 +1,7 @@
 {{--Set wrapper div--}}
 @if (!isset($parameters['form-group-wrapper']) || $parameters['form-group-wrapper'] !== false)
     <div
-        @if (isset($parameters['form-group-wrapper-classes']))
+        @if (!empty($parameters['form-group-wrapper-classes']))
             class="{!! $parameters['form-group-wrapper-classes'] !!}"
         @endif
     >
@@ -12,10 +12,10 @@
         {!! $parameters['label'] !!}
     @elseif (!isset($parameters['label']) || $parameters['label'] !== false)
         <label
-            @if (isset($parameters['id']))
+            @if (!empty($parameters['id']))
                 for="{!! $parameters['id'] !!}"
             @endif
-            @if (isset($parameters['label-classes']))
+            @if (!empty($parameters['label-classes']))
                 class="{!! $parameters['label-classes'] !!}"
             @endif
         >
@@ -26,7 +26,7 @@
     {{--Set input wrapping--}}
     @if (!isset($parameters['wrapper']) || $parameters['wrapper'] !== false)
         <div
-            @if (isset($parameters['input-wrapper-classes']))
+            @if (!empty($parameters['input-wrapper-classes']))
                 class="{!! $parameters['input-wrapper-classes'] !!}"
             @endif
         >

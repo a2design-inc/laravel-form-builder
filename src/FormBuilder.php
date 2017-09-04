@@ -59,6 +59,13 @@ class FormBuilder
     protected $entity = null;
 
     /**
+     * Action for form 'controller@method'
+     *
+     * @var string
+     */
+    protected $action = '';
+
+    /**
      * @var ViewErrorBag
      */
     protected $errors;
@@ -165,15 +172,20 @@ class FormBuilder
      */
     public function create($action = '', $entity = null, $parameters = [])
     {
+        $this->entity = $entity;
+        $this->action = $action;
         $this->route = $this->getRouteByAction($action);
         $this->actionMethod = $this->getActionMethod();
-        $this->entity = $entity;
         $this->entityName = $this->getEntityName();
         $parameters = $this->setDefaultFromConfig($parameters);
 
         if (!isset($parameters['method']) && !empty($this->getRouteMethod())) {
             $parameters['method'] = $this->getRouteMethod();
         }
+
+        $parameters['form-action'] = $this->getFormAction($parameters);
+        $parameters['form-method'] = $this->getFormMethod($parameters);
+        $parameters['hidden-inputs'] = $this->getHiddenInputs($parameters);
 
         if (!isset($parameters['id']) && $this->getConfig('generate_id') && !empty($this->getFormId())) {
             $parameters['id'] = $this->getFormId();
@@ -183,7 +195,7 @@ class FormBuilder
 
         $this->formParameters = $parameters;
 
-        return view('form::form-create', compact('action', 'parameters', 'entity'));
+        return view('form::form-create', compact('parameters'));
     }
 
     /**
@@ -698,5 +710,72 @@ class FormBuilder
         }
 
         return $this->route->getActionMethod();
+    }
+
+    /**
+     * Return url for form action attribute
+     *
+     * @param array $parameters
+     * @return string
+     */
+    protected function getFormAction($parameters)
+    {
+        $absolute = false;
+
+        if (isset($parameters['absolute'])) {
+            $absolute = $parameters['absolute'];
+        }
+
+        if (isset($parameters['url'])) {
+            return $parameters['url'];
+        }
+
+        if (!empty($this->action) && !empty($this->entity)) {
+            return action($this->action, ['id' => $this->entity->id], $absolute);
+        }
+
+        if (!empty($this->action)) {
+            return action($this->action, [], $absolute);
+        }
+    }
+
+    /**
+     * Return string for form method attribute
+     *
+     * @param array $parameters
+     * @return string
+     */
+    protected function getFormMethod($parameters)
+    {
+        if (!isset($parameters['method'])) {
+            return 'post';
+        }
+
+        if ($parameters['method'] === 'get' || $parameters['method'] === 'GET') {
+            return $parameters['method'];
+        }
+
+        return 'post';
+    }
+
+    /**
+     * Return string with laravel-required hidden inputs
+     *
+     * @param array $parameters
+     * @return string
+     */
+    protected function getHiddenInputs($parameters)
+    {
+        $result = '';
+
+        if (!isset($parameters['method']) || !in_array($parameters['method'], ['get','GET'])) {
+            $result .= csrf_field() . ' ';
+        }
+
+        if (isset($parameters['method']) && !in_array($parameters['method'], ['get','GET', 'post', 'POST'])) {
+            $result .= method_field(strtoupper($parameters['method'])) . ' ';
+        }
+
+        return $result;
     }
 }

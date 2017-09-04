@@ -2,18 +2,18 @@
 
 @section('input')
     <input
-        @if (isset($parameters['id']))
+        @if (!empty($parameters['id']))
             id="{!! $parameters['id'] !!}"
         @endif
 
-        @if (isset($parameters['input-classes']))
+        @if (!empty($parameters['input-classes']))
             class="{!! $parameters['input-classes'] !!}"
         @endif
 
         name="{!! $name !!}"
         value="{!! $value !!}"
 
-        @if (isset($parameters['type']))
+        @if (!empty($parameters['type']))
             type="{!! $parameters['type'] !!}"
         @endif
 

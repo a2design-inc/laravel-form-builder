@@ -2,27 +2,27 @@
 
 @section('input')
     <button
-        @if (isset($parameters['id']))
+        @if (!empty($parameters['id']))
             id="{!! $parameters['id'] !!}"
         @endif
 
-        @if (isset($parameters['button-classes']))
+        @if (!empty($parameters['button-classes']))
             class="{!! $parameters['button-classes'] !!}"
         @endif
 
-        @if (isset($parameters['type']))
+        @if (!empty($parameters['type']))
             type="{!! $parameters['type'] !!}"
         @endif
 
-        @if (isset($parameters['name']))
+        @if (!empty($parameters['name']))
             name="{!! $parameters['name'] !!}"
         @endif
 
-        @if (isset($parameters['value']))
+        @if (!empty($parameters['value']))
             value="{!! $parameters['value'] !!}"
         @endif
 
-        @if (isset($parameters['form']))
+        @if (!empty($parameters['form']))
             form="{!! $parameters['form'] !!}"
         @endif
 
