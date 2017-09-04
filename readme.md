@@ -60,6 +60,17 @@ Of course, you can disable bootstrap, set global configs, edit templates etc! Se
 
 ## How to install
 
+TEMPORARY:
+
+```
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@bitbucket.org:a2design/laravel-form-builder.git"
+        }
+    ],
+```
+
 Install the package:
 
 ```
