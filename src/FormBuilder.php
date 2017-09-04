@@ -425,6 +425,9 @@ class FormBuilder
             'btn-class',
             'form-direction-class',
             'use-grid',
+            'bootstrap',
+            'wrapper',
+            'form-group-wrapper',
         ];
 
         foreach ($configurableParameters as $configurableParameter) {
@@ -519,11 +522,18 @@ class FormBuilder
             $classes[] = $parameters['label-class'];
         }
 
-        if (isset($parameters['use-grid']) && $parameters['use-grid'] && isset($parameters['label-grid-class']) && $parameters['label-grid-class'] !== false) {
+        if (
+            isset($parameters['use-grid']) && $parameters['use-grid']
+            && isset($parameters['bootstrap']) && $parameters['bootstrap']
+            && isset($parameters['label-grid-class']) && $parameters['label-grid-class'] !== false
+        ) {
             $classes[] = $parameters['label-grid-class'];
         }
 
-        if (isset($parameters['control-label-class']) && $parameters['control-label-class'] !== false) {
+        if (
+            isset($parameters['bootstrap']) && $parameters['bootstrap']
+            && isset($parameters['control-label-class']) && $parameters['control-label-class'] !== false
+        ) {
             $classes[] = $parameters['control-label-class'];
         }
 
@@ -542,7 +552,10 @@ class FormBuilder
     {
         $classes = [];
 
-         if (isset($parameters['form-group-class']) && $parameters['form-group-class'] !== false) {
+         if (
+             isset($parameters['bootstrap']) && $parameters['bootstrap']
+             && isset($parameters['form-group-class']) && $parameters['form-group-class'] !== false
+         ) {
              $classes[] = $parameters['form-group-class'];
          }
 
@@ -568,7 +581,11 @@ class FormBuilder
     {
         $classes = [];
 
-        if (isset($parameters['use-grid']) && $parameters['use-grid'] && isset($parameters['input-grid-class']) && $parameters['input-grid-class'] !== false) {
+        if (
+            isset($parameters['bootstrap']) && $parameters['bootstrap']
+            && isset($parameters['use-grid']) && $parameters['use-grid']
+            && isset($parameters['input-grid-class']) && $parameters['input-grid-class'] !== false
+        ) {
             $classes[] = $parameters['input-grid-class'];
         }
 
@@ -591,7 +608,10 @@ class FormBuilder
     {
         $classes = [];
 
-        if (isset($parameters['form-control-class']) && $parameters['form-control-class'] !== false) {
+        if (
+            isset($parameters['bootstrap']) && $parameters['bootstrap']
+            && isset($parameters['form-control-class']) && $parameters['form-control-class'] !== false
+        ) {
             $classes[] = $parameters['form-control-class'];
         }
 
@@ -617,7 +637,11 @@ class FormBuilder
     {
         $classes = [];
 
-        if (isset($parameters['use-grid']) && $parameters['use-grid'] && isset($parameters['form-direction-class']) && $parameters['form-direction-class'] !== false) {
+        if (
+            isset($parameters['bootstrap']) && $parameters['bootstrap']
+            && isset($parameters['use-grid']) && $parameters['use-grid']
+            && isset($parameters['form-direction-class']) && $parameters['form-direction-class'] !== false)
+        {
             $classes[] = $parameters['form-direction-class'];
         }
 
@@ -658,7 +682,11 @@ class FormBuilder
     {
         $classes = [];
 
-        if (isset($parameters['use-grid']) && $parameters['use-grid'] && isset($parameters['button-grid-class']) && $parameters['button-grid-class'] !== false) {
+        if (
+            isset($parameters['bootstrap']) && $parameters['bootstrap']
+            && isset($parameters['use-grid']) && $parameters['use-grid']
+            && isset($parameters['button-grid-class']) && $parameters['button-grid-class'] !== false
+        ) {
             $classes[] = $parameters['button-grid-class'];
         }
 
@@ -681,7 +709,10 @@ class FormBuilder
     {
         $classes = [];
 
-        if (isset($parameters['btn-class']) && $parameters['btn-class'] !== false) {
+        if (
+            isset($parameters['bootstrap']) && $parameters['bootstrap']
+            && isset($parameters['btn-class']) && $parameters['btn-class'] !== false
+        ) {
             $classes[] = $parameters['btn-class'];
         }
 

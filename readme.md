@@ -196,7 +196,10 @@ php artisan vendor:publish
 | btn_class | false, 'string' | 'btn btn-primary' | Class for for button | Redefine the default bootstrap "btn" class or disable it |
 | button_grid_class | false, 'string' | 'col-md-8 col-md-offset-4' | Class for grid column with button | Some class name for the grid |
 | form_direction_class | false, 'string' | 'form-horizontal' | Class for form direction | Redefine the default bootstrap "form-horizontal" class or disable it |
-| use_grid | true, false | 'form-horizontal' | Use grid classed | When enabled the labels and inputs is located in different columns |
+| use_grid | true, false | true | Use grid classed | When enabled the labels and inputs is located in different columns |
+| bootstrap | true, false | true | Use bootstrap classes | When enabled the elements have bootstrap classes. You can redefine all of theme separately if you need. This is shortcut for disabling. |
+| wrapper | true, false | true | Use bootstrap classed | Use wrap div for input or not |
+| form_group_wrapper | true, false | true | Use form group wrapper | Use wrap div for label and input or not |
 
 ### Disable Bootstrap
  
@@ -205,6 +208,9 @@ php artisan vendor:publish
  Or you can use shortcuts which disable few parameters simultaneously
  
 ```
+     //remove all bootsrap classes
+     'bootstrap' => false,
+     //or just show without grid
      'use-grid' => false,
 ```
 

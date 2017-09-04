@@ -31,6 +31,47 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Use bootstrap classes
+    |--------------------------------------------------------------------------
+    |
+    | When enabled the elements have bootstrap classes.
+    | You can redefine all of theme separately if you need.
+    | This is shortcut for disabling.
+    |
+    | Supported: true, false
+    |
+    */
+
+    'bootstrap' => true,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Use input wrapper
+    |--------------------------------------------------------------------------
+    |
+    | Use wrap div for input or not
+    |
+    | Supported: true, false
+    |
+    */
+
+    'wrapper' => true,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Use form group wrapper
+    |--------------------------------------------------------------------------
+    |
+    | Use wrap div for label and input or not
+    |
+    | Supported: true, false
+    |
+    */
+
+    'form_group_wrapper' => true,
+
+    /*
+    |--------------------------------------------------------------------------
     | Class for form group
     |--------------------------------------------------------------------------
     |
