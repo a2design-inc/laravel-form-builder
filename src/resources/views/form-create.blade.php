@@ -34,8 +34,8 @@
     @endif
 
     {{--set class attribute--}}
-    @if (isset($parameters['class']))
-        class="{!! $parameters['class'] !!}"
+    @if (isset($parameters['form-classes']))
+        class="{!! $parameters['form-classes'] !!}"
     @endif
 >
     {{--set hidden inputs--}}

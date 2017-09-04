@@ -186,14 +186,14 @@ php artisan vendor:publish
 | generate_id | true, false | true | Generate ids for elements | When enabled the ids for inputs, labels, wrappers etc are generated based on entity name, field name and controller method |
 | control_label_class | false, 'string' | 'control-label' | Class for each label | Redefine the default bootstrap "control-label" class or disable it |
 | label_grid_class | false, 'string' | 'col-md-4' | Class for grid column with label | Some class name for the grid |
-| input_grid_class | false, 'string' | 'col-md-8' | Class for grid column with input | Some class name for the grid |
+| input_grid_class | false, 'string' | 'col-md-6' | Class for grid column with input | Some class name for the grid |
 | route_name_space | 'string' | 'App\Http\Controllers' | The namespace of controllers | Defined at RouteServiceProvider |
 | controller_naming | 'string' | 'Controller' | The name of controllers | End of your controllers' names By default is just "Controller" when you use ArticleController, UserController etc |
 | form_group_class | false, 'string' | 'form-group' | Class for form group | Redefine the default bootstrap "form-group" class or disable it |
 | form_control_class | false, 'string' | 'form-control' | Class for for input | Redefine the default bootstrap "form-control" class or disable it |
 | error_form_group_class |false, 'string' | 'has-error' | Class for form group with error | Redefine the default bootstrap "has-error" class or disable it |
 | error_class | false, 'string' | 'has-error' | Class for input with error | Define the class or disable it |
-| btn_class | false, 'string' | 'btn' | Class for for button | Redefine the default bootstrap "btn" class or disable it |
+| btn_class | false, 'string' | 'btn btn-primary' | Class for for button | Redefine the default bootstrap "btn" class or disable it |
 | button_grid_class | false, 'string' | 'col-md-8 col-md-offset-4' | Class for grid column with button | Some class name for the grid |
 | form_direction_class | false, 'string' | 'form-horizontal' | Class for form direction | Redefine the default bootstrap "form-horizontal" class or disable it |
 

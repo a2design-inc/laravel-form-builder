@@ -6,8 +6,8 @@
             id="{!! $parameters['id'] !!}"
         @endif
 
-        @if (isset($parameters['input-classes']))
-            class="{!! $parameters['input-classes'] !!}"
+        @if (isset($parameters['button-classes']))
+            class="{!! $parameters['button-classes'] !!}"
         @endif
 
         @if (isset($parameters['type']))
