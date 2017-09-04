@@ -11,7 +11,10 @@
         @endif
 
         name="{!! $name !!}"
-        value="{!! $value !!}"
+
+        @if (!empty($parameters['value']))
+            type="{!! $parameters['value'] !!}"
+        @endif
 
         @if (!empty($parameters['type']))
             type="{!! $parameters['type'] !!}"

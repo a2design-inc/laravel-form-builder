@@ -161,7 +161,7 @@ You can specify a lot of additional parameters:
 |                  | button-grid-class       | Specify any class for the button grid column or set false to use without grid |
 |                  | wrapper-class           | Set the class of the input wrapper div       |
 |                  | btn-class               | Specify any class for the input instead the default "btn" or set false |
-
+|                  | label                   | Set false (default) if you don't need the label or set some string with HTML |
 
 ### Template editing
 

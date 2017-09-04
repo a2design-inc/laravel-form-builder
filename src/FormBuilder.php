@@ -177,21 +177,9 @@ class FormBuilder
         $this->route = $this->getRouteByAction($action);
         $this->actionMethod = $this->getActionMethod();
         $this->entityName = $this->getEntityName();
+
         $parameters = $this->setDefaultFromConfig($parameters);
-
-        if (!isset($parameters['method']) && !empty($this->getRouteMethod())) {
-            $parameters['method'] = $this->getRouteMethod();
-        }
-
-        $parameters['form-action'] = $this->getFormAction($parameters);
-        $parameters['form-method'] = $this->getFormMethod($parameters);
-        $parameters['hidden-inputs'] = $this->getHiddenInputs($parameters);
-
-        if (!isset($parameters['id']) && $this->getConfig('generate_id') && !empty($this->getFormId())) {
-            $parameters['id'] = $this->getFormId();
-        }
-
-        $parameters['form-classes'] = $this->getFormClasses($parameters);
+        $parameters = $this->generateComplexFormParameters($parameters);
 
         $this->formParameters = $parameters;
 
@@ -221,23 +209,9 @@ class FormBuilder
     {
         $parameters = $this->setFromForm($parameters);
         $parameters = $this->setDefaultFromConfig($parameters);
+        $parameters = $this->generateComplexInputParameters($name, $parameters);
 
-        $value = $this->getInputValue($name);
-
-        if (isset($parameters['value'])) {
-            $value = $parameters['value'];
-        }
-
-        if (!isset($parameters['id']) && $this->getConfig('generate_id') && !empty($this->getInputId($name))) {
-            $parameters['id'] = $this->getInputId($name);
-        }
-
-        $parameters['label-classes'] = $this->getLabelClasses($parameters);
-        $parameters['form-group-wrapper-classes'] = $this->getFormGroupClasses($parameters, $name);
-        $parameters['input-wrapper-classes'] = $this->getInputWrapperClasses($parameters);
-        $parameters['input-classes'] = $this->getInputClasses($parameters, $name);
-
-        return view('form::input', compact('name', 'label', 'parameters', 'value'));
+        return view('form::input', compact('name', 'label', 'parameters'));
     }
 
     /**
@@ -252,25 +226,10 @@ class FormBuilder
     {
         $parameters = $this->setFromForm($parameters);
         $parameters = $this->setDefaultFromConfig($parameters);
-        $parameters['label'] = false;
+        $parameters = $this->generateComplexButtonParameters($parameters);
+
+        //define variable for input layout using
         $name = isset($parameters['name']) ? $parameters['name'] : '';
-
-
-        if (!isset($parameters['type'])) {
-            $parameters['type'] = 'submit';
-        }
-
-        if (!isset($parameters['escaped'])) {
-            $parameters['escaped'] = true;
-        }
-
-        if (!isset($parameters['id']) && $this->getConfig('generate_id') && !empty($this->getInputId($parameters['type']))) {
-            $parameters['id'] = $this->getInputId($parameters['type']);
-        }
-
-        $parameters['form-group-wrapper-classes'] = $this->getFormGroupClasses($parameters);
-        $parameters['input-wrapper-classes'] = $this->getButtonWrapperClasses($parameters);
-        $parameters['button-classes'] = $this->getButtonClasses($parameters);
 
         return view('form::button', compact('text', 'parameters', 'name'));
     }
@@ -278,10 +237,16 @@ class FormBuilder
     /**
      * Return method name of controller by the route
      *
+     * @param array$parameters
+     *
      * @return string
      */
-    protected function getRouteMethod()
+    protected function getRouteMethod($parameters)
     {
+        if (isset($parameters['method'])) {
+            return $parameters['method'];
+        }
+
         if (empty($this->route)) {
             return '';
         }
@@ -311,11 +276,16 @@ class FormBuilder
      * Get value for input by name
      *
      * @param string $name
+     * @param array $parameters
      *
      * @return string
      */
-    protected function getInputValue($name)
+    protected function getInputValue($name, $parameters)
     {
+        if (isset($parameters['value'])) {
+            return $parameters['value'];
+        }
+
         $key = $this->transformKey($name);
 
         $oldValue = $this->session->getOldInput($key);
@@ -346,10 +316,19 @@ class FormBuilder
     /**
      * Generate id for form
      *
+     * @param array $parameters
      * @return string
      */
-    protected function getFormId()
+    protected function getFormId($parameters)
     {
+        if (isset($parameters['id'])) {
+            return $parameters['id'];
+        }
+
+        if (!$this->getConfig('generate_id')) {
+            return '';
+        }
+
         $id = '';
 
         if (!empty($this->actionMethod)) {
@@ -367,10 +346,20 @@ class FormBuilder
      * Generate ind for input by name
      *
      * @param string $name
+     * @param array $parameters
+     *
      * @return string
      */
-    protected function getInputId($name)
+    protected function getInputId($name, $parameters)
     {
+        if (isset($parameters['id'])) {
+            return $parameters['id'];
+        }
+
+        if (!$this->getConfig('generate_id')) {
+            return '';
+        }
+
         $id = kebab_case($name);
 
         if (!empty($this->entityName)) {
@@ -716,6 +705,7 @@ class FormBuilder
      * Return url for form action attribute
      *
      * @param array $parameters
+     *
      * @return string
      */
     protected function getFormAction($parameters)
@@ -743,6 +733,7 @@ class FormBuilder
      * Return string for form method attribute
      *
      * @param array $parameters
+     *
      * @return string
      */
     protected function getFormMethod($parameters)
@@ -762,6 +753,7 @@ class FormBuilder
      * Return string with laravel-required hidden inputs
      *
      * @param array $parameters
+     *
      * @return string
      */
     protected function getHiddenInputs($parameters)
@@ -777,5 +769,116 @@ class FormBuilder
         }
 
         return $result;
+    }
+
+    /**
+     * Fill parameters based on other parameters
+     *
+     * @param array $parameters
+     *
+     * @return array
+     */
+    protected function generateComplexFormParameters($parameters)
+    {
+        $parameters['method'] = $this->getRouteMethod($parameters);
+        $parameters['form-action'] = $this->getFormAction($parameters);
+        $parameters['form-method'] = $this->getFormMethod($parameters);
+        $parameters['hidden-inputs'] = $this->getHiddenInputs($parameters);
+        $parameters['id'] = $this->getFormId($parameters);
+        $parameters['form-classes'] = $this->getFormClasses($parameters);
+
+        return $parameters;
+    }
+
+    /**
+     * Fill parameters based on other parameters
+     *
+     * @param string $name
+     * @param array $parameters
+     *
+     * @return array
+     */
+    protected function generateComplexInputParameters($name, $parameters)
+    {
+        $parameters['value'] = $this->getInputValue($name, $parameters);
+        $parameters['id'] = $this->getInputId($name, $parameters);
+        $parameters['label-classes'] = $this->getLabelClasses($parameters);
+        $parameters['form-group-wrapper-classes'] = $this->getFormGroupClasses($parameters, $name);
+        $parameters['input-wrapper-classes'] = $this->getInputWrapperClasses($parameters);
+        $parameters['input-classes'] = $this->getInputClasses($parameters, $name);
+
+        return $parameters;
+    }
+
+    /**
+     * Return label for button
+     *
+     * @param array $parameters
+     *
+     * @return boolean|string
+     */
+    protected function getButtonLabel($parameters)
+    {
+        // without label by default
+        if (!isset($parameters['label'])) {
+            return false;
+        }
+
+        return $parameters['label'];
+    }
+
+    /**
+     * Return type for button
+     *
+     * @param array $parameters
+     *
+     * @return string
+     */
+    protected function getButtonType($parameters)
+    {
+        // by default
+        if (!isset($parameters['type'])) {
+            return 'submit';
+        }
+
+        return $parameters['type'];
+    }
+
+    /**
+     * Return is escaped or not
+     *
+     * @param array $parameters
+     *
+     * @return boolean
+     */
+    protected function getButtonEscaping($parameters)
+    {
+        // by default
+        if (!isset($parameters['escaped'])) {
+            return true;
+        }
+
+        return $parameters['escaped'];
+    }
+
+    /**
+     * Fill parameters based on other parameters
+     *
+     * @param array $parameters
+     *
+     * @return array
+     */
+    protected function generateComplexButtonParameters($parameters)
+    {
+        $parameters['label'] = $this->getButtonLabel($parameters);
+        $parameters['type'] = $this->getButtonType($parameters);
+        $parameters['escaped'] = $this->getButtonEscaping($parameters);
+        //use type instead input name for button id
+        $parameters['id'] = $this->getInputId($parameters['type'], $parameters);
+        $parameters['form-group-wrapper-classes'] = $this->getFormGroupClasses($parameters);
+        $parameters['input-wrapper-classes'] = $this->getButtonWrapperClasses($parameters);
+        $parameters['button-classes'] = $this->getButtonClasses($parameters);
+
+        return $parameters;
     }
 }
