@@ -518,21 +518,21 @@ class FormBuilder
     {
         $classes = [];
 
-        if (isset($parameters['label-class']) && $parameters['label-class'] !== false) {
+        if (isset($parameters['label-class']) && $parameters['label-class']) {
             $classes[] = $parameters['label-class'];
         }
 
         if (
             isset($parameters['use-grid']) && $parameters['use-grid']
             && isset($parameters['bootstrap']) && $parameters['bootstrap']
-            && isset($parameters['label-grid-class']) && $parameters['label-grid-class'] !== false
+            && isset($parameters['label-grid-class']) && $parameters['label-grid-class']
         ) {
             $classes[] = $parameters['label-grid-class'];
         }
 
         if (
             isset($parameters['bootstrap']) && $parameters['bootstrap']
-            && isset($parameters['control-label-class']) && $parameters['control-label-class'] !== false
+            && isset($parameters['control-label-class']) && $parameters['control-label-class']
         ) {
             $classes[] = $parameters['control-label-class'];
         }
@@ -554,16 +554,16 @@ class FormBuilder
 
          if (
              isset($parameters['bootstrap']) && $parameters['bootstrap']
-             && isset($parameters['form-group-class']) && $parameters['form-group-class'] !== false
+             && isset($parameters['form-group-class']) && $parameters['form-group-class']
          ) {
              $classes[] = $parameters['form-group-class'];
          }
 
-        if ($this->inputHasError($parameters, $name) && $parameters['error-form-group-class'] !== false) {
+        if ($this->inputHasError($parameters, $name) && $parameters['error-form-group-class']) {
             $classes[] = $parameters['error-form-group-class'];
         }
 
-         if (isset($parameters['form-group-wrapper-class']) && $parameters['form-group-wrapper-class'] !== false) {
+         if (isset($parameters['form-group-wrapper-class']) && $parameters['form-group-wrapper-class']) {
              $classes[] = $parameters['form-group-wrapper-class'];
          }
 
@@ -584,12 +584,12 @@ class FormBuilder
         if (
             isset($parameters['bootstrap']) && $parameters['bootstrap']
             && isset($parameters['use-grid']) && $parameters['use-grid']
-            && isset($parameters['input-grid-class']) && $parameters['input-grid-class'] !== false
+            && isset($parameters['input-grid-class']) && $parameters['input-grid-class']
         ) {
             $classes[] = $parameters['input-grid-class'];
         }
 
-        if (isset($parameters['wrapper-class']) && $parameters['wrapper-class'] !== false) {
+        if (isset($parameters['wrapper-class']) && $parameters['wrapper-class']) {
             $classes[] = $parameters['wrapper-class'];
         }
 
@@ -610,16 +610,16 @@ class FormBuilder
 
         if (
             isset($parameters['bootstrap']) && $parameters['bootstrap']
-            && isset($parameters['form-control-class']) && $parameters['form-control-class'] !== false
+            && isset($parameters['form-control-class']) && $parameters['form-control-class']
         ) {
             $classes[] = $parameters['form-control-class'];
         }
 
-        if (isset($parameters['class']) && $parameters['class'] !== false) {
+        if (isset($parameters['class']) && $parameters['class']) {
             $classes[] = $parameters['class'];
         }
 
-        if ($this->inputHasError($parameters, $name) && $parameters['error-class'] !== false) {
+        if ($this->inputHasError($parameters, $name) && $parameters['error-class']) {
             $classes[] = $parameters['error-class'];
         }
 
@@ -640,12 +640,12 @@ class FormBuilder
         if (
             isset($parameters['bootstrap']) && $parameters['bootstrap']
             && isset($parameters['use-grid']) && $parameters['use-grid']
-            && isset($parameters['form-direction-class']) && $parameters['form-direction-class'] !== false)
+            && isset($parameters['form-direction-class']) && $parameters['form-direction-class'])
         {
             $classes[] = $parameters['form-direction-class'];
         }
 
-        if (isset($parameters['class']) && $parameters['class'] !== false) {
+        if (isset($parameters['class']) && $parameters['class']) {
             $classes[] = $parameters['class'];
         }
 
@@ -667,7 +667,7 @@ class FormBuilder
         }
 
         return $this->errors->has($name)
-            || isset($parameters['error']) && $parameters['error'] !== false;
+            || isset($parameters['error']) && $parameters['error'];
     }
 
 
@@ -685,12 +685,12 @@ class FormBuilder
         if (
             isset($parameters['bootstrap']) && $parameters['bootstrap']
             && isset($parameters['use-grid']) && $parameters['use-grid']
-            && isset($parameters['button-grid-class']) && $parameters['button-grid-class'] !== false
+            && isset($parameters['button-grid-class']) && $parameters['button-grid-class']
         ) {
             $classes[] = $parameters['button-grid-class'];
         }
 
-        if (isset($parameters['wrapper-class']) && $parameters['wrapper-class'] !== false) {
+        if (isset($parameters['wrapper-class']) && $parameters['wrapper-class']) {
             $classes[] = $parameters['wrapper-class'];
         }
 
@@ -711,12 +711,12 @@ class FormBuilder
 
         if (
             isset($parameters['bootstrap']) && $parameters['bootstrap']
-            && isset($parameters['btn-class']) && $parameters['btn-class'] !== false
+            && isset($parameters['btn-class']) && $parameters['btn-class']
         ) {
             $classes[] = $parameters['btn-class'];
         }
 
-        if (isset($parameters['class']) && $parameters['class'] !== false) {
+        if (isset($parameters['class']) && $parameters['class']) {
             $classes[] = $parameters['class'];
         }
 
