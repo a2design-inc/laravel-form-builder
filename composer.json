@@ -1,11 +1,17 @@
 {
-    "name": "a2design/form",
+    "name": "a2design-inc/laravel-form-builder",
     "description": "Form Builders for the Laravel Framework",
     "license": "MIT",
     "authors": [
         {
             "name": "Loburets Dimitry",
-            "email": "loburets@a2design.com"
+            "homepage": "https://github.com/loburets",
+            "role": "Author"
+        },
+        {
+            "name": "A2 Design",
+            "homepage": "https://github.com/a2design-inc",
+            "role": "Author"
         }
     ],
     "require": {

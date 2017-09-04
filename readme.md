@@ -60,6 +60,12 @@ Of course, you can disable bootstrap, set global configs, edit templates etc! Se
 
 ## How to install
 
+Install the package:
+
+```
+composer require a2design-inc/laravel-form-builder
+```
+
 Register the provider (config/app.php):
 
 ```
@@ -182,6 +188,13 @@ php artisan vendor:publish
  
  You can remove any class or wrapper for single element by parameters or globally in config file.
  
+ You can disable grid system and show inputs without separation for the label and the input
+ 
+```
+     'label-grid-class' => false,
+     'input-grid-class' => false,
+```
+
 ## List of methods
 
 #### Elements
