@@ -12,6 +12,7 @@ use Illuminate\Support\ViewErrorBag;
  * Class FormBuilder
  * @package A2design\Form
  *
+ * TODO button-link
  * TODO? submit
  * TODO checkbox
  * TODO radio
@@ -165,7 +166,7 @@ class FormBuilder
     public function create($action = '', $entity = null, $parameters = [])
     {
         $this->route = $this->getRouteByAction($action);
-        $this->actionMethod = $this->route->getActionMethod();
+        $this->actionMethod = $this->getActionMethod();
         $this->entity = $entity;
         $this->entityName = $this->getEntityName();
         $parameters = $this->setDefaultFromConfig($parameters);
@@ -365,7 +366,7 @@ class FormBuilder
         }
 
         if (!empty($this->route)) {
-            $id = kebab_case($this->route->getActionMethod()) . '-' . $id;
+            $id = kebab_case($this->getActionMethod()) . '-' . $id;
         }
 
         return $id;
@@ -683,5 +684,19 @@ class FormBuilder
         }
 
         return implode(' ', $classes);
+    }
+
+    /**
+     * Return name of controller method or empty string
+     *
+     * @return string
+     */
+    protected function getActionMethod()
+    {
+        if (empty($this->route)) {
+            return '';
+        }
+
+        return $this->route->getActionMethod();
     }
 }
