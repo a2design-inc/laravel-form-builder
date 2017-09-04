@@ -13,7 +13,8 @@ use Illuminate\Support\ViewErrorBag;
  * @package A2design\Form
  *
  * TODO button-link
- * TODO button-clear shortcut
+ * TODO button-link-cancel
+ * TODO button-reset shortcut
  * TODO button group
  *
  * TODO? submit
@@ -423,6 +424,7 @@ class FormBuilder
             'button-grid-class',
             'btn-class',
             'form-direction-class',
+            'use-grid',
         ];
 
         foreach ($configurableParameters as $configurableParameter) {
@@ -517,7 +519,7 @@ class FormBuilder
             $classes[] = $parameters['label-class'];
         }
 
-        if (isset($parameters['label-grid-class']) && $parameters['label-grid-class'] !== false) {
+        if (isset($parameters['use-grid']) && $parameters['use-grid'] && isset($parameters['label-grid-class']) && $parameters['label-grid-class'] !== false) {
             $classes[] = $parameters['label-grid-class'];
         }
 
@@ -566,7 +568,7 @@ class FormBuilder
     {
         $classes = [];
 
-        if (isset($parameters['input-grid-class']) && $parameters['input-grid-class'] !== false) {
+        if (isset($parameters['use-grid']) && $parameters['use-grid'] && isset($parameters['input-grid-class']) && $parameters['input-grid-class'] !== false) {
             $classes[] = $parameters['input-grid-class'];
         }
 
@@ -615,7 +617,7 @@ class FormBuilder
     {
         $classes = [];
 
-        if (isset($parameters['form-direction-class']) && $parameters['form-direction-class'] !== false) {
+        if (isset($parameters['use-grid']) && $parameters['use-grid'] && isset($parameters['form-direction-class']) && $parameters['form-direction-class'] !== false) {
             $classes[] = $parameters['form-direction-class'];
         }
 
@@ -656,7 +658,7 @@ class FormBuilder
     {
         $classes = [];
 
-        if (isset($parameters['button-grid-class']) && $parameters['button-grid-class'] !== false) {
+        if (isset($parameters['use-grid']) && $parameters['use-grid'] && isset($parameters['button-grid-class']) && $parameters['button-grid-class'] !== false) {
             $classes[] = $parameters['button-grid-class'];
         }
 

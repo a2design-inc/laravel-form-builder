@@ -107,9 +107,8 @@ You can specify a lot of additional parameters:
     'url' => 'http://google.com',
     //set method
     'method' => 'POST',
-    //disable grid system and show inputs traditionally
-    'label-grid-class' => false,
-    'input-grid-class' => false,
+    //your class
+    'class' => 'my-form',
     //etc
 ]) !!}
 
@@ -122,6 +121,7 @@ You can specify a lot of additional parameters:
 |------------------|-------------------------|----------------------------------------------|
 | Everywhere       | class                   | Class attribute                              |
 |                  | id                      | Id attribute. Generated automatically. If you don't need, specify empty string or redefine by id what you want. Or just adjust globally in config file |
+|                  | use-grid                | Set false to disable the grid classes        |
 | Form::create     |                         | Note: you can use other parameters here to apply them for all inputs, buttons etc inside the form |
 |                  | method                  | POST, GET, PUT etc                           |
 |                  | absolute                | Absolute path of the method                  |
@@ -196,16 +196,16 @@ php artisan vendor:publish
 | btn_class | false, 'string' | 'btn btn-primary' | Class for for button | Redefine the default bootstrap "btn" class or disable it |
 | button_grid_class | false, 'string' | 'col-md-8 col-md-offset-4' | Class for grid column with button | Some class name for the grid |
 | form_direction_class | false, 'string' | 'form-horizontal' | Class for form direction | Redefine the default bootstrap "form-horizontal" class or disable it |
+| use_grid | true, false | 'form-horizontal' | Use grid classed | When enabled the labels and inputs is located in different columns |
 
 ### Disable Bootstrap
  
  You can remove any class or wrapper for single element by parameters or globally in config file.
  
- You can disable grid system and show inputs without separation for the label and the input
+ Or you can use shortcuts which disable few parameters simultaneously
  
 ```
-     'label-grid-class' => false,
-     'input-grid-class' => false,
+     'use-grid' => false,
 ```
 
 ## List of methods
