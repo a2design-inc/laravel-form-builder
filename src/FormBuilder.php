@@ -96,6 +96,27 @@ class FormBuilder
     protected $formParameters = [];
 
     /**
+     * Parameters set for button group
+     *
+     * @var array
+     */
+    protected $buttonGroupParameters = [];
+
+    /**
+     * The group is opened or not
+     *
+     * @var boolean
+     */
+    protected $buttonGroupIsOpened = false;
+
+    /**
+     * Saved html for buttons inside a group
+     *
+     * @var boolean
+     */
+    protected $buttonsWithinGroupHtml = '';
+
+    /**
      * Array of parameter names which can be used for form creating
      *
      * @var array
@@ -224,7 +245,7 @@ class FormBuilder
      * @param string $text
      * @param array $parameters
      *
-     * @return Factory|\Illuminate\View\View
+     * @return Factory|\Illuminate\View\View|null
      */
     public function button($text = 'Submit', $parameters = [])
     {
@@ -235,7 +256,42 @@ class FormBuilder
         //define variable for input layout using
         $name = isset($parameters['name']) ? $parameters['name'] : '';
 
-        return view('form::button', compact('text', 'parameters', 'name'));
+        $onlyInput = $this->buttonGroupIsOpened;
+
+        $result = view('form::button', compact('text', 'parameters', 'name', 'onlyInput'));
+
+        if ($onlyInput) {
+            $this->buttonsWithinGroupHtml .= $result;
+            return null;
+        }
+
+        return $result;
+    }
+
+    public function buttonGroup($parameters = [])
+    {
+        $parameters = $this->setFromForm($parameters);
+        $parameters = $this->setDefaultFromConfig($parameters);
+        $name = isset($parameters['name']) ? $parameters['name'] : '';
+        //because button group equal to input with several inputs inside one input html wrap
+        $parameters = $this->generateComplexInputParameters($name, $parameters);
+        $this->buttonGroupParameters = $parameters;
+
+        $this->buttonGroupIsOpened = true;
+    }
+
+    public function buttonGroupEnd()
+    {
+        $this->buttonGroupIsOpened = false;
+        $parameters = $this->buttonGroupParameters;
+        $this->buttonGroupParameters = [];
+        $buttons = $this->buttonsWithinGroupHtml;
+        $this->buttonsWithinGroupHtml = '';
+
+        $name = isset($parameters['name']) ? $parameters['name'] : '';
+        $label = isset($parameters['label']) ? $parameters['label'] : '';
+
+        return view('form::button-group', compact('buttons', 'name', 'parameters', 'label'));
     }
 
     /**

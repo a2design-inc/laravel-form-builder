@@ -109,6 +109,8 @@ You can specify a lot of additional parameters:
     'method' => 'POST',
     //your class
     'class' => 'my-form',
+    //show labels next to inputs
+    'use-grid' => false,
     //etc
 ]) !!}
 
@@ -162,6 +164,7 @@ You can specify a lot of additional parameters:
 |                  | wrapper-class           | Set the class of the input wrapper div       |
 |                  | btn-class               | Specify any class for the input instead the default "btn" or set false |
 |                  | label                   | Set false (default) if you don't need the label or set some string with HTML |
+| Form::buttonGroup|                         | The group is the several inputs inside one input wrappers. So, you can use any input parameters here to describe the label, wrappers etc |
 
 ### Template editing
 
@@ -222,8 +225,9 @@ php artisan vendor:publish
  - Form::end()
  - Form::input($name, $label = '', $parameters = [])
  - Form::button($text = 'Submit', $parameters = [])
+ - Form::buttonGroup($parameters = [])
+ - Form::buttonGroupEnd()
 
- 
 #### Types shortcuts
  
  Equal to input() with the "type" parameter
