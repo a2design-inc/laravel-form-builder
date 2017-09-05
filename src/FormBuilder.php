@@ -272,9 +272,8 @@ class FormBuilder
     {
         $parameters = $this->setFromForm($parameters);
         $parameters = $this->setDefaultFromConfig($parameters);
-        $name = isset($parameters['name']) ? $parameters['name'] : '';
-        //because button group equal to input with several inputs inside one input html wrap
-        $parameters = $this->generateComplexInputParameters($name, $parameters);
+        //because button group equal to button with several buttons inside one input html wrap
+        $parameters = $this->generateComplexButtonParameters($parameters);
         $this->buttonGroupParameters = $parameters;
 
         $this->buttonGroupIsOpened = true;

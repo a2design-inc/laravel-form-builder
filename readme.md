@@ -12,31 +12,38 @@ Your code:
 
 ```
 {!! Form::create('ArticleController@update', $article) !!}
-{!! Form::input('name', 'Name') !!}
-{!! Form::button('Update') !!}
+    {!! Form::input('name', 'Name') !!}
+    {!! Form::buttonGroup() !!}
+        {!! Form::button('Reset', ['type' => 'reset']) !!}
+        {!! Form::button() !!}
+    {!! Form::buttonGroupEnd() !!}
 {!! Form::end() !!}
 ```
 
 Output:
 
 ```
-<form method="post" action="/article/1" id="update-article" > 
-    <input type="hidden" name="_token" value="P6LpFJ0bZf4s9aKOi8pSoZXTMITDxtRtQ98qF4wZ"> 
+<form method="post" action="/article/1" id="update-article" class="form-horizontal">
+
+    <input type="hidden" name="_token" value="CZLvWLRwqvjvZIwiaRcMj0JxyIwvpZ0nZ5y4StwO"> 
     <input type="hidden" name="_method" value="PUT"> 
-    
-    <div class="form-group ">
+
+    <div class="form-group">
         <label for="update-article-name" class="col-md-4 control-label">
             Name
         </label>
         <div class="col-md-6">
-            <input id="update-article-name" class="form-control" name="name" value="Name of the article">
+            <input id="update-article-name" name="name" value="Some name" class="form-control">
         </div>
-    </div> 
+    </div>
     
-    <div class="form-group"> 
-        <div class="col-md-8 col-md-offset-4"> 
-            <button id="update-article-submit" type="submit"> 
-                Update
+    <div class="form-group">
+        <div class="col-md-8 col-md-offset-4">
+            <button id="update-article-reset" type="reset" class="btn btn-primary">
+                Reset
+            </button>
+            <button id="update-article-submit" type="submit" class="btn btn-primary">
+                Submit
             </button>
         </div>
     </div>
@@ -164,7 +171,7 @@ You can specify a lot of additional parameters:
 |                  | wrapper-class           | Set the class of the input wrapper div       |
 |                  | btn-class               | Specify any class for the input instead the default "btn" or set false |
 |                  | label                   | Set false (default) if you don't need the label or set some string with HTML |
-| Form::buttonGroup|                         | The group is the several inputs inside one input wrappers. So, you can use any input parameters here to describe the label, wrappers etc |
+| Form::buttonGroup|                         | The group is the several buttons inside one button wrappers. So, you can use any button parameters here to describe the label, wrappers etc |
 
 ### Template editing
 
