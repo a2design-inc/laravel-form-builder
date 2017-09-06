@@ -170,6 +170,7 @@ You can specify a lot of additional parameters:
 |                  | input-grid-class        | Specify any class for the input grid column or set false to use without grid |
 |                  | error-form-group-class  | Specify any class for the form group with error or set false |
 |                  | error-class             | Specify any class for the input with error or set false |
+|                  | only-input              | Set true to disable any wrappers             |
 | Form::button     | type                    | Set the type attribute                       |
 |                  | name                    | Set the name attribute                       |
 |                  | value                   | Set the value attribute                      |
@@ -186,6 +187,7 @@ You can specify a lot of additional parameters:
 |                  | label-text              | Set some text for the label |
 | Form::buttonGroup|                         | The group is the several buttons inside one button wrappers. So, you can use any button parameters here to describe the label, wrappers etc |
 | Form::buttonLink |                         | Similar to the button, but with "href" ant "target"|
+| Form::hidden     |                         | Similar to the input, but with hardcoded "only-input" ant "type"|
 
 ### Template editing
 
@@ -245,9 +247,10 @@ php artisan vendor:publish
  - Form::create($action = '', $entity = null, $parameters = [])
  - Form::end()
  - Form::input($name, $label = '', $parameters = [])
- - Form::button($text = 'Submit', $parameters = [])
+ - Form::hidden($name, $parameters = [])
  - Form::buttonGroup($parameters = [])
  - Form::buttonGroupEnd()
+ - Form::button($text = 'Submit', $parameters = [])
  - Form::buttonLink($text = 'Cancel', $link = '/', $parameters = [])
 
 #### Shortcuts
@@ -274,3 +277,4 @@ php artisan vendor:publish
  
  - Form::reset() - Form::button() with type reset
  - Form::submit() - Form::button() alias
+ 

@@ -12,13 +12,10 @@ use Illuminate\Support\ViewErrorBag;
  * Class FormBuilder
  * @package A2design\Form
  *
- * TODO? submit
  * TODO checkbox
  * TODO radio
  * TODO file
  * TODO image
- * TODO hidden
- * TODO reset
  * TODO textarea
  *
  * TODO tests
@@ -235,6 +232,22 @@ class FormBuilder
     }
 
     /**
+     * Create new input
+     *
+     * @param $name
+     * @param array $parameters
+     *
+     * @return Factory|\Illuminate\View\View
+     */
+    public function hidden($name, $parameters = [])
+    {
+        $parameters['only-input'] = true;
+        $parameters['type'] = 'hidden';
+
+        return $this->input($name, '', $parameters);
+    }
+
+    /**
      * Create new button
      *
      * @param string $text
@@ -253,11 +266,9 @@ class FormBuilder
         $name = isset($parameters['name']) ? $parameters['name'] : '';
         $label = isset($parameters['label-text']) ? $parameters['label-text'] : '';
 
-        $onlyInput = $this->buttonGroupIsOpened;
+        $result = view($view, compact('text', 'parameters', 'name', 'label'));
 
-        $result = view($view, compact('text', 'parameters', 'name', 'onlyInput', 'label'));
-
-        if ($onlyInput) {
+        if ($this->buttonGroupIsOpened) {
             $this->buttonsWithinGroupHtml .= $result;
             return null;
         }
@@ -1026,6 +1037,7 @@ class FormBuilder
         $parameters['form-group-wrapper-classes'] = $this->getFormGroupClasses($parameters);
         $parameters['input-wrapper-classes'] = $this->getButtonWrapperClasses($parameters);
         $parameters['button-classes'] = $this->getButtonClasses($parameters);
+        $parameters['only-input'] = $this->buttonGroupIsOpened;
 
         return $parameters;
     }

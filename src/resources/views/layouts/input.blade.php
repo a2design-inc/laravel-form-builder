@@ -1,4 +1,4 @@
-@if (isset($onlyInput) && $onlyInput === true)
+@if (isset($parameters['only-input']) && $parameters['only-input'])
     @yield('input')
 @else
 
