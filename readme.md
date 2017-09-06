@@ -14,8 +14,8 @@ Your code:
 {!! Form::create('ArticleController@update', $article) !!}
     {!! Form::input('name', 'Name') !!}
     {!! Form::buttonGroup() !!}
-        {!! Form::button('Reset', ['type' => 'reset']) !!}
-        {!! Form::button() !!}
+        {!! Form::reset() !!}
+        {!! Form::submit() !!}
     {!! Form::buttonGroupEnd() !!}
 {!! Form::end() !!}
 ```
@@ -122,6 +122,10 @@ You can specify a lot of additional parameters:
 ]) !!}
 
 {!! Form::input('', '', ['label' => false]) !!}
+
+{!! Form::button('Create', ['disabled' => 'true']) !!}
+
+{!! Form::buttonGroup(['label-text' => 'Some label']) !!}
 ```
 
 ### Full list of parameters
@@ -171,6 +175,7 @@ You can specify a lot of additional parameters:
 |                  | wrapper-class           | Set the class of the input wrapper div       |
 |                  | btn-class               | Specify any class for the input instead the default "btn" or set false |
 |                  | label                   | Set false (default) if you don't need the label or set some string with HTML |
+|                  | label-text              | Set some text for the label |
 | Form::buttonGroup|                         | The group is the several buttons inside one button wrappers. So, you can use any button parameters here to describe the label, wrappers etc |
 
 ### Template editing
@@ -235,7 +240,7 @@ php artisan vendor:publish
  - Form::buttonGroup($parameters = [])
  - Form::buttonGroupEnd()
 
-#### Types shortcuts
+#### Shortcuts
  
  Equal to input() with the "type" parameter
  
@@ -255,3 +260,7 @@ php artisan vendor:publish
  - Form::month()
  - Form::week()
  
+ Buttons:
+ 
+ - Form::reset() - Form::button() with type reset
+ - Form::submit() - Form::button() alias

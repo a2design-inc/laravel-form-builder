@@ -14,8 +14,6 @@ use Illuminate\Support\ViewErrorBag;
  *
  * TODO button-link
  * TODO button-link-cancel
- * TODO button-reset shortcut
- * TODO button group
  *
  * TODO? submit
  * TODO checkbox
@@ -255,10 +253,11 @@ class FormBuilder
 
         //define variable for input layout using
         $name = isset($parameters['name']) ? $parameters['name'] : '';
+        $label = isset($parameters['label-text']) ? $parameters['label-text'] : '';
 
         $onlyInput = $this->buttonGroupIsOpened;
 
-        $result = view('form::button', compact('text', 'parameters', 'name', 'onlyInput'));
+        $result = view('form::button', compact('text', 'parameters', 'name', 'onlyInput', 'label'));
 
         if ($onlyInput) {
             $this->buttonsWithinGroupHtml .= $result;
@@ -266,6 +265,36 @@ class FormBuilder
         }
 
         return $result;
+    }
+
+    /**
+     * Create new button (alias)
+     *
+     * @param string $text
+     * @param array $parameters
+     *
+     * @return Factory|\Illuminate\View\View|null
+     */
+    public function submit($text = 'Submit', $parameters = [])
+    {
+        return $this->button($text, $parameters);
+    }
+
+    /**
+     * Create new button (type reset)
+     *
+     * @param string $text
+     * @param array $parameters
+     *
+     * @return Factory|\Illuminate\View\View|null
+     */
+    public function reset($text = 'Reset', $parameters = [])
+    {
+        if (!isset($parameters['type'])) {
+            $parameters['type'] = 'reset';
+        }
+
+        return $this->button($text, $parameters);
     }
 
     public function buttonGroup($parameters = [])
@@ -288,7 +317,7 @@ class FormBuilder
         $this->buttonsWithinGroupHtml = '';
 
         $name = isset($parameters['name']) ? $parameters['name'] : '';
-        $label = isset($parameters['label']) ? $parameters['label'] : '';
+        $label = isset($parameters['label-text']) ? $parameters['label-text'] : '';
 
         return view('form::button-group', compact('buttons', 'name', 'parameters', 'label'));
     }
@@ -742,7 +771,11 @@ class FormBuilder
             && isset($parameters['use-grid']) && $parameters['use-grid']
             && isset($parameters['button-grid-class']) && $parameters['button-grid-class']
         ) {
-            $classes[] = $parameters['button-grid-class'];
+            if (empty($parameters['label'])) {
+                $classes[] = $parameters['button-grid-class'];
+            } else {
+                $classes[] = $parameters['input-grid-class'];
+            }
         }
 
         if (isset($parameters['wrapper-class']) && $parameters['wrapper-class']) {
@@ -910,6 +943,10 @@ class FormBuilder
      */
     protected function getButtonLabel($parameters)
     {
+        if (!empty($parameters['label-text'])) {
+            return true;
+        }
+
         // without label by default
         if (!isset($parameters['label'])) {
             return false;
@@ -962,6 +999,11 @@ class FormBuilder
     protected function generateComplexButtonParameters($parameters)
     {
         $parameters['label'] = $this->getButtonLabel($parameters);
+
+        if (!empty($parameters['label'])) {
+            $parameters['label-classes'] = $this->getLabelClasses($parameters);
+        }
+
         $parameters['type'] = $this->getButtonType($parameters);
         $parameters['escaped'] = $this->getButtonEscaping($parameters);
         //use type instead input name for button id
