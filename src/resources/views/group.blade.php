@@ -1,6 +1,6 @@
 @extends('form::layouts.input')
 
 @section('input')
-    {!! $buttons !!}
+    {!! $html !!}
 {{--For multiple layout using--}}
 @overwrite

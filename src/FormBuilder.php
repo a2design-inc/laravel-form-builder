@@ -12,7 +12,6 @@ use Illuminate\Support\ViewErrorBag;
  * Class FormBuilder
  * @package A2design\Form
  *
- * TODO checkbox
  * TODO radio
  * TODO file
  * TODO image
@@ -95,6 +94,13 @@ class FormBuilder
     protected $buttonGroupParameters = [];
 
     /**
+     * Parameters set for input group
+     *
+     * @var array
+     */
+    protected $inputGroupParameters = [];
+
+    /**
      * The group is opened or not
      *
      * @var boolean
@@ -102,11 +108,25 @@ class FormBuilder
     protected $buttonGroupIsOpened = false;
 
     /**
+     * The group is opened or not
+     *
+     * @var boolean
+     */
+    protected $inputGroupIsOpened = false;
+
+    /**
      * Saved html for buttons inside a group
      *
      * @var boolean
      */
     protected $buttonsWithinGroupHtml = '';
+
+    /**
+     * Saved html for inputs inside a group
+     *
+     * @var boolean
+     */
+    protected $inputsWithinGroupHtml = '';
 
     /**
      * Array of parameter names which can be used for form creating
@@ -216,19 +236,39 @@ class FormBuilder
     /**
      * Create new input
      *
-     * @param $name
+     * @param string $name
      * @param string $label
      * @param array $parameters
+     * @param string $view
      *
      * @return Factory|\Illuminate\View\View
      */
-    public function input($name, $label = '', $parameters = [])
+    public function input($name, $label = '', $parameters = [], $view = 'form::input')
     {
         $parameters = $this->setFromForm($parameters);
         $parameters = $this->setDefaultFromConfig($parameters);
         $parameters = $this->generateComplexInputParameters($name, $parameters);
 
-        return view('form::input', compact('name', 'label', 'parameters'));
+        return view($view, compact('name', 'label', 'parameters'));
+    }
+
+    /**
+     * Create new checkbox
+     *
+     * @param string $name
+     * @param string $label
+     * @param array $parameters
+     *
+     * @return Factory|\Illuminate\View\View
+     */
+    public function checkbox($name, $label = '', $parameters = [])
+    {
+        $parameters['form-control-class'] = '';
+        $parameters = $this->setFromForm($parameters);
+        $parameters = $this->setDefaultFromConfig($parameters);
+        $parameters = $this->generateComplexCheckboxParameters($name, $parameters);
+
+        return $this->input($name, $label, $parameters, 'form::checkbox');
     }
 
     /**
@@ -323,15 +363,30 @@ class FormBuilder
         return $this->button($text, $parameters);
     }
 
+    public function inputGroup($parameters = [])
+    {
+        $parameters = $this->setFromForm($parameters);
+        $parameters = $this->setDefaultFromConfig($parameters);
+        //because input group equal to input with several buttons inside one input html wrap
+        $parameters = $this->generateComplexInputParameters('', $parameters);
+
+        $this->inputGroupParameters = $parameters;
+        $this->inputGroupIsOpened = true;
+
+        return '';
+    }
+
     public function buttonGroup($parameters = [])
     {
         $parameters = $this->setFromForm($parameters);
         $parameters = $this->setDefaultFromConfig($parameters);
         //because button group equal to button with several buttons inside one input html wrap
         $parameters = $this->generateComplexButtonParameters($parameters);
-        $this->buttonGroupParameters = $parameters;
 
+        $this->buttonGroupParameters = $parameters;
         $this->buttonGroupIsOpened = true;
+
+        return '';
     }
 
     public function buttonGroupEnd()
@@ -339,13 +394,27 @@ class FormBuilder
         $this->buttonGroupIsOpened = false;
         $parameters = $this->buttonGroupParameters;
         $this->buttonGroupParameters = [];
-        $buttons = $this->buttonsWithinGroupHtml;
+        $html = $this->buttonsWithinGroupHtml;
         $this->buttonsWithinGroupHtml = '';
 
         $name = isset($parameters['name']) ? $parameters['name'] : '';
         $label = isset($parameters['label-text']) ? $parameters['label-text'] : '';
 
-        return view('form::button-group', compact('buttons', 'name', 'parameters', 'label'));
+        return view('form::group', compact('html', 'name', 'parameters', 'label'));
+    }
+
+    public function inputGroupEnd()
+    {
+        $this->inputGroupIsOpened = false;
+        $parameters = $this->inputGroupParameters;
+        $this->inputGroupParameters = [];
+        $html = $this->inputsWithinGroupHtml;
+        $this->inputsWithinGroupHtml = '';
+
+        $name = isset($parameters['name']) ? $parameters['name'] : '';
+        $label = isset($parameters['label-text']) ? $parameters['label-text'] : '';
+
+        return view('form::group', compact('html', 'name', 'parameters', 'label'));
     }
 
     /**
@@ -531,7 +600,7 @@ class FormBuilder
             'form-control-class',
             'error-form-group-class',
             'error-class',
-            'button-grid-class',
+            'offset-input-grid-class',
             'btn-class',
             'form-direction-class',
             'use-grid',
@@ -694,9 +763,12 @@ class FormBuilder
         if (
             isset($parameters['bootstrap']) && $parameters['bootstrap']
             && isset($parameters['use-grid']) && $parameters['use-grid']
-            && isset($parameters['input-grid-class']) && $parameters['input-grid-class']
         ) {
-            $classes[] = $parameters['input-grid-class'];
+            if (empty($parameters['label'])) {
+                $classes[] = $parameters['offset-input-grid-class'];
+            } else {
+                $classes[] = $parameters['input-grid-class'];
+            }
         }
 
         if (isset($parameters['wrapper-class']) && $parameters['wrapper-class']) {
@@ -790,25 +862,7 @@ class FormBuilder
      */
     protected function getButtonWrapperClasses($parameters)
     {
-        $classes = [];
-
-        if (
-            isset($parameters['bootstrap']) && $parameters['bootstrap']
-            && isset($parameters['use-grid']) && $parameters['use-grid']
-            && isset($parameters['button-grid-class']) && $parameters['button-grid-class']
-        ) {
-            if (empty($parameters['label'])) {
-                $classes[] = $parameters['button-grid-class'];
-            } else {
-                $classes[] = $parameters['input-grid-class'];
-            }
-        }
-
-        if (isset($parameters['wrapper-class']) && $parameters['wrapper-class']) {
-            $classes[] = $parameters['wrapper-class'];
-        }
-
-        return implode(' ', $classes);
+        return $this->getInputWrapperClasses($parameters);
     }
 
 
@@ -956,6 +1010,31 @@ class FormBuilder
         $parameters['form-group-wrapper-classes'] = $this->getFormGroupClasses($parameters, $name);
         $parameters['input-wrapper-classes'] = $this->getInputWrapperClasses($parameters);
         $parameters['input-classes'] = $this->getInputClasses($parameters, $name);
+
+        return $parameters;
+    }
+
+    /**
+     * Fill parameters based on other parameters
+     *
+     * @param string $name
+     * @param array $parameters
+     *
+     * @return array
+     */
+    protected function generateComplexCheckboxParameters($name, $parameters)
+    {
+        if (!isset($parameters['label'])) {
+            $parameters['label'] = false;
+        }
+
+        if ($parameters['bootstrap'] && !$parameters['label']) {
+            $parameters['form-group-class'] = 'checkbox';
+        }
+
+        if ($this->getInputValue($name, $parameters) == true) {
+            $parameters['checked'] = true;
+        }
 
         return $parameters;
     }

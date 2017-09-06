@@ -189,16 +189,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Class for grid column with button
+    | Class for grid offset
     |--------------------------------------------------------------------------
     |
-    | Some class name for the grid
+    | Offset for inputs without label column
     |
     | Supported: false, 'string'
     |
     */
 
-    'button_grid_class' => 'col-md-8 col-md-offset-4',
+    'offset_input_grid_class' => 'col-md-6 col-md-offset-4',
 
     /*
     |--------------------------------------------------------------------------

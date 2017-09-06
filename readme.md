@@ -184,10 +184,12 @@ You can specify a lot of additional parameters:
 |                  | wrapper-class           | Set the class of the input wrapper div       |
 |                  | btn-class               | Specify any class for the input instead the default "btn" or set false |
 |                  | label                   | Set false (default) if you don't need the label or set some string with HTML |
-|                  | label-text              | Set some text for the label |
+|                  | label-text              | Set some text for the label                  |
 | Form::buttonGroup|                         | The group is the several buttons inside one button wrappers. So, you can use any button parameters here to describe the label, wrappers etc |
 | Form::buttonLink |                         | Similar to the button, but with "href" ant "target"|
 | Form::hidden     |                         | Similar to the input, but with hardcoded "only-input" ant "type"|
+| Form::checkbox   |                         | Similar to the input, but with "checked"     |
+|                  | Checked                 | True/false                                   |
 
 ### Template editing
 
@@ -220,7 +222,7 @@ php artisan vendor:publish
 | error_form_group_class |false, 'string' | 'has-error' | Class for form group with error | Redefine the default bootstrap "has-error" class or disable it |
 | error_class | false, 'string' | 'has-error' | Class for input with error | Define the class or disable it |
 | btn_class | false, 'string' | 'btn btn-primary' | Class for for button | Redefine the default bootstrap "btn" class or disable it |
-| button_grid_class | false, 'string' | 'col-md-8 col-md-offset-4' | Class for grid column with button | Some class name for the grid |
+| offset_input_grid_class | false, 'string' | 'col-md-6 col-md-offset-4' | Class for grid offset | Offset for inputs without label column |
 | form_direction_class | false, 'string' | 'form-horizontal' | Class for form direction | Redefine the default bootstrap "form-horizontal" class or disable it |
 | use_grid | true, false | true | Use grid classed | When enabled the labels and inputs is located in different columns |
 | bootstrap | true, false | true | Use bootstrap classes | When enabled the elements have bootstrap classes. You can redefine all of theme separately if you need. This is shortcut for disabling. |
@@ -252,6 +254,7 @@ php artisan vendor:publish
  - Form::buttonGroupEnd()
  - Form::button($text = 'Submit', $parameters = [])
  - Form::buttonLink($text = 'Cancel', $link = '/', $parameters = [])
+ - Form::checkbox($name, $label = '', $parameters = [])
 
 #### Shortcuts
  
