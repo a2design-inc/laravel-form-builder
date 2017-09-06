@@ -189,7 +189,7 @@ You can specify a lot of additional parameters:
 | Form::buttonLink |                         | Similar to the button, but with "href" ant "target"|
 | Form::hidden     |                         | Similar to the input, but with hardcoded "only-input" ant "type"|
 | Form::checkbox   |                         | Similar to the input, but with "checked"     |
-|                  | Checked                 | True/false                                   |
+|                  | checked                 | True/false                                   |
 
 ### Template editing
 
