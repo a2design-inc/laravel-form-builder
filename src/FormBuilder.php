@@ -12,9 +12,6 @@ use Illuminate\Support\ViewErrorBag;
  * Class FormBuilder
  * @package A2design\Form
  *
- * TODO button-link
- * TODO button-link-cancel
- *
  * TODO? submit
  * TODO checkbox
  * TODO radio
@@ -242,10 +239,11 @@ class FormBuilder
      *
      * @param string $text
      * @param array $parameters
+     * @param string $view
      *
      * @return Factory|\Illuminate\View\View|null
      */
-    public function button($text = 'Submit', $parameters = [])
+    public function button($text = 'Submit', $parameters = [], $view = 'form::button')
     {
         $parameters = $this->setFromForm($parameters);
         $parameters = $this->setDefaultFromConfig($parameters);
@@ -257,7 +255,7 @@ class FormBuilder
 
         $onlyInput = $this->buttonGroupIsOpened;
 
-        $result = view('form::button', compact('text', 'parameters', 'name', 'onlyInput', 'label'));
+        $result = view($view, compact('text', 'parameters', 'name', 'onlyInput', 'label'));
 
         if ($onlyInput) {
             $this->buttonsWithinGroupHtml .= $result;
@@ -265,6 +263,23 @@ class FormBuilder
         }
 
         return $result;
+    }
+
+    /**
+     * Create new link similar to button
+     *
+     * @param string $text
+     * @param string $link
+     * @param array $parameters
+     *
+     * @return Factory|\Illuminate\View\View|null
+     */
+    public function buttonLink($text = 'Cancel', $link = '/', $parameters = [])
+    {
+        $parameters['href'] = $link;
+        $parameters['type'] = kebab_case($text);
+
+        return $this->button($text, $parameters, 'form::button-link');
     }
 
     /**

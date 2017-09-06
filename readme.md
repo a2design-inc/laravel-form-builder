@@ -14,6 +14,7 @@ Your code:
 {!! Form::create('ArticleController@update', $article) !!}
     {!! Form::input('name', 'Name') !!}
     {!! Form::buttonGroup() !!}
+        {!! Form::buttonLink('Cancel', '/') !!}
         {!! Form::reset() !!}
         {!! Form::submit() !!}
     {!! Form::buttonGroupEnd() !!}
@@ -39,12 +40,19 @@ Output:
     
     <div class="form-group">
         <div class="col-md-8 col-md-offset-4">
+        
+            <a id="update-article-cancel" href="/" class="btn btn-primary">
+                Cancel
+            </a>
+            
             <button id="update-article-reset" type="reset" class="btn btn-primary">
                 Reset
             </button>
+            
             <button id="update-article-submit" type="submit" class="btn btn-primary">
                 Submit
             </button>
+            
         </div>
     </div>
 </form>
@@ -177,6 +185,7 @@ You can specify a lot of additional parameters:
 |                  | label                   | Set false (default) if you don't need the label or set some string with HTML |
 |                  | label-text              | Set some text for the label |
 | Form::buttonGroup|                         | The group is the several buttons inside one button wrappers. So, you can use any button parameters here to describe the label, wrappers etc |
+| Form::buttonLink |                         | Similar to the button, but with "href" ant "target"|
 
 ### Template editing
 
@@ -239,6 +248,7 @@ php artisan vendor:publish
  - Form::button($text = 'Submit', $parameters = [])
  - Form::buttonGroup($parameters = [])
  - Form::buttonGroupEnd()
+ - Form::buttonLink($text = 'Cancel', $link = '/', $parameters = [])
 
 #### Shortcuts
  
