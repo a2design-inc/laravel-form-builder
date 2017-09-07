@@ -15,8 +15,6 @@ use Illuminate\Support\ViewErrorBag;
  * TODO radio
  * TODO file
  * TODO image
- * TODO textarea
- * TODO multiselect, selectbox
  *
  * TODO tests
  * TODO? separate the class

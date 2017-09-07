@@ -6,6 +6,8 @@ You can show validation errors, old input values and form context based on model
 
 And you can simply redefine or adjust all what you want.
 
+![example_image](https://i.imgur.com/FmX6EeL.png)
+
 ## Basic example
 
 Your code:
