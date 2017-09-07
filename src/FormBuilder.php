@@ -91,13 +91,6 @@ class FormBuilder
     protected $formParameters = [];
 
     /**
-     * Parameters set for button group
-     *
-     * @var array
-     */
-    protected $buttonGroupParameters = [];
-
-    /**
      * Parameters set for input group
      *
      * @var array
@@ -109,21 +102,7 @@ class FormBuilder
      *
      * @var boolean
      */
-    protected $buttonGroupIsOpened = false;
-
-    /**
-     * The group is opened or not
-     *
-     * @var boolean
-     */
     protected $inputGroupIsOpened = false;
-
-    /**
-     * Saved html for buttons inside a group
-     *
-     * @var boolean
-     */
-    protected $buttonsWithinGroupHtml = '';
 
     /**
      * Saved html for inputs inside a group
@@ -378,6 +357,16 @@ class FormBuilder
         return $this->button($text, $parameters);
     }
 
+    /**
+     * Open group with inputs
+     *
+     * This method prevent output
+     * The html is returned in inputGroupEnd with stashed inputs inside overall wrapper
+     *
+     * @param array $parameters
+     *
+     * @return string
+     */
     public function inputGroup($parameters = [])
     {
         $this->inputGroupIsOpened = true;
@@ -392,6 +381,13 @@ class FormBuilder
         return '';
     }
 
+    /**
+     * Open group with buttons, similar to inputGroup
+     *
+     * @param array $parameters
+     *
+     * @return string
+     */
     public function buttonGroup($parameters = [])
     {
         $this->inputGroupIsOpened = true;
@@ -405,11 +401,21 @@ class FormBuilder
         return $this->inputGroup($parameters);
     }
 
+    /**
+     * Close the group and return elements stashed inside the group
+     *
+     * @return Factory|\Illuminate\View\View
+     */
     public function buttonGroupEnd()
     {
         return $this->inputGroupEnd();
     }
 
+    /**
+     * Close the group and return elements stashed inside the group
+     *
+     * @return Factory|\Illuminate\View\View
+     */
     public function inputGroupEnd()
     {
         $this->inputGroupIsOpened = false;
@@ -1161,11 +1167,11 @@ class FormBuilder
      */
     protected function setFromButtonGroup($parameters)
     {
-        if (!$this->buttonGroupIsOpened) {
+        if (!$this->inputGroupIsOpened) {
             return $parameters;
         }
 
-        return $this->addOnlyNewParameters($parameters, $this->buttonGroupParameters);
+        return $this->addOnlyNewParameters($parameters, $this->inputGroupParameters);
     }
 
     /**
