@@ -202,7 +202,11 @@ You can specify a lot of additional parameters:
 |                  | multiple                | True/false                                                      |
 |                  | size                    | Set the size attribute                                          |
 |                  | value                   | You can set array of selected values instead only one 'value' attribute for the multiple|
-
+| Form::textarea   |                         | The save as input but with additional parameters |
+|                  | maxlength               | Set the maxlength attribute                                     |
+|                  | placeholder             | Set the placeholder attribute                                   |
+|                  | cols                    | Set the cols attribute                                          |
+|                  | rows                    | Set the rows attribute                                          |
 
 ### Template editing
 
@@ -290,14 +294,14 @@ php artisan vendor:publish
  - Form::month()
  - Form::week()
  
- Buttons:
+ Other:
  
  - Form::reset() - Form::button() with type reset
  - Form::submit() - Form::button() alias
+ - Form::text() - Form::textarea() alias
  
 ## Examples
- 
- 
+
 ### Line of checkboxes
  
 ```

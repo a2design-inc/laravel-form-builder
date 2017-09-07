@@ -270,6 +270,34 @@ class FormBuilder
     }
 
     /**
+     * Create new textarea
+     *
+     * @param string $name
+     * @param string $label
+     * @param array $parameters
+     *
+     * @return Factory|\Illuminate\View\View
+     */
+    public function textarea($name, $label = '', $parameters = [])
+    {
+        return $this->input($name, $label, $parameters, 'form::textarea');
+    }
+
+    /**
+     * Shortcut for textarea
+     *
+     * @param string $name
+     * @param string $label
+     * @param array $parameters
+     *
+     * @return Factory|\Illuminate\View\View
+     */
+    public function text($name, $label = '', $parameters = [])
+    {
+        return $this->textarea($name, $label, $parameters);
+    }
+
+    /**
      * Create new input
      *
      * @param $name
@@ -1052,6 +1080,10 @@ class FormBuilder
 
         if (!isset($parameters['label-escaped'])) {
             $parameters['label-escaped'] = true;
+        }
+
+        if (!isset($parameters['escaped'])) {
+            $parameters['escaped'] = true;
         }
 
         return $parameters;
