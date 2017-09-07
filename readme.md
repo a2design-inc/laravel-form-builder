@@ -295,3 +295,13 @@ php artisan vendor:publish
         {!! Form::checkbox('bar', 'Bar') !!}
     {!! Form::inputGroupEnd() !!}
 ```
+
+### Line of buttons
+ 
+```
+    {!! Form::buttonGroup(['label-text' => 'Some label']) !!}
+        {!! Form::buttonLink('Cancel', '/') !!}
+        {!! Form::reset() !!}
+        {!! Form::submit() !!}
+    {!! Form::buttonGroupEnd() !!}
+```

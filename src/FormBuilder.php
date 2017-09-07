@@ -12,6 +12,8 @@ use Illuminate\Support\ViewErrorBag;
  * Class FormBuilder
  * @package A2design\Form
  *
+ * TODO? merge button and input methods?
+ *
  * TODO radio
  * TODO file
  * TODO image
@@ -19,6 +21,7 @@ use Illuminate\Support\ViewErrorBag;
  * TODO multiselect, selectbox
  *
  * TODO tests
+ * TODO? separate the class
  */
 class FormBuilder
 {
