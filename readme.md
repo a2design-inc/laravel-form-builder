@@ -193,8 +193,12 @@ You can specify a lot of additional parameters:
 | Form::checkbox   |                         | Similar to the input, but with additional parameters |
 |                  | checked                 | True/false                                   |
 |                  | checkbox-label          | The check box also have wrapping label, set false to disable |
-|                  | checkbox-label-class    | Define class for the label around the checkbox|
-|                  | label                   | Set true to use label position like as usual input label|
+|                  | checkbox-label-class    | Define class for the label around the checkbox |
+| Form::textarea   |                         | The save as input but with additional parameters |
+|                  | maxlength               | Set the maxlength attribute                  |
+|                  | placeholder             | Set the placeholder attribute                |
+|                  | cols                    | Set the cols attribute                       |
+|                  | rows                    | Set the rows attribute                       |
 
 ### Template editing
 
