@@ -641,6 +641,7 @@ class FormBuilder
             'bootstrap',
             'wrapper',
             'form-group-wrapper',
+            'label-after',
         ];
 
         foreach ($configurableParameters as $configurableParameter) {
