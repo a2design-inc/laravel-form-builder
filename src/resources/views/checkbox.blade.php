@@ -4,22 +4,22 @@
     @if (!isset($parameters['checkbox-label']) || $parameters['checkbox-label'] !== false)
         <label
             @if (!empty($parameters['checkbox-label-class']))
-                class="{!! $parameters['checkbox-label-class'] !!}"
+                class="{{ $parameters['checkbox-label-class'] }}"
             @endif
         >
     @endif
 
-        <input type="hidden" name="{!! $name !!}" value="0">
+        <input type="hidden" name="{{ $name }}" value="0">
         <input
             @if (!empty($parameters['id']))
-                id="{!! $parameters['id'] !!}"
+                id="{{ $parameters['id'] }}"
             @endif
 
             @if (!empty($parameters['input-classes']))
-                class="{!! $parameters['input-classes'] !!}"
+                class="{{ $parameters['input-classes'] }}"
             @endif
 
-            name="{!! $name !!}"
+            name="{{ $name }}"
             value="1"
             type="checkbox"
 
@@ -45,7 +45,11 @@
         >
 
     @if (!isset($parameters['checkbox-label']) || $parameters['checkbox-label'] !== false)
-            {!! $label !!}
+            @if ($parameters['label-escaped'] === true)
+                {{ $label }}
+            @else
+                {!! $label !!}
+            @endif
         </label>
     @endif
 {{--For multiple layout using--}}
