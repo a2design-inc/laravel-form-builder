@@ -340,3 +340,12 @@ php artisan vendor:publish
         {!! Form::submit() !!}
     {!! Form::buttonGroupEnd() !!}
 ```
+
+### Required input asterisk
+ 
+```
+    .form-group.required .control-label:after {
+        content: "*";
+        color: red;
+    }
+```
