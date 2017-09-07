@@ -159,6 +159,7 @@ You can specify a lot of additional parameters:
 |                  | wrapper-class           | Set the class of the input wrapper div       |
 |                  | form-group-wrapper-class| Set the class of the form-group wrapper div  |
 |                  | label-class             | Set the class of the label                   |
+|                  | label-escaped           | Set false to turn off the string escaping    |
 |                  | value                   | Define your own value                        |
 |                  | wrapper                 | Set false if you don't need the wrapper div  |
 |                  | form-group-wrapper      | Set false if you don't need the wrapper div  |
