@@ -188,6 +188,7 @@ You can specify a lot of additional parameters:
 |                  | label                   | Set false (default) if you don't need the label or set some string with HTML |
 |                  | label-text              | Set some text for the label                  |
 | Form::inputGroup |                         | The group is the several inputs inside one inputs wrappers. So, you can use any input parameters here to describe the label, wrappers etc |
+|                  | label-text              | Label text for the group                                        |
 | Form::buttonGroup|                         | The group is the several buttons inside one button wrappers. So, you can use any button parameters here to describe the label, wrappers etc |
 | Form::buttonLink |                         | Similar to the button, but with "href" ant "target"|
 | Form::hidden     |                         | Similar to the input, but with hardcoded "only-input" ant "type"|
@@ -302,10 +303,28 @@ php artisan vendor:publish
  
 ## Examples
 
+### Checkbox wit label in different column
+ 
+```
+    {!! Form::checkbox('field', 'Field', ['label' => true]) !!}
+```
+
 ### Line of checkboxes
  
 ```
     {!! Form::inputGroup(['checkbox-label-class' => 'checkbox-inline']) !!}
+        {!! Form::checkbox('foo', 'Foo') !!}
+        {!! Form::checkbox('bar', 'Bar') !!}
+    {!! Form::inputGroupEnd() !!}
+```
+
+### Line of checkboxes with overall label
+ 
+```
+    {!! Form::inputGroup([
+        'checkbox-label-class' => 'checkbox-inline',
+        'label-text' => 'test',
+    ]) !!}
         {!! Form::checkbox('foo', 'Foo') !!}
         {!! Form::checkbox('bar', 'Bar') !!}
     {!! Form::inputGroupEnd() !!}

@@ -399,6 +399,8 @@ class FormBuilder
 
         $parameters = $this->setFromForm($parameters);
         $parameters = $this->setDefaultFromConfig($parameters);
+        $parameters = $this->generateComplexInputGroupParameters($parameters);
+
         //because input group equal to input with several buttons inside one input html wrap
         $parameters = $this->generateComplexInputParameters('', $parameters);
 
@@ -1084,6 +1086,22 @@ class FormBuilder
 
         if (!isset($parameters['escaped'])) {
             $parameters['escaped'] = true;
+        }
+
+        return $parameters;
+    }
+
+    /**
+     * Fill parameters based on other parameters
+     *
+     * @param array $parameters
+     *
+     * @return array
+     */
+    protected function generateComplexInputGroupParameters($parameters)
+    {
+        if (empty($parameters['label-text'])) {
+            $parameters['label-after'] = false;
         }
 
         return $parameters;
