@@ -1031,6 +1031,10 @@ class FormBuilder
             $parameters['only-input'] = $this->inputGroupIsOpened;
         }
 
+        if (!isset($parameters['label-escaped'])) {
+            $parameters['label-escaped'] = true;
+        }
+
         return $parameters;
     }
 

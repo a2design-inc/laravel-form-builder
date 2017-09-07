@@ -45,7 +45,11 @@
         >
 
     @if (!isset($parameters['checkbox-label']) || $parameters['checkbox-label'] !== false)
-            {!! $label !!}
+            @if ($parameters['label-escaped'] === true)
+                {{ $label }}
+            @else
+                {!! $label !!}
+            @endif
         </label>
     @endif
 {{--For multiple layout using--}}

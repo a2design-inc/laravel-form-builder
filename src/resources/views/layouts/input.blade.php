@@ -23,7 +23,12 @@
                     class="{{ $parameters['label-classes'] }}"
                 @endif
             >
-                {{ $label }}
+                @if ($parameters['label-escaped'] === true)
+                    {{ $label }}
+                @else
+                    {!! $label !!}
+                @endif
+
             </label>
         @endif
 
