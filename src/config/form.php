@@ -229,7 +229,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Additional text after label ":" for example
+    | Additional text after label. For example ":"
     |--------------------------------------------------------------------------
     |
     | Supported: false, 'string'

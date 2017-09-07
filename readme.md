@@ -163,6 +163,7 @@ You can specify a lot of additional parameters:
 |                  | wrapper                 | Set false if you don't need the wrapper div  |
 |                  | form-group-wrapper      | Set false if you don't need the wrapper div  |
 |                  | label                   | Set false if you don't need the label or set some string with HTML |
+|                  | label-after             | Some string instead default ":"              |
 |                  | control-label-class     | Redefine the default bootstrap class for each label ("control-label") or disable it |
 |                  | form-group-class        | Specify any class instead the "form-group" or set false |
 |                  | form-control-class      | Specify any class for the input instead the "form-control" or set false |
@@ -239,6 +240,7 @@ php artisan vendor:publish
 | bootstrap | true, false | true | Use bootstrap classes | When enabled the elements have bootstrap classes. You can redefine all of theme separately if you need. This is shortcut for disabling. |
 | wrapper | true, false | true | Use bootstrap classed | Use wrap div for input or not |
 | form_group_wrapper | true, false | true | Use form group wrapper | Use wrap div for label and input or not |
+| label_after | false, 'string' | ':' | Additional text after label. For example ":" | |
 
 ### Disable Bootstrap
  

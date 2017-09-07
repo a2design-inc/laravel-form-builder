@@ -435,7 +435,7 @@ class FormBuilder
     }
 
     /**
-     * Create new button (alias)
+     * Create new select
      *
      * @param string $name
      * @param string $label
