@@ -275,6 +275,7 @@ class FormBuilder
      */
     public function checkbox($name, $label = '', $parameters = [])
     {
+        //because the bootstrap class is incompatible with checkboxes
         $parameters['form-control-class'] = '';
 
         //by default the checkbox used "checkbox-label" which wrap the checkbox, not usual input label
@@ -318,6 +319,7 @@ class FormBuilder
      */
     public function button($text = 'Submit', $parameters = [], $view = 'form::button')
     {
+        $parameters['text'] = $text;
         $parameters = $this->setFromForm($parameters);
         $parameters = $this->setDefaultFromConfig($parameters);
         $parameters = $this->generateComplexButtonParameters($parameters);
@@ -326,14 +328,7 @@ class FormBuilder
         $name = isset($parameters['name']) ? $parameters['name'] : '';
         $label = isset($parameters['label-text']) ? $parameters['label-text'] : '';
 
-        $result = view($view, compact('text', 'parameters', 'name', 'label'));
-
-        if ($this->buttonGroupIsOpened) {
-            $this->buttonsWithinGroupHtml .= $result;
-            return null;
-        }
-
-        return $result;
+        return $this->input($name, $label, $parameters, $view);
     }
 
     /**
@@ -399,7 +394,7 @@ class FormBuilder
 
     public function buttonGroup($parameters = [])
     {
-        $this->buttonGroupIsOpened = true;
+        $this->inputGroupIsOpened = true;
 
         $parameters = $this->setFromButtonGroup($parameters);
         $parameters = $this->setFromForm($parameters);
@@ -407,24 +402,12 @@ class FormBuilder
         //because button group equal to button with several buttons inside one input html wrap
         $parameters = $this->generateComplexButtonParameters($parameters);
 
-        $this->buttonGroupParameters = $parameters;
-
-        return '';
+        return $this->inputGroup($parameters);
     }
 
     public function buttonGroupEnd()
     {
-        $this->buttonGroupIsOpened = false;
-        $parameters = $this->buttonGroupParameters;
-        $this->buttonGroupParameters = [];
-        $html = $this->buttonsWithinGroupHtml;
-        $this->buttonsWithinGroupHtml = '';
-        $parameters['only-input'] = false;
-
-        $name = isset($parameters['name']) ? $parameters['name'] : '';
-        $label = isset($parameters['label-text']) ? $parameters['label-text'] : '';
-
-        return view('form::group', compact('html', 'name', 'parameters', 'label'));
+        return $this->inputGroupEnd();
     }
 
     public function inputGroupEnd()
@@ -1149,10 +1132,6 @@ class FormBuilder
         $parameters['form-group-wrapper-classes'] = $this->getFormGroupClasses($parameters);
         $parameters['input-wrapper-classes'] = $this->getButtonWrapperClasses($parameters);
         $parameters['button-classes'] = $this->getButtonClasses($parameters);
-
-        if (!isset($parameters['only-input'])) {
-            $parameters['only-input'] = $this->buttonGroupIsOpened;
-        }
 
         return $parameters;
     }

@@ -35,9 +35,9 @@
         @endif
     >
         @if ($parameters['escaped'] === true)
-            {{ $text }}
+            {{ $parameters['text'] }}
         @else
-            {!! $text !!}
+            {!! $parameters['text'] !!}
         @endif
     </button>
 {{--For multiple layout using--}}
