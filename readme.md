@@ -280,14 +280,14 @@ php artisan vendor:publish
  - Form::month()
  - Form::week()
  
- Buttons:
+ Other:
  
  - Form::reset() - Form::button() with type reset
  - Form::submit() - Form::button() alias
+ - Form::text() - Form::textarea() alias
  
 ## Examples
- 
- 
+
 ### Line of checkboxes
  
 ```
