@@ -6,7 +6,7 @@
     @if (!isset($parameters['form-group-wrapper']) || $parameters['form-group-wrapper'] !== false)
         <div
             @if (!empty($parameters['form-group-wrapper-classes']))
-                class="{!! $parameters['form-group-wrapper-classes'] !!}"
+                class="{{ $parameters['form-group-wrapper-classes'] }}"
             @endif
         >
     @endif
@@ -17,10 +17,10 @@
         @elseif (!isset($parameters['label']) || $parameters['label'] !== false)
             <label
                 @if (!empty($parameters['id']))
-                    for="{!! $parameters['id'] !!}"
+                    for="{{ $parameters['id'] }}"
                 @endif
                 @if (!empty($parameters['label-classes']))
-                    class="{!! $parameters['label-classes'] !!}"
+                    class="{{ $parameters['label-classes'] }}"
                 @endif
             >
                 {{ $label }}
@@ -31,7 +31,7 @@
         @if (!isset($parameters['wrapper']) || $parameters['wrapper'] !== false)
             <div
                 @if (!empty($parameters['input-wrapper-classes']))
-                    class="{!! $parameters['input-wrapper-classes'] !!}"
+                    class="{{ $parameters['input-wrapper-classes'] }}"
                 @endif
             >
         @endif
