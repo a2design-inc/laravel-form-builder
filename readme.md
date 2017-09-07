@@ -114,6 +114,8 @@ php artisan vendor:publish
 
 ## Customization
 
+![example_image](https://i.imgur.com/Gi1Dvec.png)
+
 ### Parameters
 
 You can specify a lot of additional parameters:
@@ -307,8 +309,6 @@ php artisan vendor:publish
  - Form::text() - Form::textarea() alias
  
 ## Examples
-
-![example_image](https://i.imgur.com/Gi1Dvec.png)
 
 ### Checkbox wit label in different column
  
