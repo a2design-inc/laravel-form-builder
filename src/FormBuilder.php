@@ -434,6 +434,14 @@ class FormBuilder
         return view('form::group', compact('html', 'name', 'parameters', 'label'));
     }
 
+    public function select($name, $label = '', $parameters = [])
+    {
+        $parameters = $this->setFromForm($parameters);
+        $parameters = $this->setDefaultFromConfig($parameters);
+
+        return $this->input($name, $label, $parameters, 'form::select');
+    }
+
     /**
      * Return method name of controller by the route
      *
