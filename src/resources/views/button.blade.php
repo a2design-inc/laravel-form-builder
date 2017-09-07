@@ -2,6 +2,8 @@
 
 @section('input')
     <button
+        @include('form::partials.custom-attributes')
+
         @if (!empty($parameters['id']))
             id="{{ $parameters['id'] }}"
         @endif

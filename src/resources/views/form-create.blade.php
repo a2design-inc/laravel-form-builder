@@ -1,4 +1,6 @@
 <form
+    @include('form::partials.custom-attributes')
+
     @if (!empty($parameters['form-method']))
         method="{{ $parameters['form-method'] }}"
     @endif
