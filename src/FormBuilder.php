@@ -276,6 +276,14 @@ class FormBuilder
     public function checkbox($name, $label = '', $parameters = [])
     {
         $parameters['form-control-class'] = '';
+
+        //by default the checkbox used "checkbox-label" which wrap the checkbox, not usual input label
+        if (!isset($parameters['label'])) {
+            $parameters['label'] = false;
+        }
+
+        $parameters = $this->setFromInputGroup($parameters);
+
         $parameters = $this->setFromForm($parameters);
         $parameters = $this->setDefaultFromConfig($parameters);
         $parameters = $this->generateComplexCheckboxParameters($name, $parameters);
@@ -1049,10 +1057,6 @@ class FormBuilder
      */
     protected function generateComplexCheckboxParameters($name, $parameters)
     {
-        if (!isset($parameters['label'])) {
-            $parameters['label'] = false;
-        }
-        
         if ($parameters['label'] !== false && !isset($parameters['checkbox-label'])) {
             $parameters['checkbox-label'] = false;
         }
