@@ -306,6 +306,8 @@ php artisan vendor:publish
  
 ## Examples
 
+![example_image](https://i.imgur.com/Gi1Dvec.png)
+
 ### Checkbox wit label in different column
  
 ```
