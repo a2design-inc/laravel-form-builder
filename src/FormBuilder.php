@@ -168,7 +168,7 @@ class FormBuilder
      * @param $name
      * @param $arguments
      *
-     * @return Factory|\Illuminate\View\View
+     * @return string
      */
     public function __call($name, $arguments)
     {
@@ -248,7 +248,7 @@ class FormBuilder
      * @param string $label
      * @param array $parameters
      *
-     * @return Factory|\Illuminate\View\View
+     * @return string
      */
     public function checkbox($name, $label = '', $parameters = [])
     {
@@ -276,7 +276,7 @@ class FormBuilder
      * @param string $label
      * @param array $parameters
      *
-     * @return Factory|\Illuminate\View\View
+     * @return string
      */
     public function textarea($name, $label = '', $parameters = [])
     {
@@ -290,7 +290,7 @@ class FormBuilder
      * @param string $label
      * @param array $parameters
      *
-     * @return Factory|\Illuminate\View\View
+     * @return string
      */
     public function text($name, $label = '', $parameters = [])
     {
@@ -303,7 +303,7 @@ class FormBuilder
      * @param $name
      * @param array $parameters
      *
-     * @return Factory|\Illuminate\View\View
+     * @return string
      */
     public function hidden($name, $parameters = [])
     {
@@ -320,7 +320,7 @@ class FormBuilder
      * @param array $parameters
      * @param string $view
      *
-     * @return Factory|\Illuminate\View\View|null
+     * @return string
      */
     public function button($text = 'Submit', $parameters = [], $view = 'form::button')
     {
@@ -343,7 +343,7 @@ class FormBuilder
      * @param string $link
      * @param array $parameters
      *
-     * @return Factory|\Illuminate\View\View|null
+     * @return string
      */
     public function buttonLink($text = 'Cancel', $link = '/', $parameters = [])
     {
@@ -359,7 +359,7 @@ class FormBuilder
      * @param string $text
      * @param array $parameters
      *
-     * @return Factory|\Illuminate\View\View|null
+     * @return string
      */
     public function submit($text = 'Submit', $parameters = [])
     {
@@ -372,7 +372,7 @@ class FormBuilder
      * @param string $text
      * @param array $parameters
      *
-     * @return Factory|\Illuminate\View\View|null
+     * @return string
      */
     public function reset($text = 'Reset', $parameters = [])
     {
@@ -432,7 +432,7 @@ class FormBuilder
     /**
      * Close the group and return elements stashed inside the group
      *
-     * @return Factory|\Illuminate\View\View
+     * @return string
      */
     public function buttonGroupEnd()
     {
@@ -466,10 +466,12 @@ class FormBuilder
      * @param string $label
      * @param array $parameters
      *
-     * @return Factory|\Illuminate\View\View|null
+     * @return string
      */
     public function select($name, $label = '', $parameters = [])
     {
+        $parameters['value'] = $this->getSelectValue($parameters, $name);
+
         return $this->input($name, $label, $parameters, 'form::select');
     }
 
@@ -525,12 +527,8 @@ class FormBuilder
             return $parameters['value'];
         }
 
-        $key = $this->transformKey($name);
-
-        $oldValue = $this->session->getOldInput($key);
-
-        if ($oldValue !== null) {
-            return $oldValue;
+        if ($this->session->hasOldInput($name)) {
+            return $this->session->getOldInput($name);
         }
 
         if (!empty($this->entity)) {
@@ -538,18 +536,6 @@ class FormBuilder
         }
 
         return '';
-    }
-
-    /**
-     * Transform key from array to dot syntax.
-     *
-     * @param  string $key
-     *
-     * @return mixed
-     */
-    protected function transformKey($key)
-    {
-        return str_replace(['.', '[]', '[', ']'], ['_', '', '.', ''], $key);
     }
 
     /**
@@ -722,7 +708,7 @@ class FormBuilder
      * @param $type
      * @param $arguments
      *
-     * @return Factory|\Illuminate\View\View
+     * @return string
      */
     protected function callInputType($type, $arguments)
     {
@@ -1263,5 +1249,31 @@ class FormBuilder
         }
 
         return $parameters;
+    }
+
+    /**
+     * Return value for the select
+     *
+     * Moved to different method because unlike usual input
+     * the select use "old" values despite the "value" parameter
+     *
+     * @param array $parameters
+     * @param string $name
+     *
+     * @return array|string
+     */
+    protected function getSelectValue($parameters, $name)
+    {
+        $customValue = isset($parameters['value'])? $parameters['value'] : '';
+
+        if (isset($parameters['use-old']) && $parameters['use-old'] === false) {
+            return $customValue;
+        }
+
+        if ($this->session->hasOldInput($name)) {
+            return $this->session->getOldInput($name);
+        }
+
+        return $customValue;
     }
 }
