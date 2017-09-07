@@ -186,7 +186,7 @@ class FormBuilder
      * @param null|Model $entity
      * @param array $parameters
      *
-     * @return Factory|\Illuminate\View\View
+     * @return string
      */
     public function create($action = '', $entity = null, $parameters = [])
     {
@@ -201,17 +201,17 @@ class FormBuilder
 
         $this->formParameters = $parameters;
 
-        return view('form::form-create', compact('parameters'));
+        return view('form::form-create', compact('parameters'))->render();
     }
 
     /**
      * Close the form
      *
-     * @return \Illuminate\View\View
+     * @return string
      */
     public function end()
     {
-        return view('form::form-end');
+        return view('form::form-end')->render();
     }
 
     /**
@@ -222,7 +222,7 @@ class FormBuilder
      * @param array $parameters
      * @param string $view
      *
-     * @return Factory|\Illuminate\View\View
+     * @return string
      */
     public function input($name, $label = '', $parameters = [], $view = 'form::input')
     {
@@ -231,7 +231,7 @@ class FormBuilder
         $parameters = $this->setDefaultFromConfig($parameters);
         $parameters = $this->generateComplexInputParameters($name, $parameters);
 
-        $result = view($view, compact('name', 'label', 'parameters'));
+        $result = view($view, compact('name', 'label', 'parameters'))->render();
 
         if ($this->inputGroupIsOpened) {
             $this->inputsWithinGroupHtml .= $result;
@@ -442,7 +442,7 @@ class FormBuilder
     /**
      * Close the group and return elements stashed inside the group
      *
-     * @return Factory|\Illuminate\View\View
+     * @return string
      */
     public function inputGroupEnd()
     {
@@ -456,7 +456,7 @@ class FormBuilder
         $name = isset($parameters['name']) ? $parameters['name'] : '';
         $label = isset($parameters['label-text']) ? $parameters['label-text'] : '';
 
-        return view('form::group', compact('html', 'name', 'parameters', 'label'));
+        return view('form::group', compact('html', 'name', 'parameters', 'label'))->render();
     }
 
     /**
