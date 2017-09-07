@@ -1,7 +1,7 @@
 @extends('form::layouts.input')
 
 @section('input')
-    @if (empty($parameters['checkbox-label']) || $parameters['checkbox-label'] !== false)
+    @if (!isset($parameters['checkbox-label']) || $parameters['checkbox-label'] !== false)
         <label
             @if (!empty($parameters['checkbox-label-class']))
                 class="{!! $parameters['checkbox-label-class'] !!}"
@@ -43,11 +43,9 @@
                 readonly
             @endif
         >
-        @if ($parameters['label'] === false)
-            {!! $label !!}
-        @endif
 
-    @if (empty($parameters['checkbox-label']) || $parameters['checkbox-label'] !== false)
+    @if (!isset($parameters['checkbox-label']) || $parameters['checkbox-label'] !== false)
+            {!! $label !!}
         </label>
     @endif
 {{--For multiple layout using--}}

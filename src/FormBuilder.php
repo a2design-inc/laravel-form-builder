@@ -1052,6 +1052,10 @@ class FormBuilder
         if (!isset($parameters['label'])) {
             $parameters['label'] = false;
         }
+        
+        if ($parameters['label'] !== false && !isset($parameters['checkbox-label'])) {
+            $parameters['checkbox-label'] = false;
+        }
 
         if ($parameters['bootstrap'] && !$parameters['label']) {
             $parameters['form-group-class'] .= ' checkbox';

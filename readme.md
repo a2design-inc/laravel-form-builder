@@ -194,6 +194,7 @@ You can specify a lot of additional parameters:
 |                  | checkbox-label          | The check box also have wrapping label, set false to disable |
 |                  | checkbox-label-class    | Define class for the label around the checkbox|
 |                  | label                   | Set true to use label position like as usual input label|
+
 ### Template editing
 
 The package is used the laravel blade templates for all form elements. Feel free to customize what you need.
