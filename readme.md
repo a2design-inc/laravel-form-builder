@@ -185,12 +185,15 @@ You can specify a lot of additional parameters:
 |                  | btn-class               | Specify any class for the input instead the default "btn" or set false |
 |                  | label                   | Set false (default) if you don't need the label or set some string with HTML |
 |                  | label-text              | Set some text for the label                  |
+| Form::inputGroup |                         | The group is the several inputs inside one inputs wrappers. So, you can use any input parameters here to describe the label, wrappers etc |
 | Form::buttonGroup|                         | The group is the several buttons inside one button wrappers. So, you can use any button parameters here to describe the label, wrappers etc |
 | Form::buttonLink |                         | Similar to the button, but with "href" ant "target"|
 | Form::hidden     |                         | Similar to the input, but with hardcoded "only-input" ant "type"|
-| Form::checkbox   |                         | Similar to the input, but with "checked"     |
+| Form::checkbox   |                         | Similar to the input, but with additional parameters |
 |                  | checked                 | True/false                                   |
-
+|                  | checkbox-label          | The check box also have wrapping label, set false to disable |
+|                  | checkbox-label-class    | Define class for the label around the checkbox|
+|                  | label                   | Set true to use label position like as usual input label|
 ### Template editing
 
 The package is used the laravel blade templates for all form elements. Feel free to customize what you need.
@@ -281,3 +284,14 @@ php artisan vendor:publish
  - Form::reset() - Form::button() with type reset
  - Form::submit() - Form::button() alias
  
+## Examples
+ 
+ 
+### Line of checkboxes
+ 
+```
+    {!! Form::inputGroup(['checkbox-label-class' => 'checkbox-inline']) !!}
+        {!! Form::checkbox('foo', 'Foo') !!}
+        {!! Form::checkbox('bar', 'Bar') !!}
+    {!! Form::inputGroupEnd() !!}
+```

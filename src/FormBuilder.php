@@ -16,6 +16,7 @@ use Illuminate\Support\ViewErrorBag;
  * TODO file
  * TODO image
  * TODO textarea
+ * TODO multiselect, selectbox
  *
  * TODO tests
  */
@@ -245,11 +246,19 @@ class FormBuilder
      */
     public function input($name, $label = '', $parameters = [], $view = 'form::input')
     {
+        $parameters = $this->setFromInputGroup($parameters);
         $parameters = $this->setFromForm($parameters);
         $parameters = $this->setDefaultFromConfig($parameters);
         $parameters = $this->generateComplexInputParameters($name, $parameters);
 
-        return view($view, compact('name', 'label', 'parameters'));
+        $result = view($view, compact('name', 'label', 'parameters'));
+
+        if ($this->inputGroupIsOpened) {
+            $this->inputsWithinGroupHtml .= $result;
+            return null;
+        }
+
+        return $result;
     }
 
     /**
@@ -365,26 +374,29 @@ class FormBuilder
 
     public function inputGroup($parameters = [])
     {
+        $this->inputGroupIsOpened = true;
+
         $parameters = $this->setFromForm($parameters);
         $parameters = $this->setDefaultFromConfig($parameters);
         //because input group equal to input with several buttons inside one input html wrap
         $parameters = $this->generateComplexInputParameters('', $parameters);
 
         $this->inputGroupParameters = $parameters;
-        $this->inputGroupIsOpened = true;
 
         return '';
     }
 
     public function buttonGroup($parameters = [])
     {
+        $this->buttonGroupIsOpened = true;
+
+        $parameters = $this->setFromButtonGroup($parameters);
         $parameters = $this->setFromForm($parameters);
         $parameters = $this->setDefaultFromConfig($parameters);
         //because button group equal to button with several buttons inside one input html wrap
         $parameters = $this->generateComplexButtonParameters($parameters);
 
         $this->buttonGroupParameters = $parameters;
-        $this->buttonGroupIsOpened = true;
 
         return '';
     }
@@ -396,6 +408,7 @@ class FormBuilder
         $this->buttonGroupParameters = [];
         $html = $this->buttonsWithinGroupHtml;
         $this->buttonsWithinGroupHtml = '';
+        $parameters['only-input'] = false;
 
         $name = isset($parameters['name']) ? $parameters['name'] : '';
         $label = isset($parameters['label-text']) ? $parameters['label-text'] : '';
@@ -410,6 +423,7 @@ class FormBuilder
         $this->inputGroupParameters = [];
         $html = $this->inputsWithinGroupHtml;
         $this->inputsWithinGroupHtml = '';
+        $parameters['only-input'] = false;
 
         $name = isset($parameters['name']) ? $parameters['name'] : '';
         $label = isset($parameters['label-text']) ? $parameters['label-text'] : '';
@@ -1004,12 +1018,20 @@ class FormBuilder
      */
     protected function generateComplexInputParameters($name, $parameters)
     {
+        if (!isset($parameters['label'])) {
+            $parameters['label'] = true;
+        }
+
         $parameters['value'] = $this->getInputValue($name, $parameters);
         $parameters['id'] = $this->getInputId($name, $parameters);
         $parameters['label-classes'] = $this->getLabelClasses($parameters);
         $parameters['form-group-wrapper-classes'] = $this->getFormGroupClasses($parameters, $name);
         $parameters['input-wrapper-classes'] = $this->getInputWrapperClasses($parameters);
         $parameters['input-classes'] = $this->getInputClasses($parameters, $name);
+
+        if (!isset($parameters['only-input'])) {
+            $parameters['only-input'] = $this->inputGroupIsOpened;
+        }
 
         return $parameters;
     }
@@ -1029,7 +1051,7 @@ class FormBuilder
         }
 
         if ($parameters['bootstrap'] && !$parameters['label']) {
-            $parameters['form-group-class'] = 'checkbox';
+            $parameters['form-group-class'] .= ' checkbox';
         }
 
         if ($this->getInputValue($name, $parameters) == true) {
@@ -1116,7 +1138,62 @@ class FormBuilder
         $parameters['form-group-wrapper-classes'] = $this->getFormGroupClasses($parameters);
         $parameters['input-wrapper-classes'] = $this->getButtonWrapperClasses($parameters);
         $parameters['button-classes'] = $this->getButtonClasses($parameters);
-        $parameters['only-input'] = $this->buttonGroupIsOpened;
+
+        if (!isset($parameters['only-input'])) {
+            $parameters['only-input'] = $this->buttonGroupIsOpened;
+        }
+
+        return $parameters;
+    }
+
+    /**
+     * Fill parameters from the group
+     *
+     * @param array $parameters
+     *
+     * @return array
+     */
+    protected function setFromInputGroup($parameters)
+    {
+        if (!$this->inputGroupIsOpened) {
+            return $parameters;
+        }
+
+        return $this->addOnlyNewParameters($parameters, $this->inputGroupParameters);
+    }
+
+    /**
+     * Fill parameters from the group
+     *
+     * @param array $parameters
+     *
+     * @return array
+     */
+    protected function setFromButtonGroup($parameters)
+    {
+        if (!$this->buttonGroupIsOpened) {
+            return $parameters;
+        }
+
+        return $this->addOnlyNewParameters($parameters, $this->buttonGroupParameters);
+    }
+
+    /**
+     * Add parameters which have not set yet
+     *
+     * @param array $parameters
+     * @param array $newParameters
+     *
+     * @return array
+     */
+    protected function addOnlyNewParameters($parameters, $newParameters)
+    {
+        foreach ($newParameters as $name => $parameter) {
+            if (isset($parameters[$name])) {
+                continue;
+            }
+            $parameters[$name] = $parameter;
+        }
 
         return $parameters;
     }

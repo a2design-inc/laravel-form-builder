@@ -1,8 +1,15 @@
 @extends('form::layouts.input')
 
 @section('input')
-    <input type="hidden" name="{!! $name !!}" value="0">
-    <label>
+    @if (empty($parameters['checkbox-label']) || $parameters['checkbox-label'] !== false)
+        <label
+            @if (!empty($parameters['checkbox-label-class']))
+                class="{!! $parameters['checkbox-label-class'] !!}"
+            @endif
+        >
+    @endif
+
+        <input type="hidden" name="{!! $name !!}" value="0">
         <input
             @if (!empty($parameters['id']))
                 id="{!! $parameters['id'] !!}"
@@ -39,6 +46,9 @@
         @if ($parameters['label'] === false)
             {!! $label !!}
         @endif
-    </label>
+
+    @if (empty($parameters['checkbox-label']) || $parameters['checkbox-label'] !== false)
+        </label>
+    @endif
 {{--For multiple layout using--}}
 @overwrite
