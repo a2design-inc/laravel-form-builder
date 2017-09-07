@@ -436,9 +436,6 @@ class FormBuilder
 
     public function select($name, $label = '', $parameters = [])
     {
-        $parameters = $this->setFromForm($parameters);
-        $parameters = $this->setDefaultFromConfig($parameters);
-
         return $this->input($name, $label, $parameters, 'form::select');
     }
 

@@ -189,11 +189,19 @@ You can specify a lot of additional parameters:
 | Form::buttonGroup|                         | The group is the several buttons inside one button wrappers. So, you can use any button parameters here to describe the label, wrappers etc |
 | Form::buttonLink |                         | Similar to the button, but with "href" ant "target"|
 | Form::hidden     |                         | Similar to the input, but with hardcoded "only-input" ant "type"|
-| Form::checkbox   |                         | Similar to the input, but with additional parameters |
-|                  | checked                 | True/false                                   |
-|                  | checkbox-label          | The check box also have wrapping label, set false to disable |
-|                  | checkbox-label-class    | Define class for the label around the checkbox|
-|                  | label                   | Set true to use label position like as usual input label|
+| Form::checkbox   |                         | Similar to the input, but with additional parameters            |
+|                  | checked                 | True/false                                                      |
+|                  | checkbox-label          | The check box also have wrapping label, set false to disable    |
+|                  | checkbox-label-class    | Define class for the label around the checkbox                  |
+|                  | label                   | Set true to use label position like as usual input label        |
+| Form::select     |                         | Similar to the input, but with additional parameters            |
+|                  | empty                   | Allow empty option. True/false or text for empty option         |
+|                  | options                 | Array value => displayed text                                   |
+|                  | multiple                | True/false                                                      |
+|                  | size                    | Set the size attribute                                          |
+|                  | value                   | You can set array of selected values instead only one 'value' attribute for the multiple|
+
+
 ### Template editing
 
 The package is used the laravel blade templates for all form elements. Feel free to customize what you need.
