@@ -434,6 +434,15 @@ class FormBuilder
         return view('form::group', compact('html', 'name', 'parameters', 'label'));
     }
 
+    /**
+     * Create new button (alias)
+     *
+     * @param string $name
+     * @param string $label
+     * @param array $parameters
+     *
+     * @return Factory|\Illuminate\View\View|null
+     */
     public function select($name, $label = '', $parameters = [])
     {
         $parameters = $this->setFromForm($parameters);
