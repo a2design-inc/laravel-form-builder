@@ -756,20 +756,24 @@ class FormBuilder
     {
         $classes = [];
 
-         if (
-             isset($parameters['bootstrap']) && $parameters['bootstrap']
-             && isset($parameters['form-group-class']) && $parameters['form-group-class']
-         ) {
-             $classes[] = $parameters['form-group-class'];
-         }
+        if (
+            isset($parameters['bootstrap']) && $parameters['bootstrap']
+            && isset($parameters['form-group-class']) && $parameters['form-group-class']
+        ) {
+            $classes[] = $parameters['form-group-class'];
+        }
 
         if ($this->inputHasError($parameters, $name) && $parameters['error-form-group-class']) {
             $classes[] = $parameters['error-form-group-class'];
         }
 
-         if (isset($parameters['form-group-wrapper-class']) && $parameters['form-group-wrapper-class']) {
-             $classes[] = $parameters['form-group-wrapper-class'];
-         }
+        if (isset($parameters['form-group-wrapper-class']) && $parameters['form-group-wrapper-class']) {
+            $classes[] = $parameters['form-group-wrapper-class'];
+        }
+
+        if (isset($parameters['required']) && $parameters['required'] === true) {
+            $classes[] = 'required';
+        }
 
         return implode(' ', $classes);
     }
