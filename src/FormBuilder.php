@@ -12,8 +12,6 @@ use Illuminate\Support\ViewErrorBag;
  * Class FormBuilder
  * @package A2design\Form
  *
- * TODO? merge button and input methods?
- *
  * TODO radio
  * TODO file
  * TODO image
