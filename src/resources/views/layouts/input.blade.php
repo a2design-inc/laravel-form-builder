@@ -13,7 +13,7 @@
 
         {{--Set label--}}
         @if (isset($parameters['label']) && is_string($parameters['label']))
-            {!! $parameters['label'] !!}
+            {!! $parameters['label'] !!}{{ !empty($parameters['label-after']) ? $parameters['label-after'] : '' }}
         @elseif (!isset($parameters['label']) || $parameters['label'] !== false)
             <label
                 @if (!empty($parameters['id']))
@@ -23,7 +23,7 @@
                     class="{!! $parameters['label-classes'] !!}"
                 @endif
             >
-                {{ $label }}
+                {{ $label }}{{ !empty($parameters['label-after']) ? $parameters['label-after'] : '' }}
             </label>
         @endif
 

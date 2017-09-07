@@ -434,6 +434,15 @@ class FormBuilder
         return view('form::group', compact('html', 'name', 'parameters', 'label'));
     }
 
+    /**
+     * Create new button (alias)
+     *
+     * @param string $name
+     * @param string $label
+     * @param array $parameters
+     *
+     * @return Factory|\Illuminate\View\View|null
+     */
     public function select($name, $label = '', $parameters = [])
     {
         return $this->input($name, $label, $parameters, 'form::select');
@@ -629,6 +638,7 @@ class FormBuilder
             'bootstrap',
             'wrapper',
             'form-group-wrapper',
+            'label-after',
         ];
 
         foreach ($configurableParameters as $configurableParameter) {

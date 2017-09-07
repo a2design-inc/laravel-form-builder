@@ -226,4 +226,15 @@ return [
     */
 
     'controller_naming' => 'Controller',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Additional text after label ":" for example
+    |--------------------------------------------------------------------------
+    |
+    | Supported: false, 'string'
+    |
+    */
+
+    'label_after' => ':',
 ];
