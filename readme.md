@@ -8,19 +8,19 @@ You can display validation errors, old input values and form context based on mo
 
 ## Table of Contents
 
-- [Basic example](#basic-example)
+- [Quick example](#quick-example)
 - [How to install](#how-to-install)
 - [Customization](#customization)
     * [Parameters](#parameters)
     * [Template editing](#template-editing)
     * [Configs](#configs)
-    * [Disable Bootstrap](#disable-bootstrap)
+    * [Disable Bootstrap/Grid](#disable-bootstrapgrid)
 - [Examples](#examples)
 - [Full list of parameters](#full-list-of-parameters)
 - [Full list of configs](#full-list-of-configs)
 - [List of methods](#list-of-methods)
 
-## Basic example
+## Quick example
 
 Your code:
 
