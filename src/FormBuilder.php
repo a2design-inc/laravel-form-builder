@@ -14,8 +14,6 @@ use Illuminate\Support\ViewErrorBag;
  * @package A2design\Form
  *
  * TODO radio
- * TODO file
- * TODO image
  * TODO input groups
  *
  * TODO tests

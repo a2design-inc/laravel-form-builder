@@ -45,7 +45,7 @@
         @foreach($parameters['options'] as $option => $text)
             <option value="{{ $option }}"
                 @if (
-                    !is_array($parameters['value']) && $option == $parameters['value']
+                    is_scalar($parameters['value']) && $option == $parameters['value']
                     || is_array($parameters['value']) && in_array($option, $parameters['value'])
                 )
                     selected

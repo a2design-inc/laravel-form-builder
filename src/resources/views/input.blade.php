@@ -12,7 +12,7 @@
             class="{{ $parameters['input-classes'] }}"
         @endif
 
-        @if (!empty($parameters['value']))
+        @if (!empty($parameters['value']) && is_scalar($parameters['value']))
             value="{!! $parameters['value'] !!}"
         @endif
 
