@@ -15,6 +15,7 @@ use Illuminate\Support\ViewErrorBag;
  * TODO radio
  * TODO file
  * TODO image
+ * TODO input groups
  *
  * TODO tests
  * TODO? separate the class
@@ -213,18 +214,20 @@ class FormBuilder
         return view('form::form-end')->render();
     }
 
-    public function postLink($action = '', $text = '', $parameters = [])
+    public function postLink($action = '', $text = '', $entity = null, $parameters = [])
     {
-//        dd(\Route::getRoutes());
-        $parameters['id'] = md5(time() . mt_rand());
-        $parameters['text'] = $text;
+        $this->entity = $entity;
         $this->action = $action;
         $this->route = $this->getRouteByAction($action);
+
+        $parameters['id'] = md5(time() . mt_rand());
+        $parameters['text'] = $text;
         $parameters['method'] = $this->getRouteMethod($parameters);
         $parameters['form-action'] = $this->getFormAction($parameters);
         $parameters['form-method'] = $this->getFormMethod($parameters);
         $parameters['hidden-inputs'] = $this->getHiddenInputs($parameters);
         $parameters['message'] = !empty($parameters['message']) ? $parameters['message'] : 'Are you sure?';
+        $parameters['escaped'] = isset($parameters['escaped']) ? $parameters['escaped'] : true;
 
         return view('form::post-link', compact('parameters'));
     }

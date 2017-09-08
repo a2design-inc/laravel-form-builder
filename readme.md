@@ -153,6 +153,7 @@ You can specify a lot of additional parameters:
 |                  | url                     | Use the url instead action argument          |
 |                  | form-direction-class    | Use some class for label->input direction    |
 |                  | attrs                   | Array of any attributes: attribute-name => value|
+|                  | enctype                 | Set the enctype attribute                    |
 | Form::input      | all-errors              | List all of the validation errors fot the input instead only first |
 |                  | error                   | Set text of error or false to force hide     |
 |                  | attrs                   | Array of any attributes: attribute-name => value|
@@ -161,7 +162,6 @@ You can specify a lot of additional parameters:
 |                  | disabled                | Set true for the attribute using             |
 |                  | autofocus               | Set true for the attribute using             |
 |                  | type                    | Set the type attribute                       |
-|                  | enctype                 | Set the enctype attribute                    |
 |                  | wrapper-class           | Set the class of the input wrapper div       |
 |                  | form-group-wrapper-class| Set the class of the form-group wrapper div  |
 |                  | label-class             | Set the class of the label                   |
@@ -215,6 +215,13 @@ You can specify a lot of additional parameters:
 |                  | placeholder             | Set the placeholder attribute                                   |
 |                  | cols                    | Set the cols attribute                                          |
 |                  | rows                    | Set the rows attribute                                          |
+| Form::postLink   |                         | Link for post data                                              |
+|                  | message                 | Confirmation message                                            |
+|                  | enctype                 | Set the enctype attribute manually                              |
+|                  | method                  | POST, GET, PUT etc                                              |
+|                  | absolute                | Absolute path of the method                                     |
+|                  | url                     | Use the url instead action argument                             |
+|                  | escaped                 | Set true/false for the text escaping                            | 
 
 ### Template editing
 
@@ -281,6 +288,7 @@ php artisan vendor:publish
  - Form::button($text = 'Submit', $parameters = [])
  - Form::buttonLink($text = 'Cancel', $link = '/', $parameters = [])
  - Form::checkbox($name, $label = '', $parameters = [])
+ - Form::postLink($action = '', $text = '', $entity = null, $parameters = [])
 
 #### Shortcuts
  
