@@ -23,7 +23,7 @@ Your code:
 
 Output:
 
-```
+```HTML
 <form method="post" action="/article/1" id="update-article" class="form-horizontal">
 
     <input type="hidden" name="_token" value="CZLvWLRwqvjvZIwiaRcMj0JxyIwvpZ0nZ5y4StwO"> 
@@ -62,52 +62,41 @@ Of course, you can disable bootstrap, set global configs, edit templates etc! Se
 
 ## Table of Contents
 
-- [How to install](#how_to_install)
-- [Basic example](#basic_example)
+- [How to install](#how-to-install)
+- [Basic example](#basic-example)
 - [Customization](#customization)
     * [Parameters](#parameters)
-    * [Full list of parameters](#full_list_of_parameters)
-    * [Template editing](#template_editing)
+    * [Full list of parameters](#full-list-of-parameters)
+    * [Template editing](#template-editing)
     * [Configs](#configs)
-    * [Disable Bootstrap](#disable_bootstrap)
-- [List of methods](#list_of_methods)
+    * [Disable Bootstrap](#disable-bootstrap)
+- [List of methods](#list-of-methods)
 - [Examples](#examples)
 
 
 ## How to install
 
-TEMPORARY:
-
-```
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@bitbucket.org:a2design/laravel-form-builder.git"
-        }
-    ],
-```
-
 Install the package:
 
-```
+```Bash
 composer require a2design-inc/laravel-form-builder
 ```
 
 Register the provider (config/app.php):
 
-```
+```PHP
 A2design\Form\FormServiceProvider::class,
 ```
 
 And the alias:
 
-```
+```PHP
 'Form' => A2design\Form\FormFacade::class,
 ```
 
 Publish the package assets (if you need to change the config file or templates):
 
-```
+```Bash
 php artisan vendor:publish
 ```
 
@@ -230,7 +219,7 @@ The package is used the laravel blade templates for all form elements. Feel free
 
 Don't forget to publish the package assets for this:
 
-```
+```Bash
 php artisan vendor:publish
 ```
 
@@ -238,7 +227,7 @@ php artisan vendor:publish
 
 Edit the config/form.php file to change the global settings. Don't forget to publish the package assets for this:
 
-```
+```Bash
 php artisan vendor:publish
 ```
 
@@ -269,7 +258,7 @@ You can remove any class or wrapper for a single element by parameters or global
  
 Or you can use shortcuts which disable few parameters simultaneously
  
-```
+```PHP
      //remove all bootsrap classes
      'bootstrap' => false,
      //or just show without grid
@@ -360,7 +349,7 @@ Or you can use shortcuts which disable few parameters simultaneously
 
 ### Required input asterisk
  
-```
+```CSS
     .form-group.required .control-label:after {
         content: "*";
         color: red;
