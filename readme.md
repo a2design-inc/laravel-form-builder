@@ -152,10 +152,10 @@ You can specify a lot of additional parameters:
 |                  | absolute                | Absolute path of the method                  |
 |                  | url                     | Use the url instead action argument          |
 |                  | form-direction-class    | Use some class for label->input direction    |
-|                  | attributes              | Array of any attributes: attribute-name => value|
+|                  | attrs                   | Array of any attributes: attribute-name => value|
 | Form::input      | all-errors              | List all of the validation errors fot the input instead only first |
 |                  | error                   | Set text of error or false to force hide     |
-|                  | attributes              | Array of any attributes: attribute-name => value|
+|                  | attrs                   | Array of any attributes: attribute-name => value|
 |                  | required                | Set true for the attribute using             |
 |                  | readonly                | Set true for the attribute using             |
 |                  | disabled                | Set true for the attribute using             |
