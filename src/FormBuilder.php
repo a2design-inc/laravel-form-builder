@@ -5,9 +5,12 @@ namespace A2design\Form;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Illuminate\Routing\RouteCollection;
+use Illuminate\Routing\UrlGenerator;
 use Illuminate\Session\Store;
 use Illuminate\Support\ViewErrorBag;
+use Illuminate\Routing\RouteUrlGenerator;
 
 /**
  * Class FormBuilder
@@ -190,8 +193,9 @@ class FormBuilder
      */
     public function create($action = '', $entity = null, $parameters = [])
     {
+        $this->action = $action;
         $this->entity = $entity;
-        $this->route = $this->getRoute($action);
+        $this->route = $this->getRoute($this->action);
         $this->actionMethod = $this->getActionMethod();
         $this->entityName = $this->getEntityName();
 
@@ -216,7 +220,8 @@ class FormBuilder
     public function postLink($action = '', $text = '', $entity = null, $parameters = [])
     {
         $this->entity = $entity;
-        $this->route = $this->getRoute($action);
+        $this->action = $action;
+        $this->route = $this->getRoute($this->action);
 
         $parameters['id'] = md5(time() . mt_rand());
         $parameters['text'] = $text;
@@ -996,19 +1001,19 @@ class FormBuilder
             return $parameters['url'];
         }
 
-        if (!empty($this->route->getActionName())) {
-            $routeAction = str_replace($this->getConfig('route_name_space') . '\\', '', $this->route->getActionName());
+        $urlGenerator = new UrlGenerator(\Route::getRoutes(), $this->request);
+        $routeUrlGenerator = new RouteUrlGenerator($urlGenerator, $this->request);
+
+        $urlParams = [];
+        if (!empty($this->entity)) {
+            $urlParams['id'] = $this->entity->getKey();
         }
 
-        if (!empty($routeAction) && !empty($this->entity)) {
-            return action($routeAction, ['id' => $this->entity->getKey()], $absolute);
+        if(!empty($this->route)) {
+            return $routeUrlGenerator->to($this->route, $urlParams, $absolute);
         }
 
-        if (!empty($routeAction)) {
-            return action($routeAction, [], $absolute);
-        }
-
-        return '';
+        return $this->action;
     }
 
     /**
