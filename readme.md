@@ -224,6 +224,11 @@ You can specify a lot of additional parameters:
 |                  | absolute                | Absolute path of the method                                     |
 |                  | url                     | Use the url instead action argument                             |
 |                  | escaped                 | Set true/false for the text escaping                            | 
+| Form::radio      |                         | Similar to the input, but with additional parameters            |
+|                  | inline                  | Show the radio buttons in line                                  |
+|                  | radio-label-class       | Set class for each radio button label                           |
+|                  | escaped                 | Set true/false for the text escaping                            |
+|                  | radio-label             | The each radio button has own label, set false to disable       |
 
 ### Template editing
 
@@ -291,6 +296,7 @@ php artisan vendor:publish
  - Form::buttonLink($text = 'Cancel', $link = '/', $parameters = [])
  - Form::checkbox($name, $label = '', $parameters = [])
  - Form::postLink($action = '', $text = '', $entity = null, $parameters = [])
+ - Form::radio($name, $label = '', $parameters = [])
 
 #### Shortcuts
  
@@ -371,4 +377,16 @@ php artisan vendor:publish
  
 ```
     {!! Form::postLink('ArticleController@destroy', 'Delete', $article) !!}
+```
+
+### Radio
+ 
+```
+    {!! Form::radio('field', 'Select the value', [
+        'inline' => true,
+        'options' => [
+            '1' => 'First',
+            '2' => 'Second',
+        ]
+    ]) !!}
 ```

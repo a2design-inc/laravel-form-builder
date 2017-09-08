@@ -497,6 +497,27 @@ class FormBuilder
     }
 
     /**
+     * Create new radio
+     *
+     * @param string $name
+     * @param string $label
+     * @param array $parameters
+     *
+     * @return string
+     */
+    public function radio($name, $label = '', $parameters = [])
+    {
+        //because the bootstrap class is incompatible with radio
+        $parameters['form-control-class'] = '';
+
+        $parameters = $this->setFromForm($parameters);
+        $parameters = $this->setDefaultFromConfig($parameters);
+        $parameters = $this->generateComplexRadioParameters($name, $parameters);
+
+        return $this->input($name, $label, $parameters, 'form::radio');
+    }
+
+    /**
      * Return method name of controller by the route
      *
      * @param array$parameters
@@ -1157,6 +1178,35 @@ class FormBuilder
 
         if ($this->getInputValue($name, $parameters) == true) {
             $parameters['checked'] = true;
+        }
+
+        return $parameters;
+    }
+
+    /**
+     * Fill parameters based on other parameters
+     *
+     * @param string $name
+     * @param array $parameters
+     *
+     * @return array
+     */
+    protected function generateComplexRadioParameters($name, $parameters)
+    {
+        if (!isset($parameters['label'])) {
+            $parameters['label'] = true;
+        }
+
+        if (!isset($parameters['inline'])) {
+            $parameters['inline'] = false;
+        }
+
+        if (!isset($parameters['radio-label-class'])) {
+            $parameters['radio-label-class'] = '';
+        }
+
+        if ($parameters['bootstrap'] && $parameters['inline']) {
+            $parameters['radio-label-class'] .= ' radio-inline';
         }
 
         return $parameters;
