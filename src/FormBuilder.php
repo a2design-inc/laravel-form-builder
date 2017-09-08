@@ -1074,6 +1074,10 @@ class FormBuilder
         $parameters['id'] = $this->getFormId($parameters);
         $parameters['form-classes'] = $this->getFormClasses($parameters);
 
+        if (!isset($parameters['enctype']) && (!empty($parameters['has-files']) || !empty($parameters['file']))) {
+            $parameters['enctype'] = 'multipart/form-data';
+        }
+
         return $parameters;
     }
 
