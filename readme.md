@@ -4,8 +4,6 @@ Laravel plugin for quick form creation with Bootstrap support.
 
 You can show validation errors, old input values and form context based on model entity without any line of code. 
 
-And you can simply redefine or adjust all what you want.
-
 ![example_image](https://i.imgur.com/NbsZjzE.png)
 
 ## Basic example
@@ -41,7 +39,7 @@ Output:
     </div>
     
     <div class="form-group">
-        <div class="col-md-8 col-md-offset-4">
+        <div class="col-md-6 col-md-offset-4">
         
             <a id="update-article-cancel" href="/" class="btn btn-primary">
                 Cancel
@@ -73,6 +71,7 @@ Of course, you can disable bootstrap, set global configs, edit templates etc! Se
     * [Configs](#configs)
     * [Disable Bootstrap](#disable_bootstrap)
 - [List of methods](#list_of_methods)
+- [Examples](#examples)
 
 
 ## How to install
@@ -122,22 +121,16 @@ You can specify a lot of additional parameters:
 
 ```
 {!! Form::create('', null, [
+
     //set custom method url
     'url' => 'http://google.com',
-    //set method
-    'method' => 'POST',
+    
     //your class
     'class' => 'my-form',
-    //show labels next to inputs
-    'use-grid' => false,
+    
     //etc
+    
 ]) !!}
-
-{!! Form::input('', '', ['label' => false]) !!}
-
-{!! Form::button('Create', ['disabled' => 'true']) !!}
-
-{!! Form::buttonGroup(['label-text' => 'Some label']) !!}
 ```
 
 ### Full list of parameters
@@ -145,9 +138,9 @@ You can specify a lot of additional parameters:
 | Element          | Parameter               | Description                                  |
 |------------------|-------------------------|----------------------------------------------|
 | Everywhere       | class                   | Class attribute                              |
-|                  | id                      | Id attribute. Generated automatically. If you don't need, specify empty string or redefine by id what you want. Or just adjust globally in config file |
+|                  | id                      | Id attribute. Generated automatically. If you don't need, specify an empty string or redefine by id what you want. Or just adjust globally in config file |
 |                  | use-grid                | Set false to disable the grid classes        |
-| Form::create     |                         | Note: you can use other parameters here to apply them for all inputs, buttons etc inside the form |
+| Form::create     |                         | Note: you can use other parameters here to apply them to all inputs, buttons etc inside the form |
 |                  | method                  | POST, GET, PUT etc                           |
 |                  | absolute                | Absolute path of the method                  |
 |                  | url                     | Use the url instead action argument          |
@@ -271,9 +264,9 @@ php artisan vendor:publish
 
 ### Disable Bootstrap
  
- You can remove any class or wrapper for single element by parameters or globally in config file.
+You can remove any class or wrapper for a single element by parameters or globally in the config file.
  
- Or you can use shortcuts which disable few parameters simultaneously
+Or you can use shortcuts which disable few parameters simultaneously
  
 ```
      //remove all bootsrap classes
