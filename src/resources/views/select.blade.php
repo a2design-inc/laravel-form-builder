@@ -16,7 +16,7 @@
             size="{{ $parameters['size'] }}"
         @endif
 
-        @if (!empty($parameters['multiple']) && $parameters['multiple'])
+        @if (!empty($parameters['multiple']))
             multiple
             name="{{ $name }}[]"
         @else

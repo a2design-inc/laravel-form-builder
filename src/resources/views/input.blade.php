@@ -20,7 +20,7 @@
             type="{{ $parameters['type'] }}"
         @endif
 
-        @if (!empty($parameters['type']) && $parameters['type'] == 'file' && $parameters['multiple'])
+        @if (!empty($parameters['type']) && $parameters['type'] == 'file' && !empty($parameters['multiple']))
             multiple
             name="{{ $name }}[]"
         @else

@@ -1088,6 +1088,10 @@ class FormBuilder
             $parameters['label'] = true;
         }
 
+        if (isset($parameters['type']) && $parameters['type'] === 'file') {
+            $parameters['form-control-class'] = false;
+        }
+
         $parameters['value'] = $this->getInputValue($name, $parameters);
         $parameters['id'] = $this->getInputId($name, $parameters);
         $parameters['label-classes'] = $this->getLabelClasses($parameters);

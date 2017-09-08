@@ -309,6 +309,7 @@ php artisan vendor:publish
  - Form::url()
  - Form::month()
  - Form::week()
+ - Form::file()
  
  Other:
  
@@ -362,4 +363,10 @@ php artisan vendor:publish
         content: "*";
         color: red;
     }
+```
+
+### Post link
+ 
+```
+    {!! Form::postLink('ArticleController@destroy', 'Delete', $article) !!}
 ```
