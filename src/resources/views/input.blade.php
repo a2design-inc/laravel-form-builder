@@ -12,14 +12,19 @@
             class="{{ $parameters['input-classes'] }}"
         @endif
 
-        name="{{ $name }}"
-
         @if (!empty($parameters['value']))
             value="{!! $parameters['value'] !!}"
         @endif
 
         @if (!empty($parameters['type']))
             type="{{ $parameters['type'] }}"
+        @endif
+
+        @if (!empty($parameters['type']) && $parameters['type'] == 'file' && $parameters['multiple'])
+            multiple
+            name="{{ $name }}[]"
+        @else
+            name="{{ $name }}"
         @endif
 
         @if (isset($parameters['required']) && $parameters['required'] === true)

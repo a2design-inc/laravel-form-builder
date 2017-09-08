@@ -131,6 +131,7 @@ class FormBuilder
     protected $typeInheritedInputs = [
         'password',
         'text',
+        'file',
         //html5
         'color',
         'date',
