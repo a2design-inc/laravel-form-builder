@@ -28,15 +28,15 @@
             form="{{ $parameters['form'] }}"
         @endif
 
-        @if (isset($parameters['autofocus']) && $parameters['autofocus'] === true)
+        @if (!empty($parameters['autofocus']))
             autofocus
         @endif
 
-        @if (isset($parameters['disabled']) && $parameters['disabled'] === true)
+        @if (!empty($parameters['disabled']))
             disabled
         @endif
     >
-        @if ($parameters['escaped'] === true)
+        @if ($parameters['escaped'])
             {{ $parameters['text'] }}
         @else
             {!! $parameters['text'] !!}

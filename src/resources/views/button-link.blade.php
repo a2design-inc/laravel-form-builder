@@ -24,7 +24,7 @@
             target="{{ $parameters['target'] }}"
         @endif
     >
-        @if ($parameters['escaped'] === true)
+        @if ($parameters['escaped'])
             {{ $parameters['text'] }}
         @else
             {!! $parameters['text'] !!}

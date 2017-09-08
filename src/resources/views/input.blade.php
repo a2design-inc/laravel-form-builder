@@ -27,19 +27,19 @@
             name="{{ $name }}"
         @endif
 
-        @if (isset($parameters['required']) && $parameters['required'] === true)
+        @if (!empty($parameters['required']))
             required
         @endif
 
-        @if (isset($parameters['autofocus']) && $parameters['autofocus'] === true)
+        @if (!empty($parameters['autofocus']))
             autofocus
         @endif
 
-        @if (isset($parameters['disabled']) && $parameters['disabled'] === true)
+        @if (!empty($parameters['disabled']))
             disabled
         @endif
 
-        @if (isset($parameters['readonly']) && $parameters['readonly'] === true)
+        @if (!empty($parameters['readonly']))
             readonly
         @endif
     >

@@ -25,29 +25,29 @@
             value="1"
             type="checkbox"
 
-            @if (isset($parameters['required']) && $parameters['required'] === true)
+            @if (!empty($parameters['required']))
                 required
             @endif
 
-            @if (isset($parameters['autofocus']) && $parameters['autofocus'] === true)
+            @if (!empty($parameters['autofocus']))
                 autofocus
             @endif
 
-            @if (isset($parameters['disabled']) && $parameters['disabled'] === true)
+            @if (!empty($parameters['disabled']))
                 disabled
             @endif
 
-            @if (isset($parameters['checked']) && $parameters['checked'] === true)
+            @if (!empty($parameters['checked']))
                 checked
             @endif
 
-            @if (isset($parameters['readonly']) && $parameters['readonly'] === true)
+            @if (!empty($parameters['readonly']))
                 readonly
             @endif
         >
 
     @if (!isset($parameters['checkbox-label']) || $parameters['checkbox-label'] !== false)
-            @if ($parameters['label-escaped'] === true)
+            @if ($parameters['label-escaped'])
                 {{ $label }}
             @else
                 {!! $label !!}

@@ -23,7 +23,7 @@
                     class="{{ $parameters['label-classes'] }}"
                 @endif
             >
-                @if ($parameters['label-escaped'] === true)
+                @if ($parameters['label-escaped'])
                     {{ $label }}{{ !empty($parameters['label-after']) ? $parameters['label-after'] : '' }}
                 @else
                     {!! $label !!}{{ !empty($parameters['label-after']) ? $parameters['label-after'] : '' }}
@@ -44,7 +44,7 @@
             @yield('input')
 
             {{--Set errors--}}
-            @if (isset($parameters['all-errors']) && $parameters['all-errors'] === true)
+            @if (!empty($parameters['all-errors']))
 
                 @foreach ($errors->get($name) as $message)
                     @include('form::partials.error-message')
@@ -56,7 +56,7 @@
 
             @elseif (isset($parameters['error']) && $parameters['error'] !== false)
                 @include('form::partials.error-message', ['message' => $parameters['error']])
-            @elseif (isset($parameters['error']) && $parameters['error'] === false)
+            @elseif (!empty($parameters['error']))
             @elseif ($errors->has($name))
                 @include('form::partials.error-message', ['message' => $errors->first($name)])
             @endif
