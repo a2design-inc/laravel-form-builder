@@ -57,7 +57,7 @@ class FormBuilder
     protected $entity = null;
 
     /**
-     * Action for form 'controller@method'
+     * Action like as 'controller@method' or route name or just usual url
      *
      * @var string
      */
@@ -185,7 +185,7 @@ class FormBuilder
     /**
      * Create a new form
      *
-     * @param string $action
+     * @param string $action Action like as 'controller@method' or route name or just usual url
      * @param null|Model $entity
      * @param array $parameters
      *
@@ -1009,7 +1009,7 @@ class FormBuilder
             $urlParams['id'] = $this->entity->getKey();
         }
 
-        if(!empty($this->route)) {
+        if (!empty($this->route)) {
             return $routeUrlGenerator->to($this->route, $urlParams, $absolute);
         }
 
