@@ -129,6 +129,7 @@ class FormBuilder
     protected $typeInheritedInputs = [
         'password',
         'text',
+        'file',
         //html5
         'color',
         'date',
@@ -215,7 +216,6 @@ class FormBuilder
 
     public function postLink($action = '', $text = '', $parameters = [])
     {
-//        dd(\Route::getRoutes());
         $parameters['id'] = md5(time() . mt_rand());
         $parameters['text'] = $text;
         $this->action = $action;

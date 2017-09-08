@@ -16,14 +16,15 @@
             size="{{ $parameters['size'] }}"
         @endif
 
-        name="{{ $name }}{{ isset($parameters['multiple']) && $parameters['multiple'] === true ? '[]' : '' }}"
+        @if (!empty($parameters['multiple']) && $parameters['multiple'])
+            multiple
+            name="{{ $name }}[]"
+        @else
+            name="{{ $name }}"
+        @endif
 
         @if (isset($parameters['required']) && $parameters['required'] === true)
             required
-        @endif
-
-        @if (isset($parameters['multiple']) && $parameters['multiple'] === true)
-            multiple
         @endif
 
         @if (isset($parameters['autofocus']) && $parameters['autofocus'] === true)
