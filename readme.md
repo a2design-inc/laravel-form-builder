@@ -6,7 +6,7 @@ You can show validation errors, old input values and form context based on model
 
 And you can simply redefine or adjust all what you want.
 
-![example_image](https://i.imgur.com/FmX6EeL.png)
+![example_image](https://i.imgur.com/NbsZjzE.png)
 
 ## Basic example
 
@@ -114,7 +114,7 @@ php artisan vendor:publish
 
 ## Customization
 
-![example_image](https://i.imgur.com/Gi1Dvec.png)
+![example_image](https://i.imgur.com/lmW0rPS.png)
 
 ### Parameters
 

@@ -1154,6 +1154,10 @@ class FormBuilder
             $parameters['label-after'] = false;
         }
 
+        if (empty($parameters['label-text']) && !isset($parameters['label'])) {
+            $parameters['label'] = false;
+        }
+
         return $parameters;
     }
 
