@@ -1,6 +1,10 @@
 @extends('form::layouts.input')
 
 @section('input')
+    @if (!empty($parameters['input-group']))
+        {!! $parameters['input-group'] !!}
+    @endif
+
     <input
         @include('form::partials.custom-attributes')
 

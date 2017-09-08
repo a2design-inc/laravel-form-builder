@@ -16,8 +16,6 @@ use Illuminate\Routing\RouteUrlGenerator;
  * Class FormBuilder
  * @package A2design\Form
  *
- * TODO input groups
- *
  * TODO tests
  * TODO? separate the class
  */

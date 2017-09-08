@@ -174,6 +174,7 @@ You can specify a lot of additional parameters:
 |                  | error-form-group-class  | Specify any class for the form group with error or set false |
 |                  | error-class             | Specify any class for the input with error or set false |
 |                  | only-input              | Set true to disable any wrappers             |
+|                  | input-group             | Add string with bootstrap input group or any HTML what you want to add before the input |
 | Form::button     | type                    | Set the type attribute                       |
 |                  | name                    | Set the name attribute                       |
 |                  | value                   | Set the value attribute                      |
