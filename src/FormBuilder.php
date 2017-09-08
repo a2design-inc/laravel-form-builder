@@ -5,6 +5,7 @@ namespace A2design\Form;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Routing\RouteCollection;
 use Illuminate\Session\Store;
 use Illuminate\Support\ViewErrorBag;
 
@@ -191,8 +192,7 @@ class FormBuilder
     public function create($action = '', $entity = null, $parameters = [])
     {
         $this->entity = $entity;
-        $this->action = $action;
-        $this->route = $this->getRouteByAction($action);
+        $this->route = $this->getRoute($action);
         $this->actionMethod = $this->getActionMethod();
         $this->entityName = $this->getEntityName();
 
@@ -217,8 +217,7 @@ class FormBuilder
     public function postLink($action = '', $text = '', $entity = null, $parameters = [])
     {
         $this->entity = $entity;
-        $this->action = $action;
-        $this->route = $this->getRouteByAction($action);
+        $this->route = $this->getRoute($action);
 
         $parameters['id'] = md5(time() . mt_rand());
         $parameters['text'] = $text;
@@ -520,15 +519,24 @@ class FormBuilder
     /**
      * Return route instance by action name
      *
-     * @param string $action
+     * @param string $routeName Route name or action
      *
      * @return \Illuminate\Routing\Route|null
      */
-    protected function getRouteByAction($action)
+    protected function getRoute($routeName)
     {
+        /** @var RouteCollection $routes */
+        $routes = \Route::getRoutes();
+
+        $route = $routes->getByName($routeName);
+
+        if (!empty($route)) {
+            return $route;
+        }
+
         // Route name space can't be used dynamically because it is on protected scope (L5.4)
         // Therefore defined in config file :(
-        return \Route::getRoutes()->getByAction($this->getConfig('route_name_space') . '\\' . $action);
+        return $routes->getByAction($this->getConfig('route_name_space') . '\\' . $routeName);
     }
 
     /**
@@ -989,30 +997,19 @@ class FormBuilder
             return $parameters['url'];
         }
 
-        $routes = \Route::getRoutes();
-
-        //try named routes
-        if ($routes->hasNamedRoute($this->action)) {
-
-            $routeParams = [];
-
-            if (!empty($this->entity)) {
-                $routeParams['id'] = $this->entity->getKey();
-            }
-
-            return route($this->action, $routeParams, $absolute);
+        if (!empty($this->route->getActionName())) {
+            $routeAction = str_replace($this->getConfig('route_name_space') . '\\', '', $this->route->getActionName());
         }
 
-        if (!empty($this->action)) {
-
-            $routeParams = [];
-
-            if (!empty($this->entity)) {
-                $routeParams['id'] = $this->entity->getKey();
-            }
-
-            return action($this->action, $routeParams, $absolute);
+        if (!empty($routeAction) && !empty($this->entity)) {
+            return action($routeAction, ['id' => $this->entity->getKey()], $absolute);
         }
+
+        if (!empty($routeAction)) {
+            return action($routeAction, [], $absolute);
+        }
+
+        return '';
     }
 
     /**
