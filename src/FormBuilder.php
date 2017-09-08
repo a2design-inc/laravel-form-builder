@@ -213,6 +213,22 @@ class FormBuilder
         return view('form::form-end')->render();
     }
 
+    public function postLink($action = '', $text = '', $parameters = [])
+    {
+//        dd(\Route::getRoutes());
+        $parameters['id'] = md5(time() . mt_rand());
+        $parameters['text'] = $text;
+        $this->action = $action;
+        $this->route = $this->getRouteByAction($action);
+        $parameters['method'] = $this->getRouteMethod($parameters);
+        $parameters['form-action'] = $this->getFormAction($parameters);
+        $parameters['form-method'] = $this->getFormMethod($parameters);
+        $parameters['hidden-inputs'] = $this->getHiddenInputs($parameters);
+        $parameters['message'] = !empty($parameters['message']) ? $parameters['message'] : 'Are you sure?';
+
+        return view('form::post-link', compact('parameters'));
+    }
+
     /**
      * Create new input
      *
@@ -970,12 +986,29 @@ class FormBuilder
             return $parameters['url'];
         }
 
-        if (!empty($this->action) && !empty($this->entity)) {
-            return action($this->action, ['id' => $this->entity->id], $absolute);
+        $routes = \Route::getRoutes();
+
+        //try named routes
+        if ($routes->hasNamedRoute($this->action)) {
+
+            $routeParams = [];
+
+            if (!empty($this->entity)) {
+                $routeParams['id'] = $this->entity->getKey();
+            }
+
+            return route($this->action, $routeParams, $absolute);
         }
 
         if (!empty($this->action)) {
-            return action($this->action, [], $absolute);
+
+            $routeParams = [];
+
+            if (!empty($this->entity)) {
+                $routeParams['id'] = $this->entity->getKey();
+            }
+
+            return action($this->action, $routeParams, $absolute);
         }
     }
 
@@ -992,8 +1025,8 @@ class FormBuilder
             return 'post';
         }
 
-        if ($parameters['method'] === 'get' || $parameters['method'] === 'GET') {
-            return $parameters['method'];
+        if (strtolower($parameters['method']) === 'get') {
+            return strtolower($parameters['method']);
         }
 
         return 'post';
