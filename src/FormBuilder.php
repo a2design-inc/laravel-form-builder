@@ -118,7 +118,7 @@ class FormBuilder
         'method',
         'absolute',
         'url',
-        'attributes',
+        'attrs',
     ];
 
     /**
