@@ -159,7 +159,7 @@ Or you can use shortcuts which disable few parameters simultaneously
  
 ## Examples
 
-### Checkbox wit label in different column
+### Checkbox with label in different column instead next to
  
 ```
     {!! Form::checkbox('field', 'Field', ['label' => true]) !!}
@@ -174,7 +174,7 @@ Or you can use shortcuts which disable few parameters simultaneously
     {!! Form::inputGroupEnd() !!}
 ```
 
-### Line of checkboxes with overall label
+### Line of checkboxes with overall label in separated column
  
 ```
     {!! Form::inputGroup([
