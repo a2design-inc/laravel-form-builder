@@ -111,9 +111,28 @@ class FormBuilderTest extends Orchestra\Testbench\TestCase
 
     public function testOpeningForm()
     {
-        $form1 = $this->formBuilder->create();
+        $defaultForm = $this->formBuilder->create();
 
-        $this->assertContains('<form', $form1, 'Form is not opened');
+        $this->assertContains('<form', $defaultForm, 'Form is not opened');
+    }
+
+    public function testTokenInput()
+    {
+        $defaultForm = $this->formBuilder->create();
+        $message = 'Some issue with token hidden input';
+
+        $this->assertContains('type="hidden"', $defaultForm, $message);
+        $this->assertContains('name="_token"', $defaultForm, $message);
+        //we cant check the csrf_token value because in test case is null
+        $this->assertContains('value="', $defaultForm, $message);
+
+        $getForm = $this->formBuilder->create('', null, ['method' => 'get']);
+        $this->assertNotContains('type="hidden"', $getForm, $message);
+        $this->assertNotContains('name="_token"', $getForm, $message);
+
+        $getForm = $this->formBuilder->create('', null, ['method' => 'GET']);
+        $this->assertNotContains('type="hidden"', $getForm, $message);
+        $this->assertNotContains('name="_token"', $getForm, $message);
     }
 
     /**
