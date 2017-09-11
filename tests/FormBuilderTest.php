@@ -109,7 +109,7 @@ class FormBuilderTest extends Orchestra\Testbench\TestCase
         Mockery::close();
     }
 
-    public function testOpeningForm()
+    public function testOpening()
     {
         $defaultForm = $this->formBuilder->create();
 
@@ -135,6 +135,66 @@ class FormBuilderTest extends Orchestra\Testbench\TestCase
         $this->assertNotContains('name="_token"', $getForm, $message);
     }
 
+    public function testMethodInput()
+    {
+        //
+    }
+
+    public function testMethodDetection()
+    {
+        //
+    }
+
+    public function testAction()
+    {
+        //
+    }
+
+    public function testId()
+    {
+        //
+    }
+
+    public function testClass()
+    {
+        //
+    }
+
+    public function testAbsoluteParameter()
+    {
+        //
+    }
+
+    public function testUrlParameter()
+    {
+        //
+    }
+
+    public function testFormDirectionParameter()
+    {
+        //
+    }
+
+    public function testAattrsParameter()
+    {
+        //
+    }
+
+    public function testEnctypeParameter()
+    {
+        //
+    }
+
+    public function testHasFilesParameter()
+    {
+        //
+    }
+
+    public function testParameterInheriting()
+    {
+        //
+    }
+    
     /**
      * Set initial config values for the config mock
      *
