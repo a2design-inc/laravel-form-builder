@@ -1,4 +1,7 @@
 <?php
+
+require_once('TestController.php');
+
 use A2design\Form\FormBuilder;
 
 class FormBuilderTestBase extends Orchestra\Testbench\TestCase
@@ -11,35 +14,35 @@ class FormBuilderTestBase extends Orchestra\Testbench\TestCase
     /**
      * Mock of \Illuminate\View\Factory
      *
-     * @var \Mockery\MockInterface
+     * @var \Mockery\MockInterface|\Illuminate\View\Factory
      */
     protected $viewFactory;
 
     /**
      * Mock of \Illuminate\Session\Store
      *
-     * @var \Mockery\MockInterface
+     * @var \Mockery\MockInterface|\Illuminate\Session\Store
      */
     protected $session;
 
     /**
      * Mock of \Illuminate\Config\Repository
      *
-     * @var \Mockery\MockInterface
+     * @var \Mockery\MockInterface|\Illuminate\Config\Repository
      */
     protected $config;
 
     /**
      * Mock of \Illuminate\Routing\RouteCollection
      *
-     * @var \Mockery\MockInterface
+     * @var \Mockery\MockInterface|\Illuminate\Routing\RouteCollection
      */
     protected $routes;
 
     /**
      * Mock of \Illuminate\Http\Request
      *
-     * @var \Mockery\MockInterface
+     * @var \Mockery\MockInterface|\Illuminate\Http\Request
      */
     protected $request;
 
@@ -47,6 +50,7 @@ class FormBuilderTestBase extends Orchestra\Testbench\TestCase
      * Specify the package service provider
      *
      * @param \Illuminate\Foundation\Application $app
+     *
      * @return array
      */
     protected function getPackageProviders($app)
@@ -58,6 +62,7 @@ class FormBuilderTestBase extends Orchestra\Testbench\TestCase
      * Specify the package aliases
      *
      * @param \Illuminate\Foundation\Application $app
+     *
      * @return array
      */
     protected function getPackageAliases($app)
@@ -74,20 +79,23 @@ class FormBuilderTestBase extends Orchestra\Testbench\TestCase
     {
         parent::setUp();
 
+        $configMock = Mockery::mock(\Illuminate\Config\Repository::class);
+        $this->stubConfig($configMock);
+        $this->config = $configMock;
+
         $viewMock = Mockery::mock(\Illuminate\View\Factory::class);
         $viewMock->shouldReceive("shared")->andReturn([])->byDefault();
         $this->viewFactory = $viewMock;
 
         $routesMock = Mockery::mock(\Illuminate\Routing\RouteCollection::class);
-        $routesMock->shouldReceive("getByName")->withAnyArgs()->andReturnNull()->byDefault();
-        $routesMock->shouldReceive("getByAction")->withAnyArgs()->andReturnNull()->byDefault();
+        $this->createRoutes($routesMock);
         $this->routes = $routesMock;
 
-        $configMock = Mockery::mock(\Illuminate\Config\Repository::class);
-        $configMock = $this->stubConfig($configMock);
-        $this->config = $configMock;
+        $requestMock = Mockery::mock(\Illuminate\Http\Request::class);
+        $requestMock->shouldReceive("getScheme")->andReturn('http');
+        $requestMock->shouldReceive("root")->andReturn('/');
+        $this->request = $requestMock;
 
-        $this->request = Mockery::mock(\Illuminate\Http\Request::class);
         $this->session = Mockery::mock(\Illuminate\Session\Store::class);
 
         $this->formBuilder = new FormBuilder(
@@ -110,11 +118,35 @@ class FormBuilderTestBase extends Orchestra\Testbench\TestCase
     }
 
     /**
+     * Create new route
+     *
+     * @param \Mockery\MockInterface $routesMock Mock for route collection
+     * @param $method
+     */
+    public function addRoute($routesMock, $method)
+    {
+        $controller = new TestController();
+        $router = app()->make(\Illuminate\Routing\Router::class);
+
+        $url = '/' . $method . '-url';
+        $action = 'testController@' . $method;
+        $actionPrefix = $this->getFromConfig('route_name_space');
+        $fullAction = $actionPrefix . '\\' . $action;
+        $name = $method . 'RouteName';
+
+        $router->$method($url, $action)->name($name);
+        $route = $router->getRoutes()->getByAction($action);
+        $routeMock = Mockery::mock($route);
+        $routeMock->shouldReceive("getController")->andReturn($controller);
+
+        $routesMock->shouldReceive("getByName")->with($name)->andReturn($routeMock)->byDefault();
+        $routesMock->shouldReceive("getByAction")->with($fullAction)->andReturn($routeMock)->byDefault();
+    }
+
+    /**
      * Set initial config values for the config mock
      *
      * @param \Mockery\MockInterface $configMock
-     *
-     * @return \Mockery\MockInterface
      */
     protected function stubConfig($configMock)
     {
@@ -144,7 +176,34 @@ class FormBuilderTestBase extends Orchestra\Testbench\TestCase
                 ->andReturn(true)
                 ->byDefault();
         }
+    }
 
-        return $configMock;
+    /**
+     * Make routes for all methods
+     *
+     * @param \Mockery\MockInterface $routesMock
+     */
+    protected function createRoutes($routesMock)
+    {
+        $routesMock->shouldReceive("getByName")->withAnyArgs()->andReturnNull()->byDefault();
+        $routesMock->shouldReceive("getByAction")->withAnyArgs()->andReturnNull()->byDefault();
+
+        $methods = ['get', 'post', 'patch', 'put', 'delete'];
+
+        foreach ($methods as $method) {
+
+            $this->addRoute($routesMock, $method);
+        }
+    }
+
+    /**
+     * Return config value from config object
+     *
+     * @param $config
+     * @return mixed
+     */
+    protected function getFromConfig($config)
+    {
+        return $this->config->get(FormBuilder::CONFIG_NAME . '.' . $config);
     }
 }

@@ -68,9 +68,29 @@ class FormTest extends FormBuilderTestBase
         $this->assertNotContains('name="_method"', $postForm, $message);
     }
 
+    public function testRouteDetection()
+    {
+        $message = 'Some issue with route detection';
+
+        $putForm = $this->formBuilder->create('putRouteName');
+        $this->assertContains('method="post"', $putForm, $message);
+        $this->assertContains('action="/put-url', $putForm, $message);
+        $this->assertContains('value="PUT"', $putForm, $message);
+
+        $deleteForm = $this->formBuilder->create('deleteRouteName');
+        $this->assertContains('method="post"', $deleteForm, $message);
+        $this->assertContains('action="/delete-url', $deleteForm, $message);
+        $this->assertContains('value="DELETE"', $deleteForm, $message);
+
+        $getForm = $this->formBuilder->create('getRouteName');
+        $this->assertNotContains('method="post"', $getForm, $message);
+        $this->assertContains('action="/get-url', $getForm, $message);
+        $this->assertNotContains('value="GET"', $getForm, $message);
+    }
+
     public function testMethodDetection()
     {
-        //
+
     }
 
     public function testAction()
