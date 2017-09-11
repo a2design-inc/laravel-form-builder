@@ -42,7 +42,7 @@ class FormServiceProvider extends ServiceProvider
     {
         $this->app->singleton(FormBuilder::class, function ($app) {
 
-            return new FormBuilder($app['view'], $app['session.store'], $app['request']);
+            return new FormBuilder($app['view'], $app['session.store'], $app['routes'], $app['config'], $app['request']);
         });
     }
 }
