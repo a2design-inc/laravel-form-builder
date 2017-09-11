@@ -1086,7 +1086,7 @@ class FormBuilder
             $result .= csrf_field() . ' ';
         }
 
-        if (isset($parameters['method']) && !in_array($parameters['method'], ['get','GET', 'post', 'POST'])) {
+        if (!empty($parameters['method']) && !in_array($parameters['method'], ['get','GET', 'post', 'POST'])) {
             $result .= method_field(strtoupper($parameters['method'])) . ' ';
         }
 
