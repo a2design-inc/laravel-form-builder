@@ -84,7 +84,7 @@ class FormBuilderTest extends Orchestra\Testbench\TestCase
         $this->routes = $routesMock;
 
         $configMock = Mockery::mock(\Illuminate\Config\Repository::class);
-        $configMock->shouldReceive('get')->withAnyArgs()->andReturn('Not mocked config value')->byDefault();
+        $configMock = $this->stubConfig($configMock);
         $this->config = $configMock;
 
         $this->request = Mockery::mock(\Illuminate\Http\Request::class);
@@ -114,5 +114,44 @@ class FormBuilderTest extends Orchestra\Testbench\TestCase
         $form1 = $this->formBuilder->create();
 
         $this->assertContains('<form', $form1, 'Form is not opened');
+    }
+
+    /**
+     * Set initial config values for the config mock
+     *
+     * @param \Mockery\MockInterface $configMock
+     *
+     * @return \Mockery\MockInterface
+     */
+    private function stubConfig($configMock)
+    {
+        /** @var \Illuminate\Config\Repository $configs */
+        $configs = config();
+        $configName = FormBuilder::CONFIG_NAME;
+
+        $configMock->shouldReceive('get')
+            ->withAnyArgs()
+            ->andReturn(null)
+            ->byDefault();
+
+        $configMock->shouldReceive('has')
+            ->withAnyArgs()
+            ->andReturn(false)
+            ->byDefault();
+
+        foreach ($configs->all()[$configName] as $config => $value) {
+
+            $configMock->shouldReceive('get')
+                ->with($configName . '.' . $config)
+                ->andReturn($value)
+                ->byDefault();
+
+            $configMock->shouldReceive('has')
+                ->with($configName . '.' . $config)
+                ->andReturn(true)
+                ->byDefault();
+        }
+
+        return $configMock;
     }
 }
