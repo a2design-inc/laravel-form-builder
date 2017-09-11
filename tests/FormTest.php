@@ -14,7 +14,7 @@ class FormTest extends FormBuilderTestBase
     public function testTokenInput()
     {
         $defaultForm = $this->formBuilder->create();
-        $message = 'Some issue with token hidden input';
+        $message = 'Some issue with hidden token input';
 
         $this->assertContains('type="hidden"', $defaultForm, $message);
         $this->assertContains('name="_token"', $defaultForm, $message);
@@ -22,17 +22,50 @@ class FormTest extends FormBuilderTestBase
         $this->assertContains('value="', $defaultForm, $message);
 
         $getForm = $this->formBuilder->create('', null, ['method' => 'get']);
-        $this->assertNotContains('type="hidden"', $getForm, $message);
         $this->assertNotContains('name="_token"', $getForm, $message);
 
         $getForm = $this->formBuilder->create('', null, ['method' => 'GET']);
-        $this->assertNotContains('type="hidden"', $getForm, $message);
         $this->assertNotContains('name="_token"', $getForm, $message);
     }
 
     public function testMethodInput()
     {
-        //
+        $defaultForm = $this->formBuilder->create();
+        $message = 'Some issue with hidden method input';
+
+        $this->assertNotContains('name="_method"', $defaultForm, $message);
+
+        $putForm = $this->formBuilder->create('', null, ['method' => 'PUT']);
+        $this->assertContains('type="hidden"', $putForm, $message);
+        $this->assertContains('name="_method', $putForm, $message);
+        $this->assertContains('value="PUT"', $putForm, $message);
+
+        $deleteForm = $this->formBuilder->create('', null, ['method' => 'DELETE']);
+        $this->assertContains('type="hidden"', $deleteForm, $message);
+        $this->assertContains('name="_method', $deleteForm, $message);
+        $this->assertContains('value="DELETE"', $deleteForm, $message);
+
+        $putForm = $this->formBuilder->create('', null, ['method' => 'put']);
+        $this->assertContains('type="hidden"', $putForm, $message);
+        $this->assertContains('name="_method', $putForm, $message);
+        $this->assertContains('value="PUT"', $putForm, $message);
+
+        $deleteForm = $this->formBuilder->create('', null, ['method' => 'delete']);
+        $this->assertContains('type="hidden"', $deleteForm, $message);
+        $this->assertContains('name="_method', $deleteForm, $message);
+        $this->assertContains('value="DELETE"', $deleteForm, $message);
+
+        $getForm = $this->formBuilder->create('', null, ['method' => 'get']);
+        $this->assertNotContains('name="_method"', $getForm, $message);
+
+        $postForm = $this->formBuilder->create('', null, ['method' => 'post']);
+        $this->assertNotContains('name="_method"', $postForm, $message);
+
+        $getForm = $this->formBuilder->create('', null, ['method' => 'GET']);
+        $this->assertNotContains('name="_method"', $getForm, $message);
+
+        $postForm = $this->formBuilder->create('', null, ['method' => 'POST']);
+        $this->assertNotContains('name="_method"', $postForm, $message);
     }
 
     public function testMethodDetection()
