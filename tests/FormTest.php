@@ -215,24 +215,38 @@ class FormTest extends FormBuilderTestBase
         $this->assertNotContains('action="/get-url-without-route-name', $getForm, $message);
         $this->assertContains('action="/custom-url', $getForm, $message);
     }
-    
+
     public function testAattrsParameter()
     {
-        //
+        $message = 'Some issue with "attrs" form parameter';
+
+        $getForm = $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity(), ['attrs' => [
+            'test-attr' => 'test-attr-value'
+        ]]);
+
+        $this->assertContains('test-attr="test-attr-value"', $getForm, $message);
     }
 
-    public function testEnctypeParameter()
+    public function testEnctype()
     {
-        //
-    }
+        $message = 'Some issue with form enctype';
 
-    public function testHasFilesParameter()
-    {
-        //
-    }
+        $getForm = $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity(), ['enctype' => 'multipart/form-data']);
+        $this->assertContains('enctype="multipart/form-data"', $getForm, $message);
 
-    public function testParameterInheriting()
-    {
-        //
+        $getForm = $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity(), ['file' => true]);
+        $this->assertContains('enctype="multipart/form-data"', $getForm, $message);
+
+        $getForm = $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity(), ['has-files' => true]);
+        $this->assertContains('enctype="multipart/form-data"', $getForm, $message);
+
+        $getForm = $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity(), ['file' => false]);
+        $this->assertNotContains('enctype="multipart/form-data"', $getForm, $message);
+
+        $getForm = $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity(), ['has-files' => false]);
+        $this->assertNotContains('enctype="multipart/form-data"', $getForm, $message);
+
+        $getForm = $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
+        $this->assertNotContains('enctype="multipart/form-data"', $getForm, $message);
     }
 }
