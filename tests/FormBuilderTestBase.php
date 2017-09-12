@@ -95,24 +95,20 @@ abstract class FormBuilderTestBase extends Orchestra\Testbench\TestCase
         $this->config = Mockery::mock(\Illuminate\Config\Repository::class);
         $this->stubConfig();
 
-        $viewMock = Mockery::mock(\Illuminate\Contracts\View\Factory::class);
-        $viewMock->shouldReceive('shared')->andReturn([])->byDefault();
-        $this->viewFactory = $viewMock;
+        $this->viewFactory = Mockery::mock(\Illuminate\Contracts\View\Factory::class);
+        $this->stubViewFactory();
 
-        $routesMock = Mockery::mock(\Illuminate\Routing\RouteCollection::class);
-        $this->createRoutes($routesMock);
-        $this->routes = $routesMock;
+        $this->routes = Mockery::mock(\Illuminate\Routing\RouteCollection::class);
+        $this->createRoutes();
 
-        $requestMock = Mockery::mock(\Illuminate\Http\Request::class);
-        $requestMock->shouldReceive('getScheme')->andReturn('http');
-        $requestMock->shouldReceive('root')->andReturn('http://test.loc');
-        $this->request = $requestMock;
+        $this->request = Mockery::mock(\Illuminate\Http\Request::class);
+        $this->stubRequest();
 
         $this->session = Mockery::mock(\Illuminate\Session\Store::class);
+        $this->stubSession();
 
-        $modelMock = Mockery::mock(TestEntity::class);
-        $this->stubModel($modelMock);
-        $this->model = $modelMock;
+        $this->model = Mockery::mock(TestEntity::class);
+        $this->stubModel();
 
         $this->formBuilder = new FormBuilder(
             $this->viewFactory,
@@ -159,7 +155,7 @@ abstract class FormBuilderTestBase extends Orchestra\Testbench\TestCase
 
         $route = $router->$method($url, $action);
         $routeMock = Mockery::mock($route);
-        $routeMock->shouldReceive('getController')->andReturn($controller);
+        $routeMock->shouldReceive('getController')->andReturn($controller)->byDefault();
 
         if ($hasName) {
             $name = $method . 'RouteName';
@@ -230,11 +226,11 @@ abstract class FormBuilderTestBase extends Orchestra\Testbench\TestCase
 
     /**
      * Set methods values for the model
-     *
-     * @param \Mockery\MockInterface $modelMock
      */
-    protected function stubModel($modelMock)
+    protected function stubModel()
     {
+        $modelMock = $this->model;
+
         $modelMock->shouldReceive('getKey')
             ->withAnyArgs()
             ->andReturn('id')
@@ -243,11 +239,11 @@ abstract class FormBuilderTestBase extends Orchestra\Testbench\TestCase
 
     /**
      * Make routes for all methods
-     *
-     * @param \Mockery\MockInterface $routesMock
      */
-    protected function createRoutes($routesMock)
+    protected function createRoutes()
     {
+        $routesMock = $this->routes;
+
         $routesMock->shouldReceive('getByName')->withAnyArgs()->andReturnNull()->byDefault();
         $routesMock->shouldReceive('getByAction')->withAnyArgs()->andReturnNull()->byDefault();
 
@@ -269,5 +265,33 @@ abstract class FormBuilderTestBase extends Orchestra\Testbench\TestCase
     protected function getFromConfig($config)
     {
         return $this->config->get(FormBuilder::CONFIG_NAME . '.' . $config);
+    }
+
+    /**
+     * Stub the session mock
+     */
+    protected function stubSession()
+    {
+        $sessionMock = $this->session;
+        $sessionMock->shouldReceive('hasOldInput')->withAnyArgs()->andReturn(false)->byDefault();
+    }
+
+    /**
+     * Stub the request mock
+     */
+    protected function stubRequest()
+    {
+        $requestMock = $this->request;
+        $requestMock->shouldReceive('getScheme')->andReturn('http')->byDefault();
+        $requestMock->shouldReceive('root')->andReturn('http://test.loc')->byDefault();
+    }
+
+    /**
+     * Stub the view mock
+     */
+    protected function stubViewFactory()
+    {
+        $viewMock = $this->viewFactory;
+        $viewMock->shouldReceive('shared')->andReturn([])->byDefault();
     }
 }
