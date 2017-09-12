@@ -55,9 +55,16 @@ abstract class FormBuilderTestBase extends Orchestra\Testbench\TestCase
     /**
      * Mock of TestModel
      *
-     * @var \Mockery\MockInterface|TestModel
+     * @var \Mockery\MockInterface|TestEntity
      */
     protected $model;
+
+    /**
+     * View errors
+     *
+     * @var \Illuminate\Support\MessageBag
+     */
+    protected $errorBag;
 
     /**
      * Specify the package service provider
@@ -136,7 +143,7 @@ abstract class FormBuilderTestBase extends Orchestra\Testbench\TestCase
      * @param string $method
      * @param bool $hasName
      */
-    public function addRoute($routesMock, $method, $hasName = true)
+    protected function addRoute($routesMock, $method, $hasName = true)
     {
         $controller = new TestController();
         /** @var \Illuminate\Routing\Router $router */
@@ -291,7 +298,27 @@ abstract class FormBuilderTestBase extends Orchestra\Testbench\TestCase
      */
     protected function stubViewFactory()
     {
+        $this->errorBag = new \Illuminate\Support\MessageBag();
         $viewMock = $this->viewFactory;
-        $viewMock->shouldReceive('shared')->andReturn([])->byDefault();
+        $viewMock->shouldReceive('shared')->andReturn($this->errorBag)->byDefault();
+    }
+
+    /**
+     * Add new error to view
+     *
+     * @param string $name
+     * @param string $message
+     */
+    protected function setError($name, $message)
+    {
+        $this->errorBag->add($name, $message);
+    }
+
+    /**
+     * Reset view (for example after validation errors)
+     */
+    protected function resetViewFactory()
+    {
+        $this->stubViewFactory();
     }
 }

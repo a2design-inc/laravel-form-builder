@@ -249,4 +249,8 @@ class FormTest extends FormBuilderTestBase
         $getForm = $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
         $this->assertNotContains('enctype="multipart/form-data"', $getForm, $message);
     }
+
+    public function testClosing() {
+        $this->assertEquals('</form>', $this->formBuilder->end());
+    }
 }

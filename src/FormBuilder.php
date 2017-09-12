@@ -267,8 +267,9 @@ class FormBuilder
         $parameters = $this->setFromForm($parameters);
         $parameters = $this->setDefaultFromConfig($parameters);
         $parameters = $this->generateComplexInputParameters($name, $parameters);
+        $errors = $this->errors;
 
-        $result = view($view, compact('name', 'label', 'parameters'))->render();
+        $result = view($view, compact('name', 'label', 'parameters', 'errors'))->render();
 
         if ($this->inputGroupIsOpened) {
             $this->inputsWithinGroupHtml .= $result;
