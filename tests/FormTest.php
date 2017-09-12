@@ -206,14 +206,16 @@ class FormTest extends FormBuilderTestBase
 
     public function testUrlParameter()
     {
-        //
-    }
+        $message = 'Some issue with "url" form parameter';
 
-    public function testFormDirectionParameter()
-    {
-        //
-    }
+        $getForm = $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
+        $this->assertContains('action="/get-url-without-route-name', $getForm, $message);
 
+        $getForm = $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity(), ['url' => '/custom-url']);
+        $this->assertNotContains('action="/get-url-without-route-name', $getForm, $message);
+        $this->assertContains('action="/custom-url', $getForm, $message);
+    }
+    
     public function testAattrsParameter()
     {
         //
