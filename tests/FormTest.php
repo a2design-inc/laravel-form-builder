@@ -36,35 +36,43 @@ class FormTest extends FormBuilderTestBase
         $this->assertNotContains('name="_method"', $defaultForm, $message);
 
         $putForm = $this->formBuilder->create('', null, ['method' => 'PUT']);
+        $this->assertContains('method="post"', $putForm, $message);
         $this->assertContains('type="hidden"', $putForm, $message);
         $this->assertContains('name="_method', $putForm, $message);
         $this->assertContains('value="PUT"', $putForm, $message);
 
         $deleteForm = $this->formBuilder->create('', null, ['method' => 'DELETE']);
+        $this->assertContains('method="post"', $deleteForm, $message);
         $this->assertContains('type="hidden"', $deleteForm, $message);
         $this->assertContains('name="_method', $deleteForm, $message);
         $this->assertContains('value="DELETE"', $deleteForm, $message);
 
         $putForm = $this->formBuilder->create('', null, ['method' => 'put']);
+        $this->assertContains('method="post"', $putForm, $message);
         $this->assertContains('type="hidden"', $putForm, $message);
         $this->assertContains('name="_method', $putForm, $message);
         $this->assertContains('value="PUT"', $putForm, $message);
 
         $deleteForm = $this->formBuilder->create('', null, ['method' => 'delete']);
+        $this->assertContains('method="post"', $deleteForm, $message);
         $this->assertContains('type="hidden"', $deleteForm, $message);
         $this->assertContains('name="_method', $deleteForm, $message);
         $this->assertContains('value="DELETE"', $deleteForm, $message);
 
         $getForm = $this->formBuilder->create('', null, ['method' => 'get']);
+        $this->assertContains('method="get"', $getForm, $message);
         $this->assertNotContains('name="_method"', $getForm, $message);
 
         $postForm = $this->formBuilder->create('', null, ['method' => 'post']);
+        $this->assertContains('method="post"', $postForm, $message);
         $this->assertNotContains('name="_method"', $postForm, $message);
 
         $getForm = $this->formBuilder->create('', null, ['method' => 'GET']);
+        $this->assertContains('method="get"', $getForm, $message);
         $this->assertNotContains('name="_method"', $getForm, $message);
 
         $postForm = $this->formBuilder->create('', null, ['method' => 'POST']);
+        $this->assertContains('method="post"', $postForm, $message);
         $this->assertNotContains('name="_method"', $postForm, $message);
     }
 
@@ -101,19 +109,42 @@ class FormTest extends FormBuilderTestBase
         $this->assertNotContains('value="POST"', $postForm, $message);
     }
 
-    public function testMethodDetection()
-    {
-
-    }
-
     public function testAction()
     {
-        //
+        $message = 'Some issue with action parameter';
+
+        $defaultForm = $this->formBuilder->create('', null, ['url' => '/test-url']);
+        $this->assertContains('action="/test-url"', $defaultForm, $message);
+
+        $getForm = $this->formBuilder->create('getRouteName', null, ['url' => '/test-url']);
+        $this->assertContains('action="/test-url"', $getForm, $message);
     }
 
     public function testId()
     {
-        //
+        $message = 'Some issue with form id';
+
+        $defaultForm = $this->formBuilder->create('', null, ['id' => 'test-id']);
+        $this->assertContains('id="test-id"', $defaultForm, $message);
+
+        $getForm = $this->formBuilder->create('TestController@getWithoutRouteName');
+        //name of controller action and name of entity
+        $this->assertContains('id="get-without-route-name-test"', $getForm, $message);
+
+        $getForm = $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
+        //name of controller action and name of entity
+        $this->assertContains('id="get-without-route-name-test-entity"', $getForm, $message);
+
+        $this->setConfigValueStub('generate_id', false);
+
+        $defaultForm = $this->formBuilder->create('', null, ['id' => 'test-id']);
+        $this->assertContains('id="test-id"', $defaultForm, $message);
+
+        $getForm = $this->formBuilder->create('TestController@getWithoutRouteName');
+        //name of controller action and name of entity
+        $this->assertNotContains('id="', $getForm, $message);
+
+        $this->resetConfig();
     }
 
     public function testClass()

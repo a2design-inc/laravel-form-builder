@@ -5,9 +5,9 @@ use Illuminate\Routing\Controller;
 /**
  * Class TestController
  *
- * For controller mocking
+ * For mocking, because any route must return controller instance
  */
 class TestController extends Controller
 {
-
+    //
 }

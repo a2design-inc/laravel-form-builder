@@ -1,6 +1,7 @@
 <?php
 
 require_once('TestController.php');
+require_once('TestEntity.php');
 
 use A2design\Form\FormBuilder;
 
@@ -47,6 +48,13 @@ class FormBuilderTestBase extends Orchestra\Testbench\TestCase
     protected $request;
 
     /**
+     * Mock of TestModel
+     *
+     * @var \Mockery\MockInterface|TestModel
+     */
+    protected $model;
+
+    /**
      * Specify the package service provider
      *
      * @param \Illuminate\Foundation\Application $app
@@ -79,9 +87,8 @@ class FormBuilderTestBase extends Orchestra\Testbench\TestCase
     {
         parent::setUp();
 
-        $configMock = Mockery::mock(\Illuminate\Config\Repository::class);
-        $this->stubConfig($configMock);
-        $this->config = $configMock;
+        $this->config = Mockery::mock(\Illuminate\Config\Repository::class);
+        $this->stubConfig();
 
         $viewMock = Mockery::mock(\Illuminate\Contracts\View\Factory::class);
         $viewMock->shouldReceive('shared')->andReturn([])->byDefault();
@@ -97,6 +104,10 @@ class FormBuilderTestBase extends Orchestra\Testbench\TestCase
         $this->request = $requestMock;
 
         $this->session = Mockery::mock(\Illuminate\Session\Store::class);
+
+        $modelMock = Mockery::mock(TestEntity::class);
+        $this->stubModel($modelMock);
+        $this->model = $modelMock;
 
         $this->formBuilder = new FormBuilder(
             $this->viewFactory,
@@ -156,14 +167,10 @@ class FormBuilderTestBase extends Orchestra\Testbench\TestCase
 
     /**
      * Set initial config values for the config mock
-     *
-     * @param \Mockery\MockInterface $configMock
      */
-    protected function stubConfig($configMock)
+    protected function stubConfig()
     {
-        /** @var \Illuminate\Config\Repository $configs */
-        $configs = config();
-        $configName = FormBuilder::CONFIG_NAME;
+        $configMock = $this->config;
 
         $configMock->shouldReceive('get')
             ->withAnyArgs()
@@ -175,18 +182,58 @@ class FormBuilderTestBase extends Orchestra\Testbench\TestCase
             ->andReturn(false)
             ->byDefault();
 
-        foreach ($configs->all()[$configName] as $config => $value) {
+        /** @var \Illuminate\Config\Repository $configs */
+        $configs = config();
+        $configName = FormBuilder::CONFIG_NAME;
 
-            $configMock->shouldReceive('get')
-                ->with($configName . '.' . $config)
-                ->andReturn($value)
-                ->byDefault();
+        foreach ($configs->all()[$configName] as $name => $value) {
 
-            $configMock->shouldReceive('has')
-                ->with($configName . '.' . $config)
-                ->andReturn(true)
-                ->byDefault();
+            $this->setConfigValueStub($name, $value);
         }
+    }
+
+    /**
+     * Set some value for config mock
+     * Don't forget to reset after temporary adding
+     *
+     * @param $name
+     * @param $value
+     */
+    protected function setConfigValueStub($name, $value)
+    {
+        $configMock = $this->config;
+        $configName = FormBuilder::CONFIG_NAME;
+
+        $configMock->shouldReceive('get')
+            ->with($configName . '.' . $name)
+            ->andReturn($value)
+            ->byDefault();
+
+        $configMock->shouldReceive('has')
+            ->with($configName . '.' . $name)
+            ->andReturn(true)
+            ->byDefault();
+    }
+
+    /**
+     * Set initial values for config
+     */
+    protected function resetConfig()
+    {
+        $this->stubConfig();
+    }
+
+    /**
+     * Set methods values for the model
+     *
+     * @param \Mockery\MockInterface $modelMock
+     */
+    protected function stubModel($modelMock)
+    {
+        $modelMock->shouldReceive('getKey')
+            ->withAnyArgs()
+            ->andReturn('id')
+            ->byDefault();
     }
 
     /**
