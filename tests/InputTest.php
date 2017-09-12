@@ -24,6 +24,13 @@ class InputTest extends FormBuilderTestBase
         $input = $this->formBuilder->input('testName', 'Test label', ['error' => false]);
         $this->assertNotContains('Test error message', $input, $message);
 
+        $this->setError('testName', 'Test error message 2');
+        $input = $this->formBuilder->input('testName', 'Test label');
+        $this->assertNotContains('Test error message 2', $input, $message);
+
+        $input = $this->formBuilder->input('testName', 'Test label', ['all-errors' => true]);
+        $this->assertContains('Test error message 2', $input, $message);
+
         $this->resetViewFactory();
     }
 
