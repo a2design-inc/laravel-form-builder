@@ -44,7 +44,7 @@
             @yield('input')
 
             {{--Set errors--}}
-            @if (!empty($parameters['all-errors']))
+            @if (!empty($parameters['all-errors']) && (!isset($parameters['error']) || $parameters['error'] !== false))
 
                 @foreach ($errors->get($name) as $message)
                     @include('form::partials.error-message')
@@ -57,7 +57,7 @@
             @elseif (isset($parameters['error']) && $parameters['error'] !== false)
                 @include('form::partials.error-message', ['message' => $parameters['error']])
             @elseif (!empty($parameters['error']))
-            @elseif ($errors->has($name))
+            @elseif ($errors->has($name) && (!isset($parameters['error']) || $parameters['error'] !== false))
                 @include('form::partials.error-message', ['message' => $errors->first($name)])
             @endif
 

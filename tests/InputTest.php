@@ -62,4 +62,9 @@ class InputTest extends FormBuilderTestBase
     {
         //
     }
+
+    public function testFormInheriting()
+    {
+        //
+    }
 }
