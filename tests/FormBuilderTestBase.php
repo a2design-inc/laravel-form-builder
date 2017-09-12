@@ -5,7 +5,12 @@ require_once('TestEntity.php');
 
 use A2design\Form\FormBuilder;
 
-class FormBuilderTestBase extends Orchestra\Testbench\TestCase
+/**
+ * Class FormBuilderTestBase
+ *
+ * Parent class for tests with mock setting and laravel test environment including
+ */
+abstract class FormBuilderTestBase extends Orchestra\Testbench\TestCase
 {
     /**
      * @var \A2design\Form\FormBuilder
@@ -100,7 +105,7 @@ class FormBuilderTestBase extends Orchestra\Testbench\TestCase
 
         $requestMock = Mockery::mock(\Illuminate\Http\Request::class);
         $requestMock->shouldReceive('getScheme')->andReturn('http');
-        $requestMock->shouldReceive('root')->andReturn('/');
+        $requestMock->shouldReceive('root')->andReturn('http://test.loc');
         $this->request = $requestMock;
 
         $this->session = Mockery::mock(\Illuminate\Session\Store::class);

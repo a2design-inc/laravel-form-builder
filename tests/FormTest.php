@@ -107,6 +107,20 @@ class FormTest extends FormBuilderTestBase
         $this->assertNotContains('name="_method"', $postForm, $message);
         $this->assertContains('action="/post-url-without-route-name', $postForm, $message);
         $this->assertNotContains('value="POST"', $postForm, $message);
+
+        $postForm = $this->formBuilder->create('TestController@postWithoutRouteName', new TestEntity());
+        $this->assertContains('method="post"', $postForm, $message);
+        $this->assertNotContains('name="_method"', $postForm, $message);
+        $this->assertContains('action="/post-url-without-route-name', $postForm, $message);
+        $this->assertNotContains('value="POST"', $postForm, $message);
+
+
+        $getForm = $this->formBuilder->create('getRouteName', new TestEntity());
+        $this->assertNotContains('method="post"', $getForm, $message);
+        $this->assertContains('method="get"', $getForm, $message);
+        $this->assertContains('action="/get-url', $getForm, $message);
+        $this->assertNotContains('value="GET"', $getForm, $message);
+
     }
 
     public function testAction()
@@ -123,6 +137,8 @@ class FormTest extends FormBuilderTestBase
     public function testId()
     {
         $message = 'Some issue with form id';
+
+        $this->setConfigValueStub('generate_id', true);
 
         $defaultForm = $this->formBuilder->create('', null, ['id' => 'test-id']);
         $this->assertContains('id="test-id"', $defaultForm, $message);
@@ -149,12 +165,43 @@ class FormTest extends FormBuilderTestBase
 
     public function testClass()
     {
-        //
+        $message = 'Some issue with form class';
+
+        $this->setConfigValueStub('bootstrap', true);
+        $this->setConfigValueStub('use-grid', true);
+
+        $defaultForm = $this->formBuilder->create('', null, ['class' => 'test-class', 'form-direction-class' => 'test-form-direction-class']);
+        $this->assertContains('test-class', $defaultForm, $message);
+        $this->assertContains('test-form-direction-class', $defaultForm, $message);
+
+        $defaultForm = $this->formBuilder->create();
+        $this->assertContains('form-horizontal', $defaultForm, $message);
+
+        $this->setConfigValueStub('bootstrap', false);
+        $this->setConfigValueStub('use-grid', false);
+
+        $defaultForm = $this->formBuilder->create('', null, ['class' => 'test-class', 'form-direction-class' => 'test-form-direction-class']);
+        $this->assertContains('test-class', $defaultForm, $message);
+        $this->assertNotContains('test-form-direction-class', $defaultForm, $message);
+
+        $defaultForm = $this->formBuilder->create();
+        $this->assertNotContains('form-horizontal', $defaultForm, $message);
+
+        $this->resetConfig();
     }
 
     public function testAbsoluteParameter()
     {
-        //
+        $message = 'Some issue with "absolute" form parameter';
+
+        $getForm = $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity(), ['absolute' => true]);
+        $this->assertContains('action="http://test.loc/', $getForm, $message);
+
+        $getForm = $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
+        $this->assertNotContains('action="http://test.loc/', $getForm, $message);
+
+        $getForm = $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity(), ['absolute' => false]);
+        $this->assertNotContains('action="http://test.loc/', $getForm, $message);
     }
 
     public function testUrlParameter()
