@@ -84,7 +84,7 @@ class FormBuilderTestBase extends Orchestra\Testbench\TestCase
         $this->config = $configMock;
 
         $viewMock = Mockery::mock(\Illuminate\Contracts\View\Factory::class);
-        $viewMock->shouldReceive("shared")->andReturn([])->byDefault();
+        $viewMock->shouldReceive('shared')->andReturn([])->byDefault();
         $this->viewFactory = $viewMock;
 
         $routesMock = Mockery::mock(\Illuminate\Routing\RouteCollection::class);
@@ -92,8 +92,8 @@ class FormBuilderTestBase extends Orchestra\Testbench\TestCase
         $this->routes = $routesMock;
 
         $requestMock = Mockery::mock(\Illuminate\Http\Request::class);
-        $requestMock->shouldReceive("getScheme")->andReturn('http');
-        $requestMock->shouldReceive("root")->andReturn('/');
+        $requestMock->shouldReceive('getScheme')->andReturn('http');
+        $requestMock->shouldReceive('root')->andReturn('/');
         $this->request = $requestMock;
 
         $this->session = Mockery::mock(\Illuminate\Session\Store::class);
@@ -121,36 +121,37 @@ class FormBuilderTestBase extends Orchestra\Testbench\TestCase
      * Create new route
      *
      * @param \Mockery\MockInterface $routesMock Mock for route collection
-     * @param $method
+     * @param string $method
+     * @param bool $hasName
      */
-    public function addRoute($routesMock, $method, $name = true)
+    public function addRoute($routesMock, $method, $hasName = true)
     {
         $controller = new TestController();
         /** @var \Illuminate\Routing\Router $router */
         $router = app()->make(\Illuminate\Routing\Router::class);
 
-        //todo make routes without name
+        $withoutNamePostfix = '';
 
-        $url = '/' . $method . '-url';
-        $action = 'testController@' . $method;
+        if (!$hasName) {
+            $withoutNamePostfix = '-without-route-name';
+        }
+
+        $url = '/' . $method . '-url' . kebab_case($withoutNamePostfix);
+        $action = 'TestController@' . $method . studly_case($withoutNamePostfix);
         $actionPrefix = $this->getFromConfig('route_name_space');
         $fullAction = $actionPrefix . '\\' . $action;
-        $name = $method . 'RouteName';
 
         $route = $router->$method($url, $action);
-
-        if ($name !== false) {
-            $route->name($name);
-        }
-
         $routeMock = Mockery::mock($route);
-        $routeMock->shouldReceive("getController")->andReturn($controller);
+        $routeMock->shouldReceive('getController')->andReturn($controller);
 
-        if ($name !== false) {
-            $routesMock->shouldReceive("getByName")->with($name)->andReturn($routeMock)->byDefault();
+        if ($hasName) {
+            $name = $method . 'RouteName';
+            $route->name($name);
+            $routesMock->shouldReceive('getByName')->with($name)->andReturn($routeMock)->byDefault();
         }
 
-        $routesMock->shouldReceive("getByAction")->with($fullAction)->andReturn($routeMock)->byDefault();
+        $routesMock->shouldReceive('getByAction')->with($fullAction)->andReturn($routeMock)->byDefault();
     }
 
     /**
@@ -195,14 +196,15 @@ class FormBuilderTestBase extends Orchestra\Testbench\TestCase
      */
     protected function createRoutes($routesMock)
     {
-        $routesMock->shouldReceive("getByName")->withAnyArgs()->andReturnNull()->byDefault();
-        $routesMock->shouldReceive("getByAction")->withAnyArgs()->andReturnNull()->byDefault();
+        $routesMock->shouldReceive('getByName')->withAnyArgs()->andReturnNull()->byDefault();
+        $routesMock->shouldReceive('getByAction')->withAnyArgs()->andReturnNull()->byDefault();
 
         $methods = ['get', 'post', 'patch', 'put', 'delete'];
 
         foreach ($methods as $method) {
 
             $this->addRoute($routesMock, $method);
+            $this->addRoute($routesMock, $method, false);
         }
     }
 

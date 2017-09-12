@@ -84,8 +84,21 @@ class FormTest extends FormBuilderTestBase
 
         $getForm = $this->formBuilder->create('getRouteName');
         $this->assertNotContains('method="post"', $getForm, $message);
+        $this->assertContains('method="get"', $getForm, $message);
         $this->assertContains('action="/get-url', $getForm, $message);
         $this->assertNotContains('value="GET"', $getForm, $message);
+
+        $getForm = $this->formBuilder->create('TestController@getWithoutRouteName');
+        $this->assertNotContains('method="post"', $getForm, $message);
+        $this->assertContains('method="get"', $getForm, $message);
+        $this->assertContains('action="/get-url-without-route-name', $getForm, $message);
+        $this->assertNotContains('value="GET"', $getForm, $message);
+
+        $postForm = $this->formBuilder->create('TestController@postWithoutRouteName');
+        $this->assertContains('method="post"', $postForm, $message);
+        $this->assertNotContains('name="_method"', $postForm, $message);
+        $this->assertContains('action="/post-url-without-route-name', $postForm, $message);
+        $this->assertNotContains('value="POST"', $postForm, $message);
     }
 
     public function testMethodDetection()
