@@ -1026,20 +1026,21 @@ class FormBuilder
      */
     protected function getFormAction($parameters)
     {
-        $absolute = false;
-
-        if (isset($parameters['absolute'])) {
-            $absolute = $parameters['absolute'];
-        }
-
         if (isset($parameters['url'])) {
             return $parameters['url'];
+        }
+
+        $absolute = false;
+
+        if (!empty($parameters['absolute'])) {
+            $absolute = $parameters['absolute'];
         }
 
         $urlGenerator = new UrlGenerator($this->routes, $this->request);
         $routeUrlGenerator = new RouteUrlGenerator($urlGenerator, $this->request);
 
         $urlParams = [];
+
         if (!empty($this->entity)) {
             $urlParams['id'] = $this->entity->getKey();
         }
