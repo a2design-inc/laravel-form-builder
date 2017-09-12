@@ -19,6 +19,7 @@ You can display validation errors, old input values and form context based on mo
 - [Full list of parameters](#full-list-of-parameters)
 - [Full list of configs](#full-list-of-configs)
 - [List of methods](#list-of-methods)
+- [Tests](#tests)
 
 ## Quick example
 
@@ -380,3 +381,8 @@ Or you can use shortcuts which disable few parameters simultaneously
  - Form::submit() - Form::button() alias
  - Form::text() - Form::textarea() alias
  
+## Tests
+
+If you are contributor don't forget run/write tests for any updates!
+
+![example_image](https://i.imgur.com/XwBR0O5.png)
