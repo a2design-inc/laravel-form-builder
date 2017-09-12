@@ -2,10 +2,10 @@
 
 namespace A2design\Form;
 
+use Illuminate\Config\Repository;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Route;
 use Illuminate\Routing\RouteCollection;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Session\Store;
@@ -16,7 +16,6 @@ use Illuminate\Routing\RouteUrlGenerator;
  * Class FormBuilder
  * @package A2design\Form
  *
- * TODO tests
  * TODO? separate the class
  */
 class FormBuilder
@@ -40,6 +39,16 @@ class FormBuilder
      * @var Request
      */
     protected $request;
+
+    /**
+     * @var RouteCollection
+     */
+    protected $routes;
+
+    /**
+     * @var Repository
+     */
+    protected $config;
 
     /**
      * @var \Illuminate\Routing\Route|null
@@ -151,14 +160,24 @@ class FormBuilder
      *
      * @param Factory $view
      * @param Store $session
+     * @param RouteCollection $routes
+     * @param Repository $config
      * @param Request|null $request
      */
-    public function __construct(Factory $view, Store $session, Request $request = null)
+    public function __construct(
+        Factory $view,
+        Store $session,
+        RouteCollection $routes,
+        Repository $config,
+        Request $request = null
+    )
     {
         $this->view = $view;
         $this->errors = $view->shared('errors');
         $this->session = $session;
         $this->request = $request;
+        $this->routes = $routes;
+        $this->config = $config;
     }
 
 
@@ -248,8 +267,9 @@ class FormBuilder
         $parameters = $this->setFromForm($parameters);
         $parameters = $this->setDefaultFromConfig($parameters);
         $parameters = $this->generateComplexInputParameters($name, $parameters);
+        $errors = $this->errors;
 
-        $result = view($view, compact('name', 'label', 'parameters'))->render();
+        $result = view($view, compact('name', 'label', 'parameters', 'errors'))->render();
 
         if ($this->inputGroupIsOpened) {
             $this->inputsWithinGroupHtml .= $result;
@@ -548,9 +568,7 @@ class FormBuilder
     protected function getRoute($routeName)
     {
         /** @var RouteCollection $routes */
-        $routes = \Route::getRoutes();
-
-        $route = $routes->getByName($routeName);
+        $route = $this->routes->getByName($routeName);
 
         if (!empty($route)) {
             return $route;
@@ -558,7 +576,7 @@ class FormBuilder
 
         // Route name space can't be used dynamically because it is on protected scope (L5.4)
         // Therefore defined in config file :(
-        return $routes->getByAction($this->getConfig('route_name_space') . '\\' . $routeName);
+        return $this->routes->getByAction($this->getConfig('route_name_space') . '\\' . $routeName);
     }
 
     /**
@@ -747,7 +765,7 @@ class FormBuilder
      */
     protected function getConfig($name)
     {
-        return config(self::CONFIG_NAME . '.' . $name);
+        return $this->config->get(self::CONFIG_NAME . '.' . $name);
     }
 
     /**
@@ -1009,20 +1027,21 @@ class FormBuilder
      */
     protected function getFormAction($parameters)
     {
-        $absolute = false;
-
-        if (isset($parameters['absolute'])) {
-            $absolute = $parameters['absolute'];
-        }
-
         if (isset($parameters['url'])) {
             return $parameters['url'];
         }
 
-        $urlGenerator = new UrlGenerator(\Route::getRoutes(), $this->request);
+        $absolute = false;
+
+        if (!empty($parameters['absolute'])) {
+            $absolute = $parameters['absolute'];
+        }
+
+        $urlGenerator = new UrlGenerator($this->routes, $this->request);
         $routeUrlGenerator = new RouteUrlGenerator($urlGenerator, $this->request);
 
         $urlParams = [];
+
         if (!empty($this->entity)) {
             $urlParams['id'] = $this->entity->getKey();
         }
@@ -1069,7 +1088,7 @@ class FormBuilder
             $result .= csrf_field() . ' ';
         }
 
-        if (isset($parameters['method']) && !in_array($parameters['method'], ['get','GET', 'post', 'POST'])) {
+        if (!empty($parameters['method']) && !in_array($parameters['method'], ['get','GET', 'post', 'POST'])) {
             $result .= method_field(strtoupper($parameters['method'])) . ' ';
         }
 
