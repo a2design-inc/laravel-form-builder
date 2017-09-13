@@ -16,7 +16,13 @@ use Illuminate\Routing\RouteUrlGenerator;
  * Class FormBuilder
  * @package A2design\Form
  *
- * TODO? separate the class
+ * TODO Form::buttonLink test
+ * TODO Form::hidden test
+ * TODO Form::checkbox test
+ * TODO Form::select test
+ * TODO Form::textarea test
+ * TODO Form::postLink test
+ * TODO Form::radio test
  */
 class FormBuilder
 {
@@ -1175,7 +1181,9 @@ class FormBuilder
             $parameters['label'] = false;
         }
 
-        //todo id
+        if (!isset($parameters['id'])) {
+            $parameters['id'] = '';
+        }
 
         return $parameters;
     }
@@ -1328,8 +1336,6 @@ class FormBuilder
             $parameters['label-classes'] = $this->getLabelClasses($parameters);
         }
 
-        //todo
-        $parameters['id'] = $this->getInputId('', $parameters);
         $parameters['input-wrapper-classes'] = $this->getButtonWrapperClasses($parameters);
         $parameters['button-classes'] = $this->getButtonClasses($parameters);
 
