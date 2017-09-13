@@ -35,6 +35,23 @@ class InputTest extends FormBuilderTestBase
         $input = $this->formBuilder->input('testName', 'Test label', ['all-errors' => true]);
         $this->assertContains('Test error message 2', $input, $message);
 
+        $input = $this->formBuilder->input('testName', 'Test label', [
+            'error-form-group-class' => 'test-error-form-group-class'
+        ]);
+        $this->assertContains('error-form-group-class', $input, $message);
+
+        $input = $this->formBuilder->input('testName', 'Test label', ['error-form-group-class' => 'test-error-class']);
+        $this->assertContains('test-error-class', $input, $message);
+
+        $this->setConfigValueStub('error_form_group_class', 'config-test-error-form-group-class');
+        $this->setConfigValueStub('error_class', 'config-test-error-class');
+
+        $input = $this->formBuilder->input('testName', 'Test label');
+        $this->assertContains('config-test-error-class', $input, $message);
+        $this->assertContains('config-test-error-form-group-class', $input, $message);
+
+        $this->resetConfig();
+        //reset errors
         $this->resetViewFactory();
     }
 
@@ -354,7 +371,7 @@ class InputTest extends FormBuilderTestBase
         $this->assertNotContains('value="some-value"', $input, $message);
         $this->assertNotContains('value="some-old-value"', $input, $message);
         $this->assertContains('value="custom-value"', $input, $message);
-        
+
         $input = $this->formBuilder->input('fieldWithValue', 'Test label', ['value' => 'custom-value']);
         $this->assertNotContains('value="some-value"', $input, $message);
         $this->assertContains('value="custom-value"', $input, $message);
