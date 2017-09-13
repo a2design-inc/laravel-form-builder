@@ -78,7 +78,61 @@ class InputTest extends FormBuilderTestBase
 
     public function testCommonInputAttributes()
     {
-        //
+        $message = 'Some issue with attribute ';
+        $attrs = ['required', 'readonly', 'disabled', 'autofocus'];
+        $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
+
+        foreach ($attrs as $attr) {
+            $input = $this->formBuilder->input('testName', 'Test label', [$attr => true]);
+            $this->assertContains($attr, $input, $message . $attr);
+
+            $input = $this->formBuilder->input('testName', 'Test label', [$attr => false]);
+            $this->assertNotContains($attr, $input, $message . $attr);
+
+            $input = $this->formBuilder->input('testName', 'Test label');
+            $this->assertNotContains($attr, $input, $message . $attr);
+        }
+
+        $this->formBuilder->end();
+    }
+
+    public function testType()
+    {
+        $message = 'Some issue with type attribute';
+
+        $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
+
+        $input = $this->formBuilder->input('testName', 'Test label', ['type' => 'test-type']);
+        $this->assertContains('type="test-type"', $input, $message);
+
+        $input = $this->formBuilder->input('testName', 'Test label', ['type' => 'test-type']);
+        $this->assertContains('type="test-type"', $input, $message);
+
+        $typeInheritedInputs = [
+            'password',
+            'file',
+            //html5
+            'color',
+            'date',
+            'datetime',
+            'datetimeLocal',
+            'email',
+            'number',
+            'range',
+            'search',
+            'tel',
+            'time',
+            'url',
+            'month',
+            'week',
+        ];
+
+        foreach ($typeInheritedInputs as $inputType) {
+            $input = $this->formBuilder->$inputType('testName', 'Test label');
+            $this->assertContains('type="' . kebab_case($inputType) . '"', $input, $message);
+        }
+
+        $this->formBuilder->end();
     }
 
     public function testClasses()
@@ -102,6 +156,11 @@ class InputTest extends FormBuilderTestBase
     }
 
     public function testFormInheriting()
+    {
+        //
+    }
+
+    public function testValueInserting()
     {
         //
     }
