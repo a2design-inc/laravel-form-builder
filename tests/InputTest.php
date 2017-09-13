@@ -337,11 +337,6 @@ class InputTest extends FormBuilderTestBase
         $this->resetConfig();
     }
 
-    public function testFormInheriting()
-    {
-        //
-    }
-
     public function testValueInserting()
     {
         //

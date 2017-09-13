@@ -250,7 +250,26 @@ class FormTest extends FormBuilderTestBase
         $this->assertNotContains('enctype="multipart/form-data"', $getForm, $message);
     }
 
-    public function testClosing() {
+    public function testClosing()
+    {
         $this->assertEquals('</form>', $this->formBuilder->end());
+    }
+
+    public function testFormInheriting()
+    {
+        $message = 'Some issue with form parameters inheriting';
+
+        $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity(), [
+            //example of non-inherited parameter
+            'id' => 'test-form-id',
+            //example of inherited parameter
+            'required' => true,
+        ]);
+
+        $input = $this->formBuilder->input('testName', 'Test label');
+        $this->assertNotContains('test-form-id', $input, $message);
+        $this->assertContains('required', $input, $message);
+
+        $this->formBuilder->end();
     }
 }
