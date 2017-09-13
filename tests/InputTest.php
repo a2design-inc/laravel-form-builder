@@ -82,9 +82,10 @@ class InputTest extends FormBuilderTestBase
         $this->assertContains('id="custom-test-id"', $input, $message);
 
         $this->formBuilder->end();
-        $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
 
         $this->setConfigValueStub('generate_id', false);
+
+        $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
 
         $input = $this->formBuilder->input('testName', 'Test label');
         $this->assertNotContains('id="get-without-route-name-test-entity-test-name"', $input, $message);
