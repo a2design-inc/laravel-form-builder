@@ -6,7 +6,11 @@ class InputTest extends FormBuilderTestBase
 {
     public function testOpening()
     {
-        //
+        $message = 'Some issue with input';
+
+        $input = $this->formBuilder->input('testName');
+        $this->assertContains('<input', $input, $message);
+        $this->assertContains('name="testName"', $input, $message);
     }
 
     public function testErrors()
@@ -43,6 +47,33 @@ class InputTest extends FormBuilderTestBase
         ]]);
 
         $this->assertContains('test-attr="test-attr-value"', $input, $message);
+    }
+
+    public function testId()
+    {
+        $message = 'Some issue with input id';
+
+        $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
+
+        $this->setConfigValueStub('generate_id', true);
+
+        $input = $this->formBuilder->input('testName', 'Test label');
+        //controller method - entity name - field name
+        $this->assertContains('id="get-without-route-name-test-entity-test-name"', $input, $message);
+
+        $input = $this->formBuilder->input('testName', 'Test label', ['id' => 'custom-test-id']);
+        $this->assertContains('id="custom-test-id"', $input, $message);
+
+        $this->setConfigValueStub('generate_id', false);
+
+        $input = $this->formBuilder->input('testName', 'Test label');
+        $this->assertNotContains('id="get-without-route-name-test-entity-test-name"', $input, $message);
+
+        $input = $this->formBuilder->input('testName', 'Test label', ['id' => 'custom-test-id']);
+        $this->assertContains('id="custom-test-id"', $input, $message);
+
+        $this->formBuilder->end();
+        $this->resetConfig();
     }
 
     public function testCommonInputAttributes()
