@@ -9,5 +9,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class TestEntity extends Model
 {
-    //
+    public $fieldWithValue = 'some-value';
+    public $fieldWithOld = 'some-value';
 }

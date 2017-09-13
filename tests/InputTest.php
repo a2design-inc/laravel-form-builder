@@ -339,6 +339,26 @@ class InputTest extends FormBuilderTestBase
 
     public function testValueInserting()
     {
-        //
+        $message = 'Some issue with input values';
+
+        $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
+
+        $input = $this->formBuilder->input('fieldWithValue', 'Test label');
+        $this->assertContains('value="some-value"', $input, $message);
+
+        $input = $this->formBuilder->input('fieldWithOld', 'Test label');
+        $this->assertNotContains('value="some-value"', $input, $message);
+        $this->assertContains('value="some-old-value"', $input, $message);
+
+        $input = $this->formBuilder->input('fieldWithOld', 'Test label', ['value' => 'custom-value']);
+        $this->assertNotContains('value="some-value"', $input, $message);
+        $this->assertNotContains('value="some-old-value"', $input, $message);
+        $this->assertContains('value="custom-value"', $input, $message);
+        
+        $input = $this->formBuilder->input('fieldWithValue', 'Test label', ['value' => 'custom-value']);
+        $this->assertNotContains('value="some-value"', $input, $message);
+        $this->assertContains('value="custom-value"', $input, $message);
+
+        $this->formBuilder->end();
     }
 }

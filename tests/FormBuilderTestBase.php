@@ -281,6 +281,8 @@ abstract class FormBuilderTestBase extends Orchestra\Testbench\TestCase
     {
         $sessionMock = $this->session;
         $sessionMock->shouldReceive('hasOldInput')->withAnyArgs()->andReturn(false)->byDefault();
+        $sessionMock->shouldReceive('hasOldInput')->with('fieldWithOld')->andReturn(true)->byDefault();
+        $sessionMock->shouldReceive('getOldInput')->with('fieldWithOld')->andReturn('some-old-value')->byDefault();
     }
 
     /**
