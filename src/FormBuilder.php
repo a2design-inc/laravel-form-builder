@@ -458,7 +458,6 @@ class FormBuilder
     {
         $this->inputGroupIsOpened = true;
 
-        $parameters = $this->setFromButtonGroup($parameters);
         $parameters = $this->setFromForm($parameters);
         $parameters = $this->setDefaultFromConfig($parameters);
         //because button group equal to button with several buttons inside one input html wrap
@@ -490,11 +489,12 @@ class FormBuilder
         $html = $this->inputsWithinGroupHtml;
         $this->inputsWithinGroupHtml = '';
         $parameters['only-input'] = false;
+        $errors = $this->errors;
 
         $name = isset($parameters['name']) ? $parameters['name'] : '';
         $label = isset($parameters['label-text']) ? $parameters['label-text'] : '';
 
-        return view('form::group', compact('html', 'name', 'parameters', 'label'))->render();
+        return view('form::group', compact('html', 'name', 'parameters', 'label', 'errors'))->render();
     }
 
     /**
@@ -1328,23 +1328,7 @@ class FormBuilder
 
         return $this->addOnlyNewParameters($parameters, $this->inputGroupParameters);
     }
-
-    /**
-     * Fill parameters from the group
-     *
-     * @param array $parameters
-     *
-     * @return array
-     */
-    protected function setFromButtonGroup($parameters)
-    {
-        if (!$this->inputGroupIsOpened) {
-            return $parameters;
-        }
-
-        return $this->addOnlyNewParameters($parameters, $this->inputGroupParameters);
-    }
-
+    
     /**
      * Add parameters which have not set yet
      *
