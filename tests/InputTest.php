@@ -98,7 +98,7 @@ class InputTest extends FormBuilderTestBase
 
     public function testType()
     {
-        $message = 'Some issue with type attribute';
+        $message = 'Some issue with input type attribute';
 
         $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
 
@@ -135,17 +135,66 @@ class InputTest extends FormBuilderTestBase
         $this->formBuilder->end();
     }
 
-    public function testClasses()
+    public function testFormControlClass()
     {
-        //
+        $message = 'Some issue with input form-control class';
+
+        $this->setConfigValueStub('bootstrap', true);
+
+        $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
+
+        $input = $this->formBuilder->input('testName', 'Test label');
+        $this->assertContains($this->getFromConfig('form_control_class'), $input, $message);
+
+        $input = $this->formBuilder->input('testName', 'Test label', ['form-control-class' => 'custom-from-control']);
+        $this->assertNotContains($this->getFromConfig('form_control_class'), $input, $message);
+        $this->assertContains('custom-from-control', $input, $message);
+
+        $this->formBuilder->end();
+
+        $this->setConfigValueStub('bootstrap', false);
+
+        $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
+        $input = $this->formBuilder->input('testName', 'Test label');
+        $this->assertNotContains($this->getFromConfig('form_control_class'), $input, $message);
+        $this->formBuilder->end();
+
+        $this->resetConfig();
     }
 
-    public function testOnlyInputParameter()
+    public function testClass()
     {
-        //
+        $message = 'Some issue with input classes';
+
+        $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
+
+        $input1 = $this->formBuilder->input('testName', 'Test label', ['class' => 'test-class']);
+        $input2 = $this->formBuilder->input('testName', 'Test label');
+
+        $this->assertContains('test-class', $input1, $message);
+        $this->assertNotContains('test-class', $input2, $message);
+
+        $this->formBuilder->end();
+        $this->resetConfig();
     }
 
     public function testInputGroupParameter()
+    {
+        $message = 'Some issue with input group';
+
+        $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
+
+        $input1 = $this->formBuilder->input('testName', 'Test label', ['input-group' => 'test-group']);
+        $input2 = $this->formBuilder->input('testName', 'Test label');
+
+        $this->assertContains('test-group', $input1, $message);
+        $this->assertNotContains('test-group', $input2, $message);
+
+        $this->formBuilder->end();
+        $this->resetConfig();
+    }
+
+    public function testOnlyInputParameter()
     {
         //
     }
