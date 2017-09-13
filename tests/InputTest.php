@@ -70,9 +70,9 @@ class InputTest extends FormBuilderTestBase
     {
         $message = 'Some issue with input id';
 
-        $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
-
         $this->setConfigValueStub('generate_id', true);
+
+        $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
 
         $input = $this->formBuilder->input('testName', 'Test label');
         //controller method - entity name - field name
@@ -80,6 +80,9 @@ class InputTest extends FormBuilderTestBase
 
         $input = $this->formBuilder->input('testName', 'Test label', ['id' => 'custom-test-id']);
         $this->assertContains('id="custom-test-id"', $input, $message);
+
+        $this->formBuilder->end();
+        $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
 
         $this->setConfigValueStub('generate_id', false);
 
