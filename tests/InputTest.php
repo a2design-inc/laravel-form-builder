@@ -196,12 +196,145 @@ class InputTest extends FormBuilderTestBase
 
     public function testOnlyInputParameter()
     {
-        //
+        $message = 'Some issue with input parameter "only-input"';
+
+        $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
+
+        $input = $this->formBuilder->input('testName', 'Test label', ['only-input' => true]);
+        $this->assertStringStartsWith('<input', $input, $message);
+
+        $input = $this->formBuilder->input('testName', 'Test label', ['only-input' => false]);
+        $this->assertStringStartsNotWith('<input', $input, $message);
+
+        $input = $this->formBuilder->input('testName', 'Test label');
+        $this->assertStringStartsNotWith('<input', $input, $message);
+
+        $this->formBuilder->end();
     }
 
-    public function testLabel()
+    public function testWrappers()
     {
-        //
+        $message = 'Some issue with input wrappers';
+
+        $this->setConfigValueStub('bootstrap', true);
+        $this->setConfigValueStub('generate_id', true);
+        $this->setConfigValueStub('use_grid', true);
+        $this->setConfigValueStub('form_group_wrapper', true);
+        $this->setConfigValueStub('label_after', 'label-after-sign');
+
+        $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
+
+        $input = $this->formBuilder->input('testName', 'Test label');
+        $this->assertStringStartsWith('<div', $input, $message);
+        $this->assertContains($this->getFromConfig('form_group_class'), $input, $message);
+        $this->assertContains($this->getFromConfig('control_label_class'), $input, $message);
+        $this->assertContains($this->getFromConfig('label_grid_class'), $input, $message);
+        $this->assertContains($this->getFromConfig('input_grid_class'), $input, $message);
+        $this->assertContains('<label', $input, $message);
+        $this->assertContains('for="get-without-route-name-test-entity-test-name"', $input, $message);
+        $this->assertContains('</label>', $input, $message);
+        $this->assertContains('Test label', $input, $message);
+        $this->assertContains('label-after-sign', $input, $message);
+
+        $this->formBuilder->end();
+
+        $this->setConfigValueStub('bootstrap', false);
+
+        $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
+
+        $input = $this->formBuilder->input('testName', 'Test label');
+        $this->assertStringStartsWith('<div', $input, $message);
+        $this->assertNotContains($this->getFromConfig('form_group_class'), $input, $message);
+        $this->assertNotContains($this->getFromConfig('control_label_class'), $input, $message);
+        $this->assertNotContains($this->getFromConfig('label_grid_class'), $input, $message);
+        $this->assertNotContains($this->getFromConfig('input_grid_class'), $input, $message);
+        $this->assertContains('<label', $input, $message);
+        $this->assertContains('for="get-without-route-name-test-entity-test-name"', $input, $message);
+        $this->assertContains('</label>', $input, $message);
+        $this->assertContains('Test label', $input, $message);
+        $this->assertContains('label-after-sign', $input, $message);
+
+        $this->formBuilder->end();
+
+        $this->setConfigValueStub('bootstrap', true);
+        $this->setConfigValueStub('use_grid', false);
+
+        $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
+
+        $input = $this->formBuilder->input('testName', 'Test label');
+        $this->assertStringStartsWith('<div', $input, $message);
+        $this->assertContains($this->getFromConfig('form_group_class'), $input, $message);
+        $this->assertContains($this->getFromConfig('control_label_class'), $input, $message);
+        $this->assertNotContains($this->getFromConfig('label_grid_class'), $input, $message);
+        $this->assertNotContains($this->getFromConfig('input_grid_class'), $input, $message);
+        $this->assertContains('<label', $input, $message);
+        $this->assertContains('for="get-without-route-name-test-entity-test-name"', $input, $message);
+        $this->assertContains('</label>', $input, $message);
+        $this->assertContains('Test label', $input, $message);
+        $this->assertContains('label-after-sign', $input, $message);
+
+        $this->formBuilder->end();
+
+        $this->setConfigValueStub('use_grid', true);
+        $this->setConfigValueStub('generate_id', false);
+
+        $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
+
+        $input = $this->formBuilder->input('testName', 'Test label');
+        $this->assertNotContains('for="', $input, $message);
+
+        $this->setConfigValueStub('generate_id', true);
+        $this->setConfigValueStub('form_group_wrapper', false);
+
+        $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
+
+        $input = $this->formBuilder->input('testName', 'Test label');
+        $this->assertStringStartsNotWith('<div', $input, $message);
+
+        $this->setConfigValueStub('wrapper', false);
+
+        $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
+
+        $input = $this->formBuilder->input('testName', 'Test label');
+        $this->assertNotContains('div', $input, $message);
+
+        $this->formBuilder->end();
+
+        $this->setConfigValueStub('form_group_wrapper', true);
+        $this->setConfigValueStub('wrapper', true);
+
+        $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
+
+        $input = $this->formBuilder->input('testName', 'Test label', [
+            'label' => false
+        ]);
+        $this->assertNotContains('<label', $input, $message);
+        $this->assertContains($this->getFromConfig('offset_input_grid_class'), $input, $message);
+
+        $this->formBuilder->end();
+
+        $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
+
+        $classParameters = [
+            'wrapper-class' => 'test-wrapper-class',
+            'form-group-wrapper-class' => 'test-form-group-wrapper-class',
+            'label-class' => 'test-label-class',
+            'control-label-class' => 'test-control-label-class',
+            'form-group-class' => 'test-form-group-class',
+            'form-control-class' => 'test-form-control-class',
+            'label-grid-class' => 'test-label-grid-class',
+            'input-grid-class' => 'test-input-grid-class',
+        ];
+
+        $input = $this->formBuilder->input('testName', 'Test label', $classParameters);
+
+        foreach ($classParameters as $classParameter) {
+            $this->assertContains($classParameter, $input, $message);
+        }
+
+        $this->formBuilder->end();
+
+        $this->resetConfig();
     }
 
     public function testFormInheriting()
