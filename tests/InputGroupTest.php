@@ -54,49 +54,6 @@ class InputGroupTest extends FormBuilderTestBase
         $this->assertContains('test-attr="test-attr-value"', $inputGroup, $message);
     }
 
-    public function testId()
-    {
-        $message = 'Some issue with input group id';
-        $this->setConfigValueStub('generate_id', true);
-
-        $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
-
-        $inputGroup = $this->formBuilder->inputGroup();
-        $inputGroup .= $this->formBuilder->input('field-name');
-        $inputGroup .= $this->formBuilder->inputGroupEnd();
-
-        //controller method - entity name
-        $this->assertContains('id="get-without-route-name-test-entity-"', $inputGroup, $message);
-
-        $inputGroup = $this->formBuilder->inputGroup(['id' => 'custom-test-id']);
-        $inputGroup .= $this->formBuilder->input('field-name');
-        $inputGroup .= $this->formBuilder->inputGroupEnd();
-
-        $this->assertContains('id="custom-test-id"', $inputGroup, $message);
-
-        $this->formBuilder->end();
-
-        $this->setConfigValueStub('generate_id', false);
-
-        $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
-
-        $inputGroup = $this->formBuilder->inputGroup();
-        $inputGroup .= $this->formBuilder->input('field-name');
-        $inputGroup .= $this->formBuilder->inputGroupEnd();
-
-        //controller method - entity name
-        $this->assertNotContains('id="get-without-route-name-test-entity-"', $inputGroup, $message);
-
-        $inputGroup = $this->formBuilder->inputGroup(['id' => 'custom-test-id']);
-        $inputGroup .= $this->formBuilder->input('field-name');
-        $inputGroup .= $this->formBuilder->inputGroupEnd();
-
-        $this->assertContains('id="custom-test-id"', $inputGroup, $message);
-
-        $this->formBuilder->end();
-        $this->resetConfig();
-    }
-
     public function testCommonInputAttributes()
     {
         $message = 'Some issue with attribute ';
@@ -199,7 +156,6 @@ class InputGroupTest extends FormBuilderTestBase
         $this->assertContains($this->getFromConfig('label_grid_class'), $inputGroup, $message);
         $this->assertContains($this->getFromConfig('input_grid_class'), $inputGroup, $message);
         $this->assertContains('<label', $inputGroup, $message);
-        $this->assertContains('for="get-without-route-name-test-entity-"', $inputGroup, $message);
         $this->assertContains('</label>', $inputGroup, $message);
         $this->assertContains('Test label', $inputGroup, $message);
         $this->assertContains('label-after-sign', $inputGroup, $message);
@@ -220,7 +176,6 @@ class InputGroupTest extends FormBuilderTestBase
         $this->assertNotContains($this->getFromConfig('label_grid_class'), $inputGroup, $message);
         $this->assertNotContains($this->getFromConfig('input_grid_class'), $inputGroup, $message);
         $this->assertContains('<label', $inputGroup, $message);
-        $this->assertContains('for="get-without-route-name-test-entity-"', $inputGroup, $message);
         $this->assertContains('</label>', $inputGroup, $message);
         $this->assertContains('Test label', $inputGroup, $message);
         $this->assertContains('label-after-sign', $inputGroup, $message);
@@ -242,7 +197,6 @@ class InputGroupTest extends FormBuilderTestBase
         $this->assertNotContains($this->getFromConfig('label_grid_class'), $inputGroup, $message);
         $this->assertNotContains($this->getFromConfig('input_grid_class'), $inputGroup, $message);
         $this->assertContains('<label', $inputGroup, $message);
-        $this->assertContains('for="get-without-route-name-test-entity-"', $inputGroup, $message);
         $this->assertContains('</label>', $inputGroup, $message);
         $this->assertContains('Test label', $inputGroup, $message);
         $this->assertContains('label-after-sign', $inputGroup, $message);

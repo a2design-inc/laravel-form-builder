@@ -53,49 +53,6 @@ class ButtonGroupTest extends FormBuilderTestBase
         $this->assertContains('test-attr="test-attr-value"', $buttonGroup, $message);
     }
 
-    public function testId()
-    {
-        $message = 'Some issue with button group id';
-        $this->setConfigValueStub('generate_id', true);
-
-        $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
-
-        $buttonGroup = $this->formBuilder->buttonGroup(['label' => true]);
-        $buttonGroup .= $this->formBuilder->button('field-name');
-        $buttonGroup .= $this->formBuilder->buttonGroupEnd();
-
-        //controller method - entity name
-        $this->assertContains('for="get-without-route-name-test-entity-"', $buttonGroup, $message);
-
-        $buttonGroup = $this->formBuilder->buttonGroup(['id' => 'custom-test-id', 'label' => true]);
-        $buttonGroup .= $this->formBuilder->button('field-name');
-        $buttonGroup .= $this->formBuilder->buttonGroupEnd();
-
-        $this->assertContains('for="custom-test-id"', $buttonGroup, $message);
-
-        $this->formBuilder->end();
-
-        $this->setConfigValueStub('generate_id', false);
-
-        $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
-
-        $buttonGroup = $this->formBuilder->buttonGroup();
-        $buttonGroup .= $this->formBuilder->button('field-name');
-        $buttonGroup .= $this->formBuilder->buttonGroupEnd();
-
-        //controller method - entity name
-        $this->assertNotContains('id="get-without-route-name-test-entity-"', $buttonGroup, $message);
-
-        $buttonGroup = $this->formBuilder->buttonGroup(['id' => 'custom-test-id', 'label' => true]);
-        $buttonGroup .= $this->formBuilder->button('field-name');
-        $buttonGroup .= $this->formBuilder->buttonGroupEnd();
-
-        $this->assertContains('for="custom-test-id"', $buttonGroup, $message);
-
-        $this->formBuilder->end();
-        $this->resetConfig();
-    }
-
     public function testCommonbuttonAttributes()
     {
         $message = 'Some issue with attribute ';
@@ -148,7 +105,6 @@ class ButtonGroupTest extends FormBuilderTestBase
         $this->assertContains($this->getFromConfig('label_grid_class'), $buttonGroup, $message);
         $this->assertContains($this->getFromConfig('input_grid_class'), $buttonGroup, $message);
         $this->assertContains('<label', $buttonGroup, $message);
-        $this->assertContains('for="get-without-route-name-test-entity-"', $buttonGroup, $message);
         $this->assertContains('</label>', $buttonGroup, $message);
         $this->assertContains('Test label', $buttonGroup, $message);
         $this->assertContains('label-after-sign', $buttonGroup, $message);
@@ -169,7 +125,6 @@ class ButtonGroupTest extends FormBuilderTestBase
         $this->assertNotContains($this->getFromConfig('label_grid_class'), $buttonGroup, $message);
         $this->assertNotContains($this->getFromConfig('input_grid_class'), $buttonGroup, $message);
         $this->assertContains('<label', $buttonGroup, $message);
-        $this->assertContains('for="get-without-route-name-test-entity-"', $buttonGroup, $message);
         $this->assertContains('</label>', $buttonGroup, $message);
         $this->assertContains('Test label', $buttonGroup, $message);
         $this->assertContains('label-after-sign', $buttonGroup, $message);
@@ -191,7 +146,6 @@ class ButtonGroupTest extends FormBuilderTestBase
         $this->assertNotContains($this->getFromConfig('label_grid_class'), $buttonGroup, $message);
         $this->assertNotContains($this->getFromConfig('input_grid_class'), $buttonGroup, $message);
         $this->assertContains('<label', $buttonGroup, $message);
-        $this->assertContains('for="get-without-route-name-test-entity-"', $buttonGroup, $message);
         $this->assertContains('</label>', $buttonGroup, $message);
         $this->assertContains('Test label', $buttonGroup, $message);
         $this->assertContains('label-after-sign', $buttonGroup, $message);
