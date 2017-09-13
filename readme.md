@@ -231,6 +231,7 @@ Or you can use shortcuts which disable few parameters simultaneously
 | Everywhere       | class                   | Class attribute                              |
 |                  | id                      | Id attribute. Generated automatically. If you don't need, specify an empty string or redefine by id what you want. Or just adjust globally in config file |
 |                  | use-grid                | Set false to disable the grid classes        |
+|                  | bootstrap               | Set false to disable the bootstrap using     |
 | Form::create     |                         | Note: you can use other parameters here to apply them to all inputs, buttons etc inside the form |
 |                  | method                  | POST, GET, PUT etc                           |
 |                  | absolute                | Absolute path of the method                  |
