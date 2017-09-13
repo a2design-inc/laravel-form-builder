@@ -461,7 +461,7 @@ class FormBuilder
         $parameters = $this->setFromForm($parameters);
         $parameters = $this->setDefaultFromConfig($parameters);
         //because button group equal to button with several buttons inside one input html wrap
-        $parameters = $this->generateComplexButtonParameters($parameters);
+        $parameters = $this->generateComplexButtonGroupParameters($parameters);
 
         return $this->inputGroup($parameters);
     }
@@ -1175,6 +1175,8 @@ class FormBuilder
             $parameters['label'] = false;
         }
 
+        //todo id
+
         return $parameters;
     }
 
@@ -1314,6 +1316,27 @@ class FormBuilder
     }
 
     /**
+     * Fill parameters based on other parameters
+     *
+     * @param array $parameters
+     *
+     * @return array
+     */
+    protected function generateComplexButtonGroupParameters($parameters)
+    {
+        if (!empty($parameters['label'])) {
+            $parameters['label-classes'] = $this->getLabelClasses($parameters);
+        }
+
+        //todo
+        $parameters['id'] = $this->getInputId('', $parameters);
+        $parameters['input-wrapper-classes'] = $this->getButtonWrapperClasses($parameters);
+        $parameters['button-classes'] = $this->getButtonClasses($parameters);
+
+        return $parameters;
+    }
+
+    /**
      * Fill parameters from the group
      *
      * @param array $parameters
@@ -1328,7 +1351,7 @@ class FormBuilder
 
         return $this->addOnlyNewParameters($parameters, $this->inputGroupParameters);
     }
-    
+
     /**
      * Add parameters which have not set yet
      *
