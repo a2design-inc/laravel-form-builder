@@ -351,6 +351,26 @@ class InputTest extends FormBuilderTestBase
 
         $this->formBuilder->end();
 
+        $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
+
+        $input = $this->formBuilder->input('testName', '<a>Test label</a>');
+        $this->assertContains('&lt;a&gt;Test label&lt;/a&gt;', $input, $message);
+        $this->assertNotContains('<a>Test label</a>', $input, $message);
+
+        $input = $this->formBuilder->input('testName', '<a>Test label</a>', [
+            'label-escaped' => true
+        ]);
+        $this->assertContains('&lt;a&gt;Test label&lt;/a&gt;', $input, $message);
+        $this->assertNotContains('<a>Test label</a>', $input, $message);
+
+        $input = $this->formBuilder->input('testName', '<a>Test label</a>', [
+            'label-escaped' => false
+        ]);
+        $this->assertNotContains('&lt;a&gt;Test label&lt;/a&gt;', $input, $message);
+        $this->assertContains('<a>Test label</a>', $input, $message);
+
+        $this->formBuilder->end();
+
         $this->resetConfig();
     }
 
