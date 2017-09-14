@@ -16,9 +16,6 @@ use Illuminate\Routing\RouteUrlGenerator;
  * Class FormBuilder
  * @package A2design\Form
  *
- * TODO Form::hidden test
- * TODO Form::checkbox test
- * TODO Form::select test
  * TODO Form::textarea test
  * TODO Form::postLink test
  * TODO Form::radio test
@@ -514,6 +511,10 @@ class FormBuilder
     public function select($name, $label = '', $parameters = [])
     {
         $parameters['value'] = $this->getSelectValue($parameters, $name);
+
+        if (empty($parameters['options'])) {
+            $parameters['options'] = [];
+        }
 
         return $this->input($name, $label, $parameters, 'form::select');
     }
@@ -1390,7 +1391,15 @@ class FormBuilder
      */
     protected function getSelectValue($parameters, $name)
     {
-        $customValue = isset($parameters['value'])? $parameters['value'] : '';
+        $customValue = '';
+
+        if (!empty($this->entity)) {
+            $customValue = $this->entity->$name;
+        }
+
+        if (isset($parameters['value'])) {
+            $customValue = $parameters['value'];
+        }
 
         if (isset($parameters['use-old']) && $parameters['use-old'] === false) {
             return $customValue;
