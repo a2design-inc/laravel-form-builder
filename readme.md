@@ -297,7 +297,7 @@ Or you can use shortcuts which disable few parameters simultaneously
 |                  | multiple                | True/false                                                      |
 |                  | size                    | Set the size attribute                                          |
 |                  | value                   | You can set array of selected values instead only one 'value' attribute for the multiple|
-|                  | use-old                 | True/false. By default true and the old values is more important that your 'value' parameter. |
+|                  | use-old                 | True/false. By default it is true and the old values is more important that your 'value' parameter. |
 | Form::textarea   |                         | The save as input but with additional parameters |
 |                  | maxlength               | Set the maxlength attribute                                     |
 |                  | placeholder             | Set the placeholder attribute                                   |
