@@ -15,8 +15,6 @@ use Illuminate\Routing\RouteUrlGenerator;
 /**
  * Class FormBuilder
  * @package A2design\Form
- *
- * TODO Form::radio test
  */
 class FormBuilder
 {
@@ -533,6 +531,10 @@ class FormBuilder
     {
         //because the bootstrap class is incompatible with radio
         $parameters['form-control-class'] = '';
+
+        if (empty($parameters['options'])) {
+            $parameters['options'] = [];
+        }
 
         $parameters = $this->setFromForm($parameters);
         $parameters = $this->setDefaultFromConfig($parameters);

@@ -311,6 +311,7 @@ Or you can use shortcuts which disable few parameters simultaneously
 |                  | url                     | Use the url instead action argument                             |
 |                  | escaped                 | Set true/false for the text escaping                            | 
 | Form::radio      |                         | Similar to the input, but with additional parameters            |
+|                  | options                 | Array value => displayed text                                   |
 |                  | inline                  | Show the radio buttons in line                                  |
 |                  | radio-label-class       | Set class for each radio button label                           |
 |                  | escaped                 | Set true/false for the text escaping                            |
