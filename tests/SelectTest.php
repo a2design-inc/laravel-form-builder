@@ -4,6 +4,13 @@ require_once 'FormBuilderTestBase.php';
 
 class SelectTest extends FormBuilderTestBase
 {
+    private $options = [
+        'option1' => 'Text 1',
+        'option2' => 'Text 2',
+        'option3' => 'Text 3',
+        'some-value' => 'Some value',
+    ];
+
     public function testOpening()
     {
         $message = 'Some issue with select';
@@ -159,7 +166,7 @@ class SelectTest extends FormBuilderTestBase
         $this->formBuilder->end();
         $this->resetConfig();
     }
-    
+
     public function testWrappers()
     {
         $message = 'Some issue with select wrappers';
@@ -311,12 +318,8 @@ class SelectTest extends FormBuilderTestBase
 
         $this->formBuilder->create('TestController@getWithoutRouteName', new TestEntity());
 
-        $options = [
-            'option1' => 'Text 1',
-            'option2' => 'Text 2',
-            'option3' => 'Text 3',
-            'some-value' => 'Some value',
-        ];
+        $options = $this->options;
+        $this->options;
 
         $select = $this->formBuilder->select('someField', 'Test label', ['options' => $options]);
 
@@ -364,5 +367,17 @@ class SelectTest extends FormBuilderTestBase
         $this->assertTrue($optionPos < $selectedPos && $textPos > $selectedPos);
 
         $this->formBuilder->end();
+    }
+
+    public function testEmptyParameter()
+    {
+        $message = 'Some issue with select empty option';
+        $options = $this->options;
+
+        $select = $this->formBuilder->select('testName', 'Test label', ['empty' => true, 'options' => $options]);
+        $this->assertContains('<option value="">', $select, $message);
+
+        $select = $this->formBuilder->select('testName', 'Test label', ['empty' => false, 'options' => $options]);
+        $this->assertNotContains('<option value="">', $select, $message);
     }
 }
