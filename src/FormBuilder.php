@@ -16,8 +16,6 @@ use Illuminate\Routing\RouteUrlGenerator;
  * Class FormBuilder
  * @package A2design\Form
  *
- * TODO Form::textarea test
- * TODO Form::postLink test
  * TODO Form::radio test
  */
 class FormBuilder
@@ -241,7 +239,10 @@ class FormBuilder
         $this->action = $action;
         $this->route = $this->getRoute($this->action);
 
-        $parameters['id'] = md5(time() . mt_rand());
+        if (!isset( $parameters['id'])) {
+            $parameters['id'] = md5(time() . mt_rand());
+        }
+
         $parameters['text'] = $text;
         $parameters['method'] = $this->getRouteMethod($parameters);
         $parameters['form-action'] = $this->getFormAction($parameters);
@@ -250,7 +251,7 @@ class FormBuilder
         $parameters['message'] = !empty($parameters['message']) ? $parameters['message'] : 'Are you sure?';
         $parameters['escaped'] = isset($parameters['escaped']) ? $parameters['escaped'] : true;
 
-        return view('form::post-link', compact('parameters'));
+        return view('form::post-link', compact('parameters'))->render();
     }
 
     /**
