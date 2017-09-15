@@ -160,6 +160,31 @@ Or you can use shortcuts which disable few parameters simultaneously
  
 ## Examples
 
+### Bootstrap
+ 
+```HTML
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Form</div>
+                    <div class="panel-body">
+                    
+                        {!! Form::create('ArticleController@update', $article) !!}
+                            {!! Form::input('name', 'Name') !!}
+                            {!! Form::buttonGroup() !!}
+                                {!! Form::buttonLink('Cancel', '/') !!}
+                                {!! Form::submit() !!}
+                            {!! Form::buttonGroupEnd() !!}
+                        {!! Form::end() !!}
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+```
+
 ### Checkbox with label in different column instead next to
  
 ```
