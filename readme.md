@@ -375,11 +375,15 @@ Or you can use shortcuts which disable few parameters simultaneously
  - Form::hidden($name, $parameters = [])
  - Form::buttonGroup($parameters = [])
  - Form::buttonGroupEnd()
+ - Form::inputGroup($parameters = [])
+ - Form::inputGroupEnd()
  - Form::button($text = 'Submit', $parameters = [])
  - Form::buttonLink($text = 'Cancel', $link = '/', $parameters = [])
  - Form::checkbox($name, $label = '', $parameters = [])
  - Form::postLink($action = '', $text = '', $entity = null, $parameters = [])
  - Form::radio($name, $label = '', $parameters = [])
+ - Form::textarea($name, $label = '', $parameters = [])
+ - Form::select($name, $label = '', $parameters = [])
 
 #### Shortcuts
  
