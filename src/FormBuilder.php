@@ -1093,11 +1093,11 @@ class FormBuilder
     {
         $result = '';
 
-        if (!isset($parameters['method']) || !in_array($parameters['method'], ['get','GET'])) {
+        if (!isset($parameters['method']) || !in_array(strtoupper($parameters['method']), ['GET'])) {
             $result .= csrf_field() . ' ';
         }
 
-        if (!empty($parameters['method']) && !in_array($parameters['method'], ['get','GET', 'post', 'POST'])) {
+        if (!empty($parameters['method']) && !in_array(strtoupper($parameters['method']), ['GET', 'POST'])) {
             $result .= method_field(strtoupper($parameters['method'])) . ' ';
         }
 
