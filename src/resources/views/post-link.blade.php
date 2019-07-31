@@ -26,7 +26,7 @@
     @endif
 
 </form>
-<a href="javascrit:void(0);" onclick="if (confirm('{{ $parameters['message'] }}')) { document['{{ $parameters['id'] }}'].submit(); } event.returnValue = false; return false;">
+<a href="javascript:void(0);" onclick="if (confirm('{{ $parameters['message'] }}')) { document['{{ $parameters['id'] }}'].submit(); } event.returnValue = false; return false;">
     @if ($parameters['escaped'])
         {{ $parameters['text'] }}
     @else
