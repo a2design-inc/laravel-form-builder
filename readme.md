@@ -4,7 +4,7 @@ Laravel plugin for quick form creation with Bootstrap support.
 
 You can display validation errors, old input values and form context based on model entity without any line of code and with great flexibility. 
 
-![example_image](https://i.imgur.com/NbsZjzE.png)
+![example_image](https://user-images.githubusercontent.com/5417461/66260886-54a36700-e7e6-11e9-896d-58e02c55281d.png)
 
 ## Table of Contents
 
@@ -103,7 +103,7 @@ php artisan vendor:publish
 
 ## Customization
 
-![example_image](https://i.imgur.com/lmW0rPS.png)
+![example_image](https://user-images.githubusercontent.com/5417461/66260887-5c630b80-e7e6-11e9-80c0-2c79a83f24fd.png)
 
 ### Parameters
 
